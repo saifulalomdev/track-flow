@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import Separator from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
-import { CheckCheck, ChevronRight, CircleCheck } from "lucide-react"
+import { ChevronRight, CircleCheck } from "lucide-react"
 
 export type PricingCardPros = {
     planName: "Free" | "Pro" | "Team",
@@ -61,7 +61,7 @@ export default function PricingCard({ planName, shortDescription, price, feature
                 size="lg"
                 className="w-full font-bold mx-auto"
                 variant="outline"
-                >
+            >
                 Subscribe <ChevronRight />
             </Button>
         </div>
