@@ -4,8 +4,14 @@ import { pricingPlans } from '@/constants/pricing-plans'
 
 export default function PricingSection() {
     return (
-        <section className='mt-19.5 space-y-16'>
-            <div>
+        <section className='mt-19.5 relative space-y-16'>
+            
+            {/* backgroud image and overlay for botom */}
+            <img src="/images/price-section-bg.png" className='absolute -z-10 h-full object-cover opacity-40' alt="" />
+            <div className='w-full h-16 absolute -bottom-20 left-0 bg-background bg-linear-to-t from-background via-background to-background/5 '/>
+            
+            
+            <div className='bg-background/10 backdrop-blur-sm'>
                 <h1 className='font-bold text-[64px] text-center leading-tight'>
                     Choose the Plan <br />That’s Right for You
                 </h1>
@@ -14,7 +20,7 @@ export default function PricingSection() {
                 </p>
             </div>
 
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-center bg-background/10 backdrop-blur-sm'>
                {pricingPlans.map((plan=> (
                  <PricingCard {...plan} key={plan.planName}/>
     

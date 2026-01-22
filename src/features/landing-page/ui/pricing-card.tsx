@@ -22,7 +22,7 @@ export default function PricingCard({ planName, shortDescription, price, feature
         <div className={cn(
             'w-100 h-143 bg-muted-foreground/10 p-8 space-y-6',
             freePlan && "rounded-l-2xl ",
-            proPlan && "rounded-2xl border h-165 border-primary/30 shadow-2xl shadow-primary/30",
+            proPlan && "rounded-2xl border w-95 h-168 border-primary/30 shadow-2xl shadow-primary/30",
             teamPlan && "rounded-r-2xl",
         )}>
 
@@ -43,7 +43,7 @@ export default function PricingCard({ planName, shortDescription, price, feature
             <Separator />
 
             <div>
-                <p className="text-[16px] opacity-75">What's included</p>
+                <p className="text-[16px] opacity-75">What&apos;s included</p>
                 <ul className="mt-4">
                     {features.map(featuer => (
                         <li key={featuer} className="mt-3.5 flex items-center gap-3 opacity-75">

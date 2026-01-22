@@ -6,7 +6,7 @@ export default function Separator() {
             <rect width="339.78" height="1" fill="url(#paint0_linear_1_265)" />
             <defs>
                 <linearGradient id="paint0_linear_1_265" x1="0" y1="0.5" x2="339.78" y2="0.5" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="white" stopOpacity="0" />
+                    <stop stopColor="white" stopOpacity="0" />
                     <stop offset="0.5" stopColor="white" stopOpacity="0.2" />
                     <stop offset="1" stopColor="white" stopOpacity="0" />
                 </linearGradient>
