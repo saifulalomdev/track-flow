@@ -1,12 +1,10 @@
 "use client"
-import { Button } from '@/components/ui/button'
+import HeroSection from '@/features/landing-page/components/hero-section'
 
 export default function LandingPage() {
   return (
-    <div>
-      <Button onClick={()=> alert("Next")}>
-        This is button
-      </Button>
-    </div>
+    <>
+      <HeroSection />
+    </>
   )
 }
