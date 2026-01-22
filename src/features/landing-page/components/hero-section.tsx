@@ -1,4 +1,10 @@
 import { Button } from "@/components/ui/button";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+import { StarIcon } from "lucide-react";
 
 export default function HeroSection() {
   return (
@@ -21,8 +27,36 @@ export default function HeroSection() {
       <div className="flex flex-col gap-6.75 z-10 text-center px-4">
 
         {/* user rating card */}
-        <div className="mt-30">
-          Profiles
+        <div className="mt-30 flex w-full justify-center items-center">
+          <div className="bg-background/10 bg-linear-to-tr from-primary/20 via-background to-background border backdrop-blur-sm gap-3 p-2 rounded-full flex">
+            <div className="flex items-center">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+                <AvatarFallback>LR</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/evilrabbit.png"
+                  alt="@evilrabbit"
+                />
+                <AvatarFallback>ER</AvatarFallback>
+              </Avatar>
+            </div>
+            <div className="flex flex-col justify-center mr-3">
+              <div className="flex">
+                <StarIcon size={14} fill="#ff6900" className="text-primary" />
+                <StarIcon size={14} fill="#ff6900" className="text-primary" />
+                <StarIcon size={14} fill="#ff6900" className="text-primary" />
+                <StarIcon size={14} fill="#ff6900" className="text-primary" />
+                <StarIcon size={14} fill="#ff6900" className="text-primary" />
+              </div>
+              <p>150+ happy clients</p>
+            </div>
+          </div>
         </div>
 
         {/* headlines */}
@@ -41,10 +75,14 @@ export default function HeroSection() {
 
         {/* action buttons */}
         <div className="flex gap-5.75 justify-center">
-          <Button className="font-bold">
+          <Button
+            size="lg"
+            className="font-bold"
+          >
             Get Started
           </Button>
           <Button
+            size="lg"
             variant="outline"
             className="font-bold"
           >
