@@ -30,7 +30,7 @@ export default function FeaturesSection() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-5 gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-3">
                 {featuers.map((feature, index) => (
                     <FeatuersCard
                         {...feature}
