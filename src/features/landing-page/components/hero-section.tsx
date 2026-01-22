@@ -5,6 +5,7 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 import { StarIcon } from "lucide-react";
+import Image from "next/image";
 
 export default function HeroSection() {
   return (
@@ -48,13 +49,13 @@ export default function HeroSection() {
             </div>
             <div className="flex flex-col justify-center mr-3">
               <div className="flex">
-                <StarIcon size={14} fill="#ff6900" className="text-primary" />
-                <StarIcon size={14} fill="#ff6900" className="text-primary" />
-                <StarIcon size={14} fill="#ff6900" className="text-primary" />
-                <StarIcon size={14} fill="#ff6900" className="text-primary" />
-                <StarIcon size={14} fill="#ff6900" className="text-primary" />
+                <StarIcon size={12} fill="#ff6900" className="text-primary" />
+                <StarIcon size={12} fill="#ff6900" className="text-primary" />
+                <StarIcon size={12} fill="#ff6900" className="text-primary" />
+                <StarIcon size={12} fill="#ff6900" className="text-primary" />
+                <StarIcon size={12} fill="#ff6900" className="text-primary" />
               </div>
-              <p>150+ happy clients</p>
+              <p className="text-muted-foreground">150+ happy clients</p>
             </div>
           </div>
         </div>
@@ -94,7 +95,7 @@ export default function HeroSection() {
 
       </div>
       <div className="pt-19.75 w-full">
-        <div className="h-53.5 w-full bg-background/5 border py-10 backdrop-blur-sm grid grid-cols-3">
+        <div className="h-53.5 w-full bg-background/5 bg-linear-to-b from-background/5 via-background to-background border-t py-10 backdrop-blur-sm grid grid-cols-3">
           <div className="flex justify-center items-center flex-col border-r">
             <h1 className="text-[23px]">Clients</h1>
             <h1 className="text-[46px] font-bold">350+</h1>
