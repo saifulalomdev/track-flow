@@ -11,58 +11,58 @@ export type PricingCardPros = {
     features: string[]
 }
 
-
 export default function PricingCard({ planName, shortDescription, price, features }: PricingCardPros) {
-
     const freePlan = planName === "Free"
     const proPlan = planName === "Pro"
     const teamPlan = planName === "Team"
 
     return (
         <div className={cn(
-            'w-85 xl:w-100 h-143 bg-muted-foreground/10 p-8 space-y-6',
-            freePlan && "rounded-l-2xl ",
-            proPlan && "rounded-2xl border w-80 xl:w-95 h-168 border-primary/30 shadow-2xl shadow-primary/30",
-            teamPlan && "rounded-r-2xl",
+            'w-full max-w-85 xl:max-w-100 h-auto lg:h-143 bg-muted-foreground/10 p-8 flex flex-col justify-between',
+            freePlan && "rounded-2xl lg:rounded-none lg:rounded-l-2xl",
+            proPlan && "rounded-2xl border w-full max-w-80 xl:max-w-95 h-auto lg:h-168 border-primary/30 shadow-2xl shadow-primary/30 z-10 bg-background/50 backdrop-blur-md lg:-my-12",
+            teamPlan && "rounded-2xl lg:rounded-none lg:rounded-r-2xl",
         )}>
+            <div className="space-y-6">
+                <h1 className={cn("text-[18px]", proPlan && "text-[32px] text-primary font-bold")}>
+                    {planName}
+                </h1>
 
-            <h1
-                className={cn(
-                    "text-[18px]",
-                    proPlan && "text-[32px] text-primary font-bold",
-                )}
-            >
-                {planName}
-            </h1>
+                <p className="opacity-75 text-[16px] leading-relaxed">{shortDescription}</p>
+                
+                <div className="flex items-baseline gap-2">
+                    <p className="text-[40px] font-bold">{price}</p>
+                    <span className="text-[16px] opacity-75">/ month</span>
+                </div>
+                
+                <Separator />
 
-            <p className="opacity-75 text-[16px]">{shortDescription}</p>
-            <div className="flex items-center gap-2">
-                <p className="text-[40px] font-bold">{price}</p>
-                <span className="text-[16px] opacity-75 -mt-2">/ month</span>
+                <div>
+                    <p className="text-[16px] font-medium opacity-90">What&apos;s included</p>
+                    <ul className="mt-4 space-y-3.5">
+                        {features.map(featuer => (
+                            <li key={featuer} className="flex items-start gap-3 text-[15px] opacity-75">
+                                <CircleCheck
+                                    fill={proPlan ? "#FF541F" : "transparent"}
+                                    size={20}
+                                    className={cn("shrink-0 mt-0.5", proPlan ? "text-background" : "text-primary")}
+                                />
+                                <span>{featuer}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
-            <Separator />
 
-            <div>
-                <p className="text-[16px] opacity-75">What&apos;s included</p>
-                <ul className="mt-4">
-                    {features.map(featuer => (
-                        <li key={featuer} className="mt-3.5 flex items-center gap-3 opacity-75">
-                            <CircleCheck
-                                fill={proPlan ? "#FF541F" : ""}
-                                size={24}
-                                className={proPlan ? "text-black" : ""}
-                            />
-                            {featuer}
-                        </li>
-                    ))}
-                </ul>
-            </div>
             <Button
                 size="lg"
-                className="w-full font-bold mx-auto"
-                variant="outline"
+                className={cn(
+                    "w-full font-bold mt-8",
+                    proPlan && "bg-primary text-white hover:bg-primary/90"
+                )}
+                variant={proPlan ? "default" : "outline"}
             >
-                Subscribe <ChevronRight />
+                Subscribe <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
         </div>
     )

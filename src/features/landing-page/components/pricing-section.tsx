@@ -5,26 +5,36 @@ import { pricingPlans } from '@/constants/pricing-plans'
 export default function PricingSection() {
     return (
         <section className='mt-19.5 relative space-y-16'>
-            
-            {/* backgroud image and overlay for botom */}
-            <img src="/images/price-section-bg.png" className='absolute -z-10 h-full object-cover opacity-40' alt="" />
-            <div className='w-full h-16 absolute -bottom-20 left-0 bg-background bg-linear-to-t from-background via-background to-background/5 '/>
-            
-            
-            <div className='bg-background/10 backdrop-blur-sm'>
-                <h1 className='font-bold text-[64px] text-center leading-tight'>
-                    Choose the Plan <br />That’s Right for You
+
+            {/* Background Image - Adjusted for all screens */}
+            <img
+                src="/images/price-section-bg.png"
+                className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-30 md:opacity-40"
+                alt="Background texture"
+            />
+
+            {/* Bottom Gradient Overlay - Fixed positioning to prevent gaps */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-background via-background/80 to-transparent pointer-events-none" />
+
+            <div className="relative z-10 px-6 py-12 md:py-20 bg-background/5 backdrop-blur-[2px]">
+                {/* Responsive Heading */}
+                <h1 className="text-center font-bold leading-tight tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-[64px]">
+                    Choose the Plan <br className="hidden sm:block" />
+                    That’s Right for You
                 </h1>
-                <p className='text-[18px] text-foreground/80 max-w-2xl text-center mt-5 mx-auto'>
-                    Access core tracking essentials and over 1,000 data integrations out of the box. Upgrade to the Pro Plan to unlock high-frequency data processing, unlimited cloud storage, and a whole new level of analytical depth.
+
+                {/* Responsive Paragraph */}
+                <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-relaxed opacity-80 sm:text-base md:text-[18px]">
+                    Access core tracking essentials and over 1,000 data integrations out of the box.
+                    Upgrade to the Pro Plan to unlock <span className="text-primary font-medium">high-frequency data processing</span>,
+                    unlimited cloud storage, and professional analytical depth.
                 </p>
             </div>
 
-            <div className='flex justify-center items-center bg-background/10 backdrop-blur-sm'>
-               {pricingPlans.map((plan=> (
-                 <PricingCard {...plan} key={plan.planName}/>
-    
-               )))}
+            <div className='flex flex-col lg:flex-row justify-center items-center gap-6 lg:gap-0 px-4 py-10'>
+                {pricingPlans.map((plan => (
+                    <PricingCard {...plan} key={plan.planName} />
+                )))}
             </div>
         </section>
     )
