@@ -17,19 +17,23 @@ export default function FeatuersCard({
 }: FeatuersCardProps ) {
     return (
         <div className={cn(
-            'flex flex-col justify-between p-6 min-h-62.5 rounded-4xl border border-primary/40',
+            'flex flex-col justify-between p-6 md:p-8 min-h-[280px] md:min-h-62.5 rounded-3xl md:rounded-4xl border border-primary/20 hover:border-primary/50 transition-colors duration-300',
             isGradiant 
-                ? "bg-linear-to-tl from-primary/40 via-background/50 to-muted-foreground/5" 
+                ? "bg-linear-to-tl from-primary/20 via-background/50 to-muted-foreground/5" 
                 : "bg-muted-foreground/5",
             className
         )}>
-            <div className='flex gap-10 justify-between items-start'>
-                <p className='text-[18px] text-slate-300 leading-snug'> {description}</p>
-                <Button size="icon" className='rounded-full shrink-0'>
-                    <ArrowUpRight />
+            <div className='flex gap-6 justify-between items-start'>
+                <p className='text-base md:text-[18px] text-slate-300 leading-relaxed'>
+                    {description}
+                </p>
+                <Button size="icon" variant="ghost" className='rounded-full shrink-0 border border-white/10 hover:bg-primary hover:text-white'>
+                    <ArrowUpRight size={20} />
                 </Button>
             </div>
-            <h3 className='text-[34px] font-bold text-white'>{title}</h3>
+            <h3 className='text-2xl md:text-[34px] font-bold text-white tracking-tight'>
+                {title}
+            </h3>
         </div>
     )
 }

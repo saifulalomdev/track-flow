@@ -60,54 +60,56 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* headlines */}
-        <h1 className="text-6xl font-bold md:text-[80px]">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold leading-[1.1] tracking-tight">
           Streamline <span className="text-primary">Tracking.</span>
-          <br />
+          <br className="hidden sm:block" />
           Maximize Performance.
         </h1>
 
         {/* descriptions */}
-        <p
-          className="text-muted-foreground mt-4 text-[22px] font-normal max-w-200 mx-auto"
-        >
+        <p className="text-muted-foreground mt-4 text-base sm:text-lg md:text-[22px] font-normal max-w-2xl px-4 mx-auto leading-relaxed">
           Our platform tracks traffic, identifies origins, and monitors conversions through one high-performance dashboard—eliminating bloated scripts.
         </p>
 
         {/* action buttons */}
-        <div className="flex gap-5.75 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5.75 justify-center px-6">
           <Button
             size="lg"
-            className="font-bold"
+            className="font-bold w-full sm:w-auto px-8 rounded-full"
           >
             Get Started
           </Button>
           <Button
             size="lg"
             variant="outline"
-            className="font-bold"
+            className="font-bold w-full sm:w-auto px-8 rounded-full border-white/10 hover:bg-white/5"
           >
             See Details
           </Button>
         </div>
-
-        {/* reviews */}
-
       </div>
-      <div className="pt-19.75 w-full">
-        <div className="h-53.5 w-full bg-background/5 bg-linear-to-b from-background/5 via-background to-background border-t py-10 backdrop-blur-sm grid grid-cols-3">
-          <div className="flex justify-center items-center flex-col border-r">
-            <h1 className="text-[23px]">Clients</h1>
-            <h1 className="text-[46px] font-bold">350+</h1>
+      {/* reviews */}
+      <div className="pt-10 md:pt-19.75 w-full">
+        <div className="h-auto md:h-53.5 w-full bg-background/5 bg-linear-to-b from-background/5 via-background to-background border-t py-10 backdrop-blur-sm grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
+
+          {/* Clients */}
+          <div className="flex justify-center items-center flex-col border-b md:border-b-0 md:border-r border-white/10 pb-8 md:pb-0">
+            <h1 className="text-lg md:text-[23px] opacity-80">Clients</h1>
+            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight">350+</h1>
           </div>
-          <div className="flex justify-center items-center flex-col border-r">
-            <h1 className="text-[23px]">Projects</h1>
-            <h1 className="text-[46px] font-bold">1000+</h1>
+
+          {/* Projects */}
+          <div className="flex justify-center items-center flex-col border-b md:border-b-0 md:border-r border-white/10 pb-8 md:pb-0">
+            <h1 className="text-lg md:text-[23px] opacity-80">Projects</h1>
+            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight">1,000+</h1>
           </div>
+
+          {/* Reviews */}
           <div className="flex justify-center items-center flex-col">
-            <h1 className="text-[23px]">5 Star Review</h1>
-            <h1 className="text-[46px] font-bold">10,000+</h1>
+            <h1 className="text-lg md:text-[23px] opacity-80">5 Star Review</h1>
+            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight">10,000+</h1>
           </div>
+
         </div>
       </div>
     </section>
