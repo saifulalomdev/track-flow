@@ -59,7 +59,7 @@ export default function Footer() {
                     <h3 className='text-xl font-bold text-primary'>Connect With Us</h3>
                     <div className='flex flex-col gap-3 text-base opacity-75'>
                         <address className='not-italic leading-relaxed'>
-                            27 Division St, New York,<br />NY 10002, USA
+                            Sylhet, 3100, Bangladesh
                         </address>
                         <a href="tel:+8801935679071" className="hover:text-primary transition-colors">+8801935679071</a>
                         <a href="mailto:hello@saifulalom.com" className="hover:text-primary transition-colors underline decoration-primary/30">hello@saifulalom.com</a>
