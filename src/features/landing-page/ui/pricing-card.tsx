@@ -20,9 +20,9 @@ export default function PricingCard({ planName, shortDescription, price, feature
 
     return (
         <div className={cn(
-            'w-100 h-143 bg-muted-foreground/10 p-8 space-y-6',
+            'w-85 xl:w-100 h-143 bg-muted-foreground/10 p-8 space-y-6',
             freePlan && "rounded-l-2xl ",
-            proPlan && "rounded-2xl border w-95 h-168 border-primary/30 shadow-2xl shadow-primary/30",
+            proPlan && "rounded-2xl border w-80 xl:w-95 h-168 border-primary/30 shadow-2xl shadow-primary/30",
             teamPlan && "rounded-r-2xl",
         )}>
 
