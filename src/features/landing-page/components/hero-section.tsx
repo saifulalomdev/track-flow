@@ -5,11 +5,10 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 import { StarIcon } from "lucide-react";
-import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="w-full relative flex flex-col items-center justify-center overflow-hidden">
+    <section className="w-full relative bg-black flex flex-col items-center justify-center overflow-hidden">
       {/* Background Layer: Left Image */}
       <img
         src="/images/hero-left-side.png"
@@ -29,7 +28,7 @@ export default function HeroSection() {
 
         {/* user rating card */}
         <div className="mt-30 flex w-full justify-center items-center">
-          <div className="bg-background/10 bg-linear-to-tr from-primary/20 via-background to-background border backdrop-blur-sm gap-3 px-3 py-2 rounded-full flex">
+          <div className="bg-black/10 bg-linear-to-tr from-primary/20 via-balck to-black border border-black backdrop-blur-sm gap-3 px-3 py-2 rounded-full flex">
             <div className="flex items-center">
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -60,7 +59,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold leading-[1.1] tracking-tight">
+        <h1 className="text-4xl sm:text-6x text-white md:text-7xl lg:text-[80px] font-bold leading-[1.1] tracking-tight">
           Streamline <span className="text-primary">Tracking.</span>
           <br className="hidden sm:block" />
           Maximize Performance.

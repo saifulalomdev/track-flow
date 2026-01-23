@@ -2,6 +2,10 @@ import { Button } from "@/components/ui/button";
 import { navItems } from "@/constants/nav-items";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  SignedOut,
+  SignInButton
+} from "@clerk/nextjs";
 
 export default function ClientHeader() {
   return (
@@ -24,7 +28,7 @@ export default function ClientHeader() {
           <Link
             key={index}
             href={href}
-            className="font-medium hover:underline underline-offset-4 hover:text-primary transition-all"
+            className="font-medium text-background hover:underline underline-offset-4 hover:text-primary transition-all"
           >
             {name}
           </Link>
@@ -32,12 +36,20 @@ export default function ClientHeader() {
       </nav>
 
       <div className="flex items-center gap-4">
-        <Button size="lg" variant="outline" className="hidden sm:flex font-bold">
-          Log in
-        </Button>
-        <Button size="lg" className="font-bold px-6">
-          Get Started
-        </Button>
+
+        <SignedOut>
+          <SignInButton mode="redirect">
+            <Button variant="outline" className="hidden sm:flex font-bold">
+              Log in
+            </Button>
+          </SignInButton>
+        </SignedOut>
+
+        <Link href="/admin">
+          <Button size="lg" className="font-bold px-6">
+            Get Started
+          </Button>
+        </Link>
         {/* Mobile Menu Trigger could go here */}
       </div>
     </header>
