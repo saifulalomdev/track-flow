@@ -19,7 +19,7 @@ export default function ClientHeader() {
         />
       </Link>
 
-      <nav className="hidden lg:flex items-center gap-8 xl:gap-13">
+      <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-13">
         {navItems.map(({ href, name }, index) => (
           <Link
             key={index}
