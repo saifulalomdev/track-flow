@@ -80,8 +80,9 @@ export function SidebarHeader({ children, className }: { children?: ReactNode; c
     return (
         <div className={cn("flex h-16 items-center border-b px-6 shrink-0", className)}>
             {children || (
-                <Link href="/" className="transition-opacity hover:opacity-80">
+                <Link href="/" className="transition-opacity flex items-end text-sm hover:opacity-80">
                     <Image src="/images/logo.svg" alt="site-logo" width={40} height={40} priority />
+                    <h1>Trac Flow</h1>
                 </Link>
             )}
         </div>
@@ -111,7 +112,7 @@ export function SidebarInset({ children }: { children: ReactNode }) {
 
 
 interface SidebarItem {
-    label: string;
+    name: string;
     href: string;
     Icon: ComponentType<SVGProps<SVGSVGElement>>;
 }
@@ -126,7 +127,7 @@ export function SidebarContent({ sidebarItems }: SidebarContentProps) {
 
     return (
         <nav className="flex-1 flex flex-col gap-1 px-3 mt-6 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {sidebarItems?.map(({ href, label, Icon }) => {
+            {sidebarItems?.map(({ href, name, Icon }) => {
                 const isActive = pathname === href;
 
                 return (
@@ -142,7 +143,7 @@ export function SidebarContent({ sidebarItems }: SidebarContentProps) {
                     >
                         {/* Render Icon with consistent sizing */}
                         <Icon className="h-5 w-5 shrink-0" />
-                        <span className="text-sm">{label}</span>
+                        <span className="text-sm">{name}</span>
                     </Link>
                 );
             })}

@@ -28,7 +28,7 @@ export default function ClientHeader() {
           <Link
             key={index}
             href={href}
-            className="font-medium text-background hover:underline underline-offset-4 hover:text-primary transition-all"
+            className="font-medium text-white hover:underline underline-offset-4 hover:text-primary transition-all"
           >
             {name}
           </Link>

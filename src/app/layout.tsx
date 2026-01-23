@@ -6,7 +6,7 @@ import "./globals.css";
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="dak">
+      <html lang="en" className="drk">
         <body className={brandFont.className}>
           {children}
         </body>
