@@ -10,9 +10,12 @@ import { helpMenus } from '@/constants/help-menus';
 
 export default function Footer() {
     return (
-        <div className='px-25 pt-15 border-t'>
-            <div className='w-full border-b pb-6 border-primary grid grid-cols-5'>
-                <div className='col-span-2 pr-10'>
+        <div className='px-6 lg:px-25 pt-15 border-t'>
+            {/* navigations section */}
+            <div className='w-full border-b pb-6 border-primary grid gap-4 grid-cols-1 md:grid-cols-3 xl:grid-cols-5'>
+              
+                {/* about us section */}
+                <div className='md:col-span-3 xl:col-span-2 pr-10'>
                     <h3 className='text-[32px] font-bold'> About Us</h3>
                     <p className='text-[18px] opacity-80 mt-3'>
                         We’re a team of engineers and data strategists building high-performance tracking tools that empower teams to turn raw data into actionable insights—faster, more accurately, and effortlessly.
@@ -77,11 +80,11 @@ export default function Footer() {
 
                 </div>
             </div>
-            <div className='flex justify-between py-8'>
-                <p className='col-span-3 text-muted-foreground'>
-                    © {new Date().getFullYear()} All Right Reserved.
-                </p>
-                <div className='flex gap-2'>
+
+            {/* copyrithe section and social links */}
+            <div className='flex flex-col md:flex-row justify-center md:justify-between items-center gap-3 xl:justify-between py-8'>
+                
+                <div className='flex gap-2 md:order-last'>
                     {socialLinks.map(({ href, name, Icon }) => (
                         <Tooltip key={name}>
                             <TooltipContent
@@ -102,6 +105,9 @@ export default function Footer() {
 
                     ))}
                 </div>
+                <p className='col-span-3 text-muted-foreground'>
+                    © {new Date().getFullYear()} All Right Reserved.
+                </p>
             </div>
         </div>
     )

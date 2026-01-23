@@ -7,7 +7,7 @@ import PricingSection from '@/features/landing-page/components/pricing-section'
 
 export default function LandingPage() {
   return (
-    <div className=''>
+    <div className='overflow-x-hidden'>
       <HeroSection />
       <FeaturesSection/>
       <PricingSection/>
