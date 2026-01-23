@@ -5,30 +5,41 @@ import Link from "next/link";
 
 export default function ClientHeader() {
   return (
-    <header 
-    className="w-full h-16 z-20 flex justify-between items-center px-20 py-14 fixed top-0 left-0 bg-background/5 backdrop-blur-sm"
+    <header
+      className="w-full h-16 md:h-20 z-50 flex justify-between items-center px-6 md:px-10 lg:px-20 py-4 fixed top-0 left-0 bg-background/5 backdrop-blur-md"
     >
-      <Image
-        src="/images/logo.svg"
-        alt="Logo"
-        width={40}
-        height={40}
-        priority
-      />
-      <nav className="flex gap-13">
+      <Link href="/" className="shrink-0">
+        <Image
+          src="/images/logo.svg"
+          alt="Logo"
+          width={32}
+          height={32}
+          priority
+          className="md:w-10 md:h-10"
+        />
+      </Link>
+
+      <nav className="hidden lg:flex items-center gap-8 xl:gap-13">
         {navItems.map(({ href, name }, index) => (
           <Link
             key={index}
             href={href}
-            className="font-normal [-word-spacing:0.10rem]"
+            className="text-sm font-medium opacity-80 hover:opacity-100 hover:text-primary transition-all"
           >
             {name}
           </Link>
         ))}
       </nav>
-      <Button className="font-bold">
-        Log in
-      </Button>
+
+      <div className="flex items-center gap-4">
+        <Button size="lg" variant="outline" className="hidden sm:flex font-bold">
+          Log in
+        </Button>
+        <Button size="lg" className="font-bold px-6">
+          Get Started
+        </Button>
+        {/* Mobile Menu Trigger could go here */}
+      </div>
     </header>
   )
 }

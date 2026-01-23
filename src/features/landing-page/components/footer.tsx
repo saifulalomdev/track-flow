@@ -78,7 +78,7 @@ export default function Footer() {
                         <Tooltip key={name} delayDuration={0}>
                             <TooltipTrigger asChild>
                                 <Link
-                                    className='border border-primary/20 p-2.5 text-primary/80 rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300'
+                                    className='border border-primary/80 p-2.5 text-primary/80 rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300'
                                     href={href}
                                     aria-label={name}
                                 >

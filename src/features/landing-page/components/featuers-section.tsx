@@ -49,8 +49,8 @@ export default function FeaturesSection() {
             </div>
 
             {/* Quote/Mission Section */}
-            <div className='max-w-4xl mx-auto flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center py-10'>
-                <h3 className='text-muted-foreground font-mono text-xl'>
+            <div className='max-w-4xl mx-auto flex flex-col md:flex-row gap-6 md:gap-10 items-start py-10'>
+                <h3 className='text-muted-foreground text-xl md:mt-1'>
                     {new Date().getFullYear()}
                 </h3>
                 <p className='text-xl md:text-[27px] font-bold leading-snug'>
@@ -60,10 +60,10 @@ export default function FeaturesSection() {
 
             {/* CTA Buttons */}
             <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pb-10'>
-                <Button size="lg" className='font-bold w-full sm:w-auto rounded-full px-8'>
+                <Button size="lg" className='font-bold w-full sm:w-auto'>
                     Get started <ArrowUpRight className="ml-2" />
                 </Button>
-                <Button size="lg" variant="outline" className='w-full sm:w-auto rounded-full px-8 gap-3 border-white/10'>
+                <Button size="lg" variant="outline" className='w-full sm:w-auto'>
                     Slot available
                     <span className="relative flex h-3 w-3">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0AC300] opacity-75"></span>

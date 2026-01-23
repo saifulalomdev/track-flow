@@ -29,17 +29,17 @@ export default function HeroSection() {
 
         {/* user rating card */}
         <div className="mt-30 flex w-full justify-center items-center">
-          <div className="bg-background/10 bg-linear-to-tr from-primary/20 via-background to-background border backdrop-blur-sm gap-3 p-2 rounded-full flex">
+          <div className="bg-background/10 bg-linear-to-tr from-primary/20 via-background to-background border backdrop-blur-sm gap-3 px-3 py-2 rounded-full flex">
             <div className="flex items-center">
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <Avatar>
+              <Avatar className="-ml-2">
                 <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
                 <AvatarFallback>LR</AvatarFallback>
               </Avatar>
-              <Avatar>
+              <Avatar className="-ml-2">
                 <AvatarImage
                   src="https://github.com/evilrabbit.png"
                   alt="@evilrabbit"
@@ -47,7 +47,7 @@ export default function HeroSection() {
                 <AvatarFallback>ER</AvatarFallback>
               </Avatar>
             </div>
-            <div className="flex flex-col justify-center mr-3">
+            <div className="flex flex-col justify-center mr-2">
               <div className="flex">
                 <StarIcon size={12} fill="#ff6900" className="text-primary" />
                 <StarIcon size={12} fill="#ff6900" className="text-primary" />
@@ -75,14 +75,14 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-5.75 justify-center px-6">
           <Button
             size="lg"
-            className="font-bold w-full sm:w-auto px-8 rounded-full"
+            className="font-bold w-full sm:w-auto "
           >
             Get Started
           </Button>
           <Button
             size="lg"
             variant="outline"
-            className="font-bold w-full sm:w-auto px-8 rounded-full border-white/10 hover:bg-white/5"
+            className="font-bold sm:w-auto"
           >
             See Details
           </Button>

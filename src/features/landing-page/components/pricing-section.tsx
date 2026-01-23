@@ -4,7 +4,7 @@ import { pricingPlans } from '@/constants/pricing-plans'
 
 export default function PricingSection() {
     return (
-        <section className='mt-19.5 relative space-y-16'>
+        <section className='relative space-y-16'>
 
             {/* Background Image - Adjusted for all screens */}
             <img
@@ -31,7 +31,7 @@ export default function PricingSection() {
                 </p>
             </div>
 
-            <div className='flex flex-col lg:flex-row justify-center items-center gap-6 lg:gap-0 px-4 py-10'>
+            <div className='flex flex-col lg:flex-row justify-center items-center gap-6 lg:gap-0 px-4'>
                 {pricingPlans.map((plan => (
                     <PricingCard {...plan} key={plan.planName} />
                 )))}

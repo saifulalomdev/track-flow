@@ -12,7 +12,7 @@ import Footer from "./footer";
 
 export default function FAQsection() {
     return (
-        <section className='pt-36 mt-10 relative space-y-16 overflow-hidden'>
+        <section className='pt-36 relative space-y-16 overflow-hidden'>
 
 
             {/* Top Left Background - Hide on smallest mobile to keep UI clean */}
