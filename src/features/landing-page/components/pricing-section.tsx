@@ -16,7 +16,7 @@ export default function PricingSection() {
             {/* Bottom Gradient Overlay - Fixed positioning to prevent gaps */}
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-background via-background/80 to-transparent pointer-events-none" />
 
-            <div className="relative z-10 px-6 py-12 md:py-20 bg-background/5 backdrop-blur-[2px]">
+            <div className="relative z-30 px-6 py-12 md:py-20 bg-background/5 backdrop-blur-[2px]">
                 {/* Responsive Heading */}
                 <h1 className="text-center font-bold leading-tight tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-[64px]">
                     Choose the Plan <br className="hidden sm:block" />

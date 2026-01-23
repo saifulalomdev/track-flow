@@ -24,14 +24,14 @@ export default function FeatuersCard({
             className
         )}>
             <div className='flex gap-6 justify-between items-start'>
-                <p className='text-base md:text-[18px] text-slate-300 leading-relaxed'>
+                <p className='text-base md:text-[18px] text-muted-foreground leading-relaxed'>
                     {description}
                 </p>
                 <Button size="icon" className='rounded-full shrink-0 border border-white/10 hover:bg-primary hover:text-white'>
                     <ArrowUpRight size={20} />
                 </Button>
             </div>
-            <h3 className='text-2xl md:text-[34px] font-bold text-white tracking-tight'>
+            <h3 className='text-2xl md:text-[34px] font-bold tracking-tight'>
                 {title}
             </h3>
         </div>
