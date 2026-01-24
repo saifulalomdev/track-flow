@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation';
 
 const pathnameTable: Record<string, string> = {
     "/admin": "Dashboard",
-    "/admin/utm": "TrackFlow Magic Link", // Much cleaner and brand-aligned
-    "/admin/websites": "My Websites",
+    "/admin/utm": "Link builder", // Much cleaner and brand-aligned
+    "/admin/sites": "My Websites",
     "/admin/settings": "Settings",
 }
 
@@ -19,7 +19,7 @@ export default function AdminHeader() {
     const displayTitle = pathnameTable[pathname] || "TrackFlow";
 
     return (
-        <header className='w-full bg-background/10 flex justify-between items-center px-4 backdrop-blur-sm border-b h-16'>
+        <header className='w-full shrink-0 sticky top-0 left-0 bg-background/10 flex justify-between items-center px-4 backdrop-blur-sm border-b h-16'>
             <div className='flex items-center gap-4'>
                 <MenuIcon className='lg:hidden cursor-pointer' onClick={toggle} />
                 <h1 className='text-xl font-bold tracking-tight'>

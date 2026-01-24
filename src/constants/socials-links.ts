@@ -1,4 +1,4 @@
-import { Globe  , Linkedin , Github , Twitch, Twitter} from "lucide-react"
+import { Globe  , Linkedin , Github , Twitter} from "lucide-react"
 
 
 export const socialLinks = [
