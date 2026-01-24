@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </Sidebar>
             <SidebarInset>
                 <AdminHeader />
-                <div className='p-4'>
+                <div className='p-4 lg:p-10'>
                     {children}
                 </div>
             </SidebarInset>
