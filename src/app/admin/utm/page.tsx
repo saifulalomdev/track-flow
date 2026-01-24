@@ -34,7 +34,7 @@ export default function UTMBuilder() {
         </p>
       </header>
 
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-start'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-8 items-start'>
         {/* LEFT COLUMN: Inputs */}
         <div className='space-y-6 bg-card p-6 rounded-xl border shadow-sm'>
 

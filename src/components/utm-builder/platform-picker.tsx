@@ -19,7 +19,7 @@ export function PlatformPicker({ onChange }: PlatformPickerProps) {
   };
 
   return (
-    <div className='grid grid-cols-1 lg:grid-cols-2 w-full gap-4 border-2 border-input/30 p-4 rounded-md'>
+    <div className='grid grid-cols-1 xl:grid-cols-2 w-full gap-4 border-2 border-input/30 p-4 rounded-md'>
 
       {platforms.map(({ name, Icon, utmSource, color }) => {
 
@@ -35,7 +35,7 @@ export function PlatformPicker({ onChange }: PlatformPickerProps) {
               isSelected
                 ? 'bg-primary/10 border-primary shadow-md'
                 : 'bg-muted/50 border-transparent hover:border-primary/30 hover:bg-muted',
-              name === "Other" ? "lg:col-span-2" : ""
+              name === "Other" ? "xl:col-span-2" : ""
             )}
             style={{
               borderColor: isSelected ? color : undefined
@@ -60,7 +60,7 @@ export function PlatformPicker({ onChange }: PlatformPickerProps) {
 
       {selected === "manual" && (
         <Input
-          className='lg:col-span-2'
+          className='xl:col-span-2'
           onChange={(e) => onChange(formatSlug(e.target.value))}
         />
       )}
