@@ -26,14 +26,15 @@ export const insertUserSchema = createInsertSchema(users, {
     password: (schema) => schema.min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`),
 });
 
-export const signUpUserSchema = insertUserSchema.pick({email: true , password: true , name: true})
-export const signInUserSchema = signUpUserSchema.omit({name: true})
+export const signUpUserSchema = insertUserSchema.pick({ email: true, password: true, name: true });
+export const signInUserSchema = signUpUserSchema.omit({ name: true });
+export const jwtPayload = insertUserSchema.pick({ id: true, name: true, email: true });
 
 export const selectUserSchema = createSelectSchema(users);
 
 // types
-
 export type User = typeof users.$inferSelect;
+export type JWTPayload = z.infer<typeof jwtPayload>;
 export type NewUser = typeof users.$inferInsert;
 export type SignIn = z.infer<typeof signInUserSchema>;
 export type SignUp = z.infer<typeof signUpUserSchema>;

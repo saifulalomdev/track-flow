@@ -4,15 +4,14 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { faqs } from "@/constants/faqs";
-import { ArrowUpRight } from "lucide-react";
 import Footer from "./footer";
+import GetStarted from "../ui/get-started-button";
 
 
 export default function FAQsection() {
     return (
-        <section className='pt-36 relative space-y-16 overflow-hidden'>
+        <section id="FAQs" className='pt-36 relative space-y-16 overflow-hidden'>
 
 
             {/* Top Left Background - Hide on smallest mobile to keep UI clean */}
@@ -107,9 +106,7 @@ export default function FAQsection() {
                     Whether you&apos;re a developer, a startup, or a scaling enterprise—our platform adapts to your data needs. Monitor faster. Scale better.
                 </p>
 
-                <Button size="lg" className="font-bold w-full sm:w-auto">
-                    Get started <ArrowUpRight className="ml-2 h-5 w-5" />
-                </Button>
+                <GetStarted />
             </div>
 
             <Footer />

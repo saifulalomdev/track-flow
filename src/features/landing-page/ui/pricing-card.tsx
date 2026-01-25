@@ -13,9 +13,9 @@ export default function PricingCard({ id, name, desc, price, features }: Plan) {
 
     return (
         <div className={cn(
-            'w-full max-w-85 z-10 xl:max-w-100 h-auto lg:h-143 bg-muted-foreground/10 p-8 flex flex-col justify-between',
+            'w-full max-w-xl lg:max-w-82 z-10 xl:max-w-100 h-auto lg:h-143 bg-muted-foreground/10 p-8 flex flex-col justify-between',
             freePlan && "rounded-2xl lg:rounded-none lg:rounded-l-2xl",
-            proPlan && "rounded-2xl border w-full max-w-80 xl:max-w-95 h-auto lg:h-168 border-primary/30 shadow-2xl shadow-primary/30 z-10 bg-background/50 backdrop-blur-md lg:-my-12",
+            proPlan && "rounded-2xl border w-full xl:max-w-95 h-auto lg:h-168 border-primary/30 shadow-2xl shadow-primary/30 z-10 bg-background/50 backdrop-blur-md lg:-my-12",
             teamPlan && "rounded-2xl lg:rounded-none lg:rounded-r-2xl",
         )}>
             <div className="space-y-6">

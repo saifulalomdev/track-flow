@@ -41,7 +41,7 @@ export async function signInAction(data: SignIn): Promise<ActionResponse> {
 
         // 4. Generate JWT
         // SECURITY: We only pass ID and Email. NEVER pass the password into a JWT.
-        const token = await generateJWTToken(data); 
+        const token = await generateJWTToken({ id: user.id, email: user.email, name: user.name });
 
         // 5. Set Cookie
         const cookieStore = await cookies();

@@ -3,7 +3,7 @@ import { plans } from '@/constants/pricing-plans'
 
 export default function PricingSection() {
     return (
-        <section className='relative space-y-16'>
+        <section id='pricing' className='relative space-y-16'>
 
             {/* Background Image - Adjusted for all screens */}
             <img

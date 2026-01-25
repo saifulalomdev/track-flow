@@ -27,7 +27,7 @@ export default function FeatuersCard({
                 <p className='text-base md:text-[18px] text-muted-foreground leading-relaxed'>
                     {description}
                 </p>
-                <Button size="icon" className='rounded-full shrink-0 border border-white/10 hover:bg-primary hover:text-white'>
+                <Button size="icon" className='shrink-0 border border-white/10 hover:bg-primary hover:text-white'>
                     <ArrowUpRight size={20} />
                 </Button>
             </div>
