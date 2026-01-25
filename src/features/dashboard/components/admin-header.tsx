@@ -10,10 +10,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import AdminSidebar from "@/components/sidebar/side-bar";
+import { useSidebar } from "@/components/ui/side-bar";
 
 export function DashboardNavbar() {
     const pathname = usePathname();
     const segments = pathname.split("/").filter(Boolean);
+    const { toggle } = useSidebar()
 
     return (
         <nav className="sticky shrink-0 top-0 z-30 flex h-16 w-full items-center justify-between border-b border-white/10 bg-background/60 px-4 md:px-6 backdrop-blur-md">
@@ -22,19 +25,9 @@ export function DashboardNavbar() {
             <div className="flex items-center gap-2">
                 {/* Mobile Sidebar Trigger */}
                 <div className="md:hidden">
-                    <Sheet>
-                        <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                                <Menu className="h-5 w-5" />
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent side="left" className="p-0 w-64 bg-background border-r border-white/10">
-                            {/* We literally just put the Sidebar component inside the drawer */}
-                            {/* <Sidebar /> */}
-
-                            nav bar
-                        </SheetContent>
-                    </Sheet>
+                    <Button onClick={toggle} variant="ghost" size="icon">
+                        <Menu className="h-5 w-5" />
+                    </Button>
                 </div>
 
                 {/* Breadcrumbs (Hidden on very small screens to save space) */}

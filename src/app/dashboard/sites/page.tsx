@@ -26,7 +26,7 @@ export default function MyWebsites() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
-      <div className="flex flex-col md:flex-row gap-3 justify-between items-end">
+      <div className="flex flex-col md:flex-row gap-3 justify-between md:items-end">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">My Websites</h1>
           <p className="text-muted-foreground">Track and manage your websites.</p>
