@@ -9,7 +9,7 @@ export default function NavUser() {
                     {user?.name.split("")[0]}
                 </div>
                 <div className="flex-1 overflow-hidden">
-                    <p className="text-sm font-semibold truncate text-white">{user?.name}</p>
+                    <p className="text-sm font-semibold truncate">{user?.name}</p>
                     <p className="text-[10px] text-muted-foreground uppercase">Pro Account</p>
                 </div>
             </div>

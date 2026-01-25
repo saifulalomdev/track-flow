@@ -8,7 +8,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const user = await getSession();
 
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="ark">
       <SessionProvider user={user}>
         <body className={brandFont.className}>
           {children}

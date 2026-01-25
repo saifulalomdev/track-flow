@@ -35,11 +35,11 @@ export default function Dashboard() {
       {/* HEADER */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
             Overview
           </h1>
           <p className="text-sm md:text-base text-muted-foreground">
-            Welcome back. Here's what's happening today.
+            Welcome back. Here&aps;s what&aps;s happening today.
           </p>
         </div>
 

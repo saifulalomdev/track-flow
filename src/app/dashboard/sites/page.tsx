@@ -97,7 +97,7 @@ export default function MyWebsites() {
           <div className="max-w-sm">
             <h3 className="font-semibold text-lg">Add your primary domain</h3>
             <p className="text-sm text-muted-foreground">
-              We'll provide a 1KB script to paste into your site. No cookies, no bloat—just pure analytics.
+              We&aps;ll provide a 1KB script to paste into your site. No cookies, no bloat—just pure analytics.
             </p>
           </div>
         </CardContent>
