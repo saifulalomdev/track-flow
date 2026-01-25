@@ -31,12 +31,12 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-6 space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-8 max-w-7xl mx-auto">
       {/* HEADER */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
-            Center Overview
+            Overview
           </h1>
           <p className="text-sm md:text-base text-muted-foreground">
             Welcome back. Here's what's happening today.

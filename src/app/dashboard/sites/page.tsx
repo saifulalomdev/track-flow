@@ -25,13 +25,13 @@ export default function MyWebsites() {
   ];
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-8">
-      <div className="flex justify-between items-end">
+    <div className="max-w-6xl mx-auto space-y-8">
+      <div className="flex flex-col md:flex-row gap-3 justify-between items-end">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">My Websites</h1>
-          <p className="text-muted-foreground">Track and manage your coaching center domains.</p>
+          <p className="text-muted-foreground">Track and manage your websites.</p>
         </div>
-        <Button className="gap-2">
+        <Button className="gap-2 w-full md:w-auto">
           <Plus className="w-4 h-4" /> Add New Site
         </Button>
       </div>
