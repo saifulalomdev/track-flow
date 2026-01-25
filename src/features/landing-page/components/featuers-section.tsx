@@ -2,12 +2,12 @@ import Image from 'next/image'
 import FeatuersCard from '../ui/featues-card'
 import { featuers } from '@/constants/features'
 import { Button } from '@/components/ui/button'
-import { ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import GetStarted from '../ui/get-started-button'
 
 export default function FeaturesSection() {
     return (
-        <section className='px-6 md:px-10 lg:px-20 mt-10 md:mt-19.5 space-y-10 md:space-y-14 overflow-hidden'>
+        <section id='features' className='px-6 md:px-10 lg:px-20 mt-10 md:mt-19.5 space-y-10 md:space-y-14 overflow-hidden'>
             {/* Header Section */}
             <div className='flex flex-col lg:flex-row w-full justify-between items-center gap-10'>
                 <div className="text-center lg:text-left">
@@ -59,10 +59,8 @@ export default function FeaturesSection() {
             </div>
 
             {/* CTA Buttons */}
-            <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pb-10'>
-                <Button size="lg" className='font-bold w-full sm:w-auto'>
-                    Get started <ArrowUpRight className="ml-2" />
-                </Button>
+            <div className='flex flex-col sm:flex-row justify-center items-center gap-3 pb-10'>
+                <GetStarted/>
                 <Button size="lg" variant="outline" className='w-full sm:w-auto'>
                     Slot available
                     <span className="relative flex h-3 w-3">

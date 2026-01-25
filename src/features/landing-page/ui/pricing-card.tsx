@@ -1,40 +1,35 @@
 import { Button } from "@/components/ui/button"
 import Separator from "@/components/ui/separator"
+import { Plan } from "@/constants/pricing-plans"
+import { createCustomCheckout } from "@/features/payment/actions/create-payment"
 import { cn } from "@/lib/utils"
 import { ChevronRight, CircleCheck } from "lucide-react"
 
-export type PricingCardPros = {
-    planName: "Free" | "Pro" | "Team",
-    shortDescription: string,
-    price: string,
-    discount: string,
-    features: string[]
-}
 
-export default function PricingCard({ planName, shortDescription, price, features }: PricingCardPros) {
-    const freePlan = planName === "Free"
-    const proPlan = planName === "Pro"
-    const teamPlan = planName === "Team"
+export default function PricingCard({ id, name, desc, price, features }: Plan) {
+    const freePlan = name === "Free"
+    const proPlan = name === "Pro"
+    const teamPlan = name === "Team"
 
     return (
         <div className={cn(
-            'w-full max-w-85 z-10 xl:max-w-100 h-auto lg:h-143 bg-muted-foreground/10 p-8 flex flex-col justify-between',
+            'w-full max-w-xl lg:max-w-82 z-10 xl:max-w-100 h-auto lg:h-143 bg-muted-foreground/10 p-8 flex flex-col justify-between',
             freePlan && "rounded-2xl lg:rounded-none lg:rounded-l-2xl",
-            proPlan && "rounded-2xl border w-full max-w-80 xl:max-w-95 h-auto lg:h-168 border-primary/30 shadow-2xl shadow-primary/30 z-10 bg-background/50 backdrop-blur-md lg:-my-12",
+            proPlan && "rounded-2xl border w-full xl:max-w-95 h-auto lg:h-168 border-primary/30 shadow-2xl shadow-primary/30 z-10 bg-background/50 backdrop-blur-md lg:-my-12",
             teamPlan && "rounded-2xl lg:rounded-none lg:rounded-r-2xl",
         )}>
             <div className="space-y-6">
                 <h1 className={cn("text-[18px]", proPlan && "text-[32px] text-primary font-bold")}>
-                    {planName}
+                    {name}
                 </h1>
 
-                <p className="opacity-75 text-[16px] leading-relaxed">{shortDescription}</p>
-                
+                <p className="opacity-75 text-[16px] leading-relaxed">{desc}</p>
+
                 <div className="flex items-baseline gap-2">
-                    <p className="text-[40px] font-bold">{price}</p>
+                    <p className="text-[40px] font-bold">${price}</p>
                     <span className="text-[16px] opacity-75">/ month</span>
                 </div>
-                
+
                 <Separator />
 
                 <div>
@@ -55,6 +50,7 @@ export default function PricingCard({ planName, shortDescription, price, feature
             </div>
 
             <Button
+                onClick={() => createCustomCheckout(id)}
                 size="lg"
                 className={cn(
                     "w-full font-bold mt-8",

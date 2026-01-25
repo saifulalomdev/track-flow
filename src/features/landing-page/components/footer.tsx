@@ -10,14 +10,14 @@ import { helpMenus } from '@/constants/help-menus';
 
 export default function Footer() {
     return (
-        <footer className='px-6 md:px-10 lg:px-15 xl:px-25 pt-15 border-t'>
+        <footer id='footer'  className='px-6 md:px-10 lg:px-15 xl:px-25 pt-15 border-t'>
             {/* Navigations Section */}
-            <div className='w-full border-b pb-12 border-white/10 grid gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5'>
+            <div className='w-full border-b pb-12 border-white/10 grid gap-10 grid-cols-1 md:grid-cols-3 xl:grid-cols-5'>
               
                 {/* About Us section - Spans full width on mobile, 2 cols on Desktop */}
-                <div className='sm:col-span-2 md:col-span-3 xl:col-span-2 pr-0'>
+                <div className='md:col-span-3 xl:col-span-2 pr-0'>
                     <h3 className='text-3xl font-bold tracking-tight'>About Us</h3>
-                    <p className='text-lg opacity-70 mt-4 leading-relaxed max-w-md'>
+                    <p className='text-lg opacity-70 mt-4 leading-relaxed'>
                         We’re a team of engineers and data strategists building high-performance tracking tools that empower teams to turn raw data into actionable insights—faster, more accurately, and effortlessly.
                     </p>
                 </div>

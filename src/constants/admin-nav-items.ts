@@ -1,8 +1,6 @@
-import { Globe, LayoutDashboard, Link2, Settings } from "lucide-react";
+import { Globe, LayoutDashboard } from "lucide-react";
 
 export const adminNavItems = [
-  { name: 'Dashboard', href: '/admin', Icon: LayoutDashboard },
-  { name: 'My Websites', href: '/admin/sites', Icon: Globe },
-  { name: 'Link Builder', href: '/admin/utm', Icon: Link2 },
-  { name: 'Settings', href: '/admin/settings', Icon: Settings },
+  { name: 'Dashboard', href: '/dashboard', Icon: LayoutDashboard },
+  { name: 'My Websites', href: '/dashboard/sites', Icon: Globe },
 ];

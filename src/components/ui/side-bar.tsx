@@ -78,7 +78,7 @@ export function Sidebar({ children, className }: { children: ReactNode; classNam
 // 3. Components: Semantic and Clean
 export function SidebarHeader({ children, className }: { children?: ReactNode; className?: string }) {
     return (
-        <div className={cn("flex h-16 items-center border-b px-6 shrink-0", className)}>
+        <div className={cn("flex h-16 items-center px-4 mt-5 shrink-0", className)}>
             {children || (
                 <Link href="/" className="transition-opacity flex items-end text-sm hover:opacity-80">
                     <Image src="/images/logo.svg" alt="site-logo" width={40} height={40} priority />
@@ -91,7 +91,7 @@ export function SidebarHeader({ children, className }: { children?: ReactNode; c
 
 export function SidebarFooter({ children }: { children?: ReactNode }) {
     return (
-        <div className="mt-auto border-t p-4 bg-muted/20">
+        <div className="mt-auto">
             {children || (
                 <p className="text-center text-xs text-muted-foreground">
                     © {new Date().getFullYear()}  Track Flow.

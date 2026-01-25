@@ -5,10 +5,12 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 import { StarIcon } from "lucide-react";
+import Link from "next/link";
+import GetStarted from "../ui/get-started-button";
 
 export default function HeroSection() {
   return (
-    <section className="w-full relative bg-black flex flex-col items-center justify-center overflow-hidden">
+    <section id="hero" className="w-full relative bg-black flex flex-col items-center justify-center overflow-hidden">
       {/* Background Layer: Left Image */}
       <img
         src="/images/hero-left-side.png"
@@ -71,20 +73,17 @@ export default function HeroSection() {
         </p>
 
         {/* action buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5.75 justify-center px-6">
-          <Button
-            size="lg"
-            className="font-bold w-full sm:w-auto "
-          >
-            Get Started
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="font-bold sm:w-auto"
-          >
-            See Details
-          </Button>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center px-6">
+          <GetStarted />
+          <Link href="/#features">
+            <Button
+              size="lg"
+              variant="outline"
+              className="font-bold sm:w-auto"
+            >
+              See Details
+            </Button>
+          </Link>
         </div>
       </div>
       {/* reviews */}
