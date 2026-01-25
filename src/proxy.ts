@@ -1,18 +1,33 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { verifyJWTToken } from './lib/jwt-token';
 
-const isProtectedRoute = createRouteMatcher(['/admin(.*)', '/api(.*)']);
+// Note: Next.js looks for the function named 'middleware', not 'proxy'
+export async function proxy(request: NextRequest) {
+    const token = request.cookies.get('auth_token')?.value; 
 
-export default clerkMiddleware(async (auth, req) => {
-    if (isProtectedRoute(req)) {
-        await auth.protect();
+    // 1. Check if token exists
+    if (!token) {
+        // Redirect syntax: (Target URL string, Base URL)
+        return NextResponse.redirect(new URL("/sign-in", request.url));
     }
-});
 
-export const config = {
-    matcher: [
-        // Skip Next.js internals and all static files, unless found in search params
-        '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-        // Always run for API routes
-        '/(api|trpc)(.*)',
-    ]
+    // 2. Verify the token (must use await if verifyJWTToken is async)
+    const payload = await verifyJWTToken(token);
+
+    // 3. Handle invalid/expired tokens
+    if (!payload) {
+        const response = NextResponse.redirect(new URL("/sign-in", request.url));
+        // Optional: Clear the invalid cookie so they don't loop
+        response.cookies.delete('auth_token');
+        return response;
+    }
+
+    // 4. Everything is good
+    return NextResponse.next();
 }
+
+// Important: Matcher ensures this doesn't run on images/favicon
+export const config = {
+    matcher: ['/dashboard/:path*', '/api/:path*'],
+};

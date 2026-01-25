@@ -1,12 +1,11 @@
 "use client"
 import { useSidebar } from '@/components/ui/side-bar'
-import { SignedIn, UserButton } from '@clerk/nextjs'
 import { MenuIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 const pathnameTable: Record<string, string> = {
     "/admin": "Dashboard",
-    "/admin/utm": "Link builder", // Much cleaner and brand-aligned
+    "/admin/utm": "Link builder",
     "/admin/sites": "My Websites",
     "/admin/settings": "Settings",
 }
@@ -26,11 +25,6 @@ export default function AdminHeader() {
                     {displayTitle}
                 </h1>
             </div>
-            <SignedIn>
-                <div className="flex items-center gap-4">
-                    <UserButton afterSignOutUrl="/" />
-                </div>
-            </SignedIn>
         </header>
     )
 }

@@ -1,6 +1,5 @@
-import React from 'react'
 import PricingCard from '../ui/pricing-card'
-import { pricingPlans } from '@/constants/pricing-plans'
+import { plans } from '@/constants/pricing-plans'
 
 export default function PricingSection() {
     return (
@@ -32,8 +31,8 @@ export default function PricingSection() {
             </div>
 
             <div className='flex flex-col lg:flex-row justify-center items-center gap-6 lg:gap-0 px-4'>
-                {pricingPlans.map((plan => (
-                    <PricingCard {...plan} key={plan.planName} />
+                {plans.map((plan => (
+                    <PricingCard {...plan} key={plan.id} />
                 )))}
             </div>
         </section>

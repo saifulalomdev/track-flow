@@ -17,7 +17,7 @@ export default function FeatuersCard({
 }: FeatuersCardProps ) {
     return (
         <div className={cn(
-            'flex flex-col justify-between p-6 md:p-8 min-h-[280px] md:min-h-62.5 rounded-3xl md:rounded-4xl border border-primary/20 hover:border-primary/50 transition-colors duration-300',
+            'flex flex-col justify-between p-6 md:p-8 min-h-70 md:min-h-62.5 rounded-3xl md:rounded-4xl border border-primary/20 hover:border-primary/50 transition-colors duration-300',
             isGradiant 
                 ? "bg-linear-to-tl from-primary/20 via-background/50 to-muted-foreground/5" 
                 : "bg-muted-foreground/5",
