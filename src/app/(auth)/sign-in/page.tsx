@@ -5,9 +5,11 @@ import { Input } from "@/components/ui/input"
 import { useSignIn } from "@/features/auth/hooks/use-signin"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 export default function SignIn() {
-    const { form, handleSignIn, isSubmiting } = useSignIn();
+    const redirectUrl = useSearchParams().get("redirect") || "/dashboard";
+    const { form, handleSignIn, isSubmiting } = useSignIn({redirectUrl : redirectUrl});
     
     return (
         <div className="space-y-4 w-sm border border-primary/30 bg-linear-to-br from-primary/10 via-primary/5 to-background p-6 rounded-md">
