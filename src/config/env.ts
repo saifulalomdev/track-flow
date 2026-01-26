@@ -7,6 +7,7 @@ const envSchema = z.object({
     NEXT_PUBLIC_BASE_URL: z.string().url(),
     JWT_SECRET: z.string().min(1),
     JWT_SECRET_EXIRES_IN: z.string().optional().default("7d"),
+    STRIPE_SECRET_KEY: z.string().optional().default("7d"),
 });
 
 // Validate process.env
