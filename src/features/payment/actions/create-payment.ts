@@ -45,6 +45,9 @@ export async function createCustomCheckout(productId: string) {
 
         metadata: {
             planId: plan.id,
+            userId: user.id ?? "",
+            userEmail: user.email,
+            userName: user.name,
         }
     });
 
