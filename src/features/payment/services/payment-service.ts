@@ -38,7 +38,7 @@ export const paymentService = {
             ],
             mode: 'subscription',
             success_url: `${ENV.NEXT_PUBLIC_BASE_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${ENV.NEXT_PUBLIC_BASE_URL}/#pricing`,
+            cancel_url: `${ENV.NEXT_PUBLIC_BASE_URL}/payment/failed?seesion_id={CHECKOUT_SESSION_ID}`,
             metadata: { planId, userId, userEmail, userName }
         });
     },
