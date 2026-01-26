@@ -79,7 +79,7 @@ export default function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              className="font-bold sm:w-auto"
+              className="font-bold w-full md:w-auto"
             >
               See Details
             </Button>
