@@ -46,20 +46,19 @@ export async function signUpAction(data: SignUp): Promise<ActionResponse> {
         });
 
         isSuccess = true;
+        // 5. Success Redirect
+        if (isSuccess) {
+            // Sending them to sign-in with a success message in the URL is a nice touch
+            redirect("/sign-in?message=account-created");
+        }
+
+        return { success: true, message: "Sign up succesfully" };
 
     } catch (error) {
-        console.error("SIGNUP_ERROR:", error); 
+        console.error("SIGNUP_ERROR:", error);
         return {
             success: false,
             message: "Something went wrong. Please try again later.",
         };
     }
-
-    // 5. Success Redirect
-    if (isSuccess) {
-        // Sending them to sign-in with a success message in the URL is a nice touch
-        redirect("/sign-in?message=account-created");
-    }
-
-    return { success: false, message: "An unexpected error occurred" };
 }

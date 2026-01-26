@@ -4,6 +4,7 @@ import z from 'zod';
 
 const envSchema = z.object({
     DATABASE_URL: z.string().url(),
+    NEXT_PUBLIC_BASE_URL: z.string().url(),
     JWT_SECRET: z.string().min(1),
     JWT_SECRET_EXIRES_IN: z.string().optional().default("7d"),
 });

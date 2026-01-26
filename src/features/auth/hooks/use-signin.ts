@@ -4,14 +4,16 @@ import { signInUserSchema, type SignIn } from "@/db/schema/users";
 import { useState } from "react";
 import { toast } from 'sonner'
 import { signInAction } from "../actions/signin-action";
+import { useRouter } from "next/navigation";
 
 const defaultValues = {
     email: "hello@saifulalom.com",
     password: "mypassword123"
 }
 
-export function useSignIn() {
-    const [isSubmiting, setIsSubmiting] = useState(false)
+export function useSignIn({ redirectUrl }: { redirectUrl: string }) {
+    const [isSubmiting, setIsSubmiting] = useState(false);
+    const { push } = useRouter()
 
     const form = useForm<SignIn>({
         resolver: zodResolver(signInUserSchema),
@@ -32,6 +34,8 @@ export function useSignIn() {
 
             toast.success("Signed in successfully!");
             form.reset();
+            console.log(redirectUrl)
+            push(redirectUrl);
         } catch (error) {
             toast.error("A server error occurred. Please try again.");
         } finally {

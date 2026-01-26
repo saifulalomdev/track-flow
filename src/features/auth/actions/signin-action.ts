@@ -7,7 +7,6 @@ import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { generateJWTToken } from "@/lib/jwt-token";
 import { verifyPassword } from "@/lib/hash-password";
-import { redirect } from "next/navigation";
 
 export async function signInAction(data: SignIn): Promise<ActionResponse> {
     // 1. Validate input
@@ -21,7 +20,6 @@ export async function signInAction(data: SignIn): Promise<ActionResponse> {
     }
 
     const { email, password } = result.data;
-    let isSuccess = false;
 
     try {
         // 2. Find user
@@ -53,17 +51,10 @@ export async function signInAction(data: SignIn): Promise<ActionResponse> {
             maxAge: 60 * 60 * 24 * 7, // 7 days
         });
 
-        isSuccess = true;
+        return { success: true, message: "Signed in successfully" };
 
     } catch (error) {
         console.error("SIGNIN_ERROR:", error);
         return { success: false, message: "Internal Server Error" };
     }
-
-    // 6. Redirect MUST be called outside of try/catch
-    if (isSuccess) {
-        redirect("/dashboard");
-    }
-
-    return { success: false, message: "An unexpected error occurred" };
 }
