@@ -6,14 +6,26 @@ import { useSignIn } from "@/features/auth/hooks/use-signin"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
 export default function SignIn() {
+
+    return (
+        <Suspense>
+            <SignInForm />
+        </Suspense>
+    )
+
+}
+
+
+function SignInForm() {
     const redirectUrl = useSearchParams().get("redirect") || "/dashboard";
-    const { form, handleSignIn, isSubmiting } = useSignIn({redirectUrl : redirectUrl});
-    
+    const { form, handleSignIn, isSubmiting } = useSignIn({ redirectUrl: redirectUrl });
+
     return (
         <div className="space-y-4 w-sm border border-primary/30 bg-linear-to-br from-primary/10 via-primary/5 to-background p-6 rounded-md">
-           <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center">
                 <Link href="/">
                     <ArrowLeft size={40} />
                 </Link>
