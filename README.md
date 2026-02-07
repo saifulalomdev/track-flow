@@ -80,5 +80,3 @@ During the development of **trackFlow**, I focused on solving the "Empty State" 
 ---
 
 **Developed with ❤️ by Saiful Alom**
-
-Would you like me to help you write the specific **Drizzle Schema code** for your `campaigns` and `visitors` tables now?

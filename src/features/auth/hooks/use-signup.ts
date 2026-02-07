@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from "react";
 import { toast } from 'sonner'
 import { signUpAction } from "../actions/signup-action";
+import { RegisterInput, RegisterSchema } from "@/db/schema";
 
 const defaultValues = {
     name: "",
@@ -13,13 +14,13 @@ const defaultValues = {
 export function useSignUp() {
     const [isSubmiting, setIsSubmiting] = useState(false)
 
-    const form = useForm<any>({
-        // resolver: zodResolver(signUpUserSchema),
+    const form = useForm<RegisterInput>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues
     })
 
     // useSignIn.ts
-    const handleSignUp = form.handleSubmit(async (data: any) => {
+    const handleSignUp = form.handleSubmit(async (data: RegisterInput) => {
         try {
             setIsSubmiting(true);
             const res = await signUpAction(data);

@@ -4,7 +4,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
-import { StarIcon } from "lucide-react";
+import { GlobeIcon, ShieldCheckIcon, StarIcon, ZapIcon } from "lucide-react";
 import Link from "next/link";
 import GetStarted from "../ui/get-started-button";
 
@@ -30,33 +30,32 @@ export default function HeroSection() {
 
         {/* user rating card */}
         <div className="mt-30 flex w-full justify-center items-center">
-          <div className="bg-black/10 bg-linear-to-tr from-primary/20 via-balck to-black border border-black backdrop-blur-sm gap-3 px-3 py-2 rounded-full flex">
+          <div className="bg-black/5 dark:bg-white/5 border border-border backdrop-blur-md gap-3 px-4 py-2 rounded-full flex items-center">
+
+            {/* Abstract Technical Icons (No Brand Logos) */}
             <div className="flex items-center">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <Avatar className="-ml-2">
-                <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
-                <AvatarFallback>LR</AvatarFallback>
-              </Avatar>
-              <Avatar className="-ml-2">
-                <AvatarImage
-                  src="https://github.com/evilrabbit.png"
-                  alt="@evilrabbit"
-                />
-                <AvatarFallback>ER</AvatarFallback>
-              </Avatar>
-            </div>
-            <div className="flex flex-col justify-center mr-2">
-              <div className="flex">
-                <StarIcon size={12} fill="#ff6900" className="text-primary" />
-                <StarIcon size={12} fill="#ff6900" className="text-primary" />
-                <StarIcon size={12} fill="#ff6900" className="text-primary" />
-                <StarIcon size={12} fill="#ff6900" className="text-primary" />
-                <StarIcon size={12} fill="#ff6900" className="text-primary" />
+              {/* Icon 1: The Globe (Network) */}
+              <div className="h-8 w-8 rounded-full border-2 border-background bg-zinc-900 flex items-center justify-center shadow-sm">
+                <GlobeIcon size={14} className="text-white" />
               </div>
-              <p className="text-muted-foreground">150+ happy clients</p>
+              {/* Icon 2: The Bolt (Speed) */}
+              <div className="-ml-3 h-8 w-8 rounded-full border-2 border-background bg-zinc-800 flex items-center justify-center shadow-sm">
+                <ZapIcon size={14} className="text-yellow-500" />
+              </div>
+              {/* Icon 3: The Shield (Privacy) */}
+              <div className="-ml-3 h-8 w-8 rounded-full border-2 border-background bg-zinc-700 flex items-center justify-center shadow-sm">
+                <ShieldCheckIcon size={14} className="text-emerald-500" />
+              </div>
+            </div>
+
+            <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="flex justify-center items-center leading-tight pr-2">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground">Active Infrastructure</span>
+                <p className="text-[11px] text-muted-foreground font-medium">
+                  Verified across <span className="text-foreground font-bold">330+ Centers</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -92,20 +91,20 @@ export default function HeroSection() {
 
           {/* Clients */}
           <div className="flex justify-center items-center flex-col border-b md:border-b-0 md:border-r border-white/10 pb-8 md:pb-0">
-            <h1 className="text-lg md:text-[23px] opacity-80">Clients</h1>
-            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight">350+</h1>
+            <h1 className="text-lg md:text-[23px] opacity-80">Uptime</h1>
+            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight">99.9%</h1>
           </div>
 
           {/* Projects */}
           <div className="flex justify-center items-center flex-col border-b md:border-b-0 md:border-r border-white/10 pb-8 md:pb-0">
-            <h1 className="text-lg md:text-[23px] opacity-80">Projects</h1>
-            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight">1,000+</h1>
+            <h1 className="text-lg md:text-[23px] opacity-80">Data Centers</h1>
+            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight">330+</h1>
           </div>
 
           {/* Reviews */}
           <div className="flex justify-center items-center flex-col">
-            <h1 className="text-lg md:text-[23px] opacity-80">5 Star Review</h1>
-            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight">10,000+</h1>
+            <h1 className="text-lg md:text-[23px] opacity-80">Montly Requests</h1>
+            <h1 className="text-4xl md:text-[46px] font-bold tracking-tight"> 50M+</h1>
           </div>
 
         </div>

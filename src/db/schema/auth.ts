@@ -1,5 +1,7 @@
 import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import z from "zod";
+import { createInsertSchema } from 'drizzle-zod';
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -91,3 +93,25 @@ export const accountRelations = relations(account, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+const insertUserSchema = createInsertSchema(user);
+
+// 2. Register Schema: Name, Email, and Password are REQUIRED
+export const RegisterSchema = insertUserSchema.pick({
+  name: true,
+  email: true,
+}).extend({
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+// 3. Sign-In Schema: Email/Password required, Name is OPTIONAL
+export const SignInSchema = insertUserSchema.pick({
+  email: true,
+}).extend({
+  password: z.string(),
+  name: z.string().optional(), // Extended as optional name
+});
+
+// Export the Types
+export type RegisterInput = z.infer<typeof RegisterSchema>;
+export type SignInInput = z.infer<typeof SignInSchema>;

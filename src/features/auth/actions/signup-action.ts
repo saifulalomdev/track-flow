@@ -1,11 +1,12 @@
 "use server";
 
+import { RegisterInput } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { ActionResponse } from "@/types/action";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function signUpAction(data: any): Promise<ActionResponse> {
+export async function signUpAction(data: RegisterInput): Promise<ActionResponse> {
     try {
         await auth.api.signUpEmail({
             body: {
