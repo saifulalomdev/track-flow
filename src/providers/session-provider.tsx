@@ -2,14 +2,25 @@
 "use client";
 
 import { createContext, useContext, ReactNode } from "react";
-import { JWTPayload } from "@/db/schema/users";
+import { auth } from "@/lib/auth"; // Import your auth config
 
-const SessionContext = createContext<{
-  user: JWTPayload | null;
+// Use Better Auth's inference to get the User type
+type User = typeof auth.$Infer.Session.user;
+
+interface SessionContextType {
+  user: User | undefined;
   isSignedIn: boolean;
-} | null>(null);
+}
 
-export function SessionProvider({ children, user }: { children: ReactNode; user: JWTPayload | null; }) {
+const SessionContext = createContext<SessionContextType | undefined>(undefined);
+
+export function SessionProvider({ 
+  children, 
+  user 
+}: { 
+  children: ReactNode; 
+  user: User | undefined; // Use the inferred type here
+}) {
   return (
     <SessionContext.Provider value={{ user, isSignedIn: !!user }}>
       {children}

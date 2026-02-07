@@ -1,15 +1,14 @@
 import "./globals.css";
 import { brandFont } from "@/lib/font";
 import { Toaster } from "sonner";
-import { getSession } from "@/lib/auth";
 import { SessionProvider } from "@/providers/session-provider";
+import { getSession } from "@/lib/get-session";
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const user = await getSession();
-
+  const session = await getSession()
   return (
     <html lang="en" className="dark">
-      <SessionProvider user={user}>
+      <SessionProvider user={session?.user}>
         <body className={brandFont.className}>
           {children}
           <Toaster
