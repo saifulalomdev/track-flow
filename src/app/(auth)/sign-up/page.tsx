@@ -8,7 +8,6 @@ import Link from "next/link"
 
 export default function SignUp() {
     const { form, handleSignUp, isSubmiting } = useSignUp();
-
     return (
         <div className="space-y-4 w-sm border border-primary/30 bg-linear-to-br from-primary/10 via-primary/5 to-background p-6 rounded-md">
             <div className="flex gap-3 items-center">

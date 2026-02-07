@@ -8,6 +8,8 @@ const envSchema = z.object({
     JWT_SECRET: z.string().min(1),
     JWT_SECRET_EXIRES_IN: z.string().optional().default("7d"),
     STRIPE_SECRET_KEY: z.string().optional().default("7d"),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string()
 });
 
 // Validate process.env
