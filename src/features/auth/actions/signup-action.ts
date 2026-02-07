@@ -29,3 +29,19 @@ export async function signUpAction(data: RegisterInput): Promise<ActionResponse>
 
     redirect("/dashboard"); 
 }
+
+
+export async function signInWithGoogle() {
+    const res = await auth.api.signInSocial({
+        body: {
+            provider: "google",
+            callbackURL: "/dashboard", // Where to go after Google success
+        },
+        headers: await headers(),
+    });
+
+    // Better Auth returns a 'url' property for social providers
+    if (res?.url) {
+        redirect(res.url); // Sends the user to Google's login page
+    }
+}
