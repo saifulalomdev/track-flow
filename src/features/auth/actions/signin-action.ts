@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { type SignIn, signInUserSchema, users } from "@/db/schema/users";
+import { type SignIn, signInUserSchema, users } from "@/db/schema/auth";
 import { ActionResponse } from "@/types/action";
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";

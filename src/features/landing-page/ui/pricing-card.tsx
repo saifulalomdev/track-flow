@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import Separator from "@/components/ui/separator"
 import { Plan } from "@/constants/pricing-plans"
-import { createCheckout } from "@/features/payment/actions/create-payment"
 import { cn } from "@/lib/utils"
 import { ChevronRight, CircleCheck } from "lucide-react"
 
@@ -50,7 +49,7 @@ export default function PricingCard({ id, name, desc, price, features }: Plan) {
             </div>
 
             <Button
-                onClick={() => createCheckout(id)}
+                onClick={() => alert(id)}
                 size="lg"
                 className={cn(
                     "w-full font-bold mt-8",

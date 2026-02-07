@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { type SignUp, signUpUserSchema } from "@/db/schema/users";
 import { useState } from "react";
 import { toast } from 'sonner'
 import { signUpAction } from "../actions/signup-action";
@@ -14,13 +13,13 @@ const defaultValues = {
 export function useSignUp() {
     const [isSubmiting, setIsSubmiting] = useState(false)
 
-    const form = useForm<SignUp>({
-        resolver: zodResolver(signUpUserSchema),
+    const form = useForm<any>({
+        // resolver: zodResolver(signUpUserSchema),
         defaultValues
     })
 
     // useSignIn.ts
-    const handleSignUp = form.handleSubmit(async (data: SignUp) => {
+    const handleSignUp = form.handleSubmit(async (data: any) => {
         try {
             setIsSubmiting(true);
             const res = await signUpAction(data);

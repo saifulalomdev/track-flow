@@ -1,21 +1,15 @@
-import { cookies } from "next/headers";
-import { cache } from "react";
-import { verifyJWTToken } from "@/lib/jwt-token";
-import { JWTPayload } from "@/db/schema";
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "@/db"; // your drizzle instance
+import { nextCookies } from "better-auth/next-js";
 
-export const getSession = cache(async (): Promise<JWTPayload | null> => {
-    try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("auth_token")?.value;
+export const auth = betterAuth({
+    database: drizzleAdapter(db, {
+        provider: "pg",
+    }),
+    emailAndPassword: {
+        enabled: true,
+    },
+    plugins: [nextCookies()]
 
-        if (!token) return null;
-
-        const payload = await verifyJWTToken(token);
-
-        if (!payload) return null;
-
-        return payload;
-    } catch (error) {
-        return null;
-    }
 });
