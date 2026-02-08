@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyJWTToken } from './lib/jwt-token';
 
 // Note: Next.js looks for the function named 'middleware', not 'proxy'
 export async function proxy(request: NextRequest) {
@@ -13,7 +12,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // 2. Verify the token (must use await if verifyJWTToken is async)
-    const payload = await verifyJWTToken(token);
+    const payload = null
 
     // 3. Handle invalid/expired tokens
     if (!payload) {

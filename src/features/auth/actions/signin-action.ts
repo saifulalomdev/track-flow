@@ -1,60 +1,60 @@
-"use server";
+// "use server";
 
-import { db } from "@/db";
-import { type SignIn, signInUserSchema, users } from "@/db/schema/auth";
-import { ActionResponse } from "@/types/action";
-import { eq } from "drizzle-orm";
-import { cookies } from "next/headers";
-import { generateJWTToken } from "@/lib/jwt-token";
-import { verifyPassword } from "@/lib/hash-password";
+// import { db } from "@/db";
+// import { type SignIn, signInUserSchema, users } from "@/db/schema/auth";
+// import { ActionResponse } from "@/types/action";
+// import { eq } from "drizzle-orm";
+// import { cookies } from "next/headers";
+// import { generateJWTToken } from "@/lib/jwt-token";
+// import { verifyPassword } from "@/lib/hash-password";
 
-export async function signInAction(data: SignIn): Promise<ActionResponse> {
-    // 1. Validate input
-    const result = signInUserSchema.safeParse(data);
-    if (!result.success) {
-        return {
-            success: false,
-            message: "Validation failed",
-            errors: result.error.flatten().fieldErrors
-        };
-    }
+// export async function signInAction(data: SignIn): Promise<ActionResponse> {
+//     // 1. Validate input
+//     const result = signInUserSchema.safeParse(data);
+//     if (!result.success) {
+//         return {
+//             success: false,
+//             message: "Validation failed",
+//             errors: result.error.flatten().fieldErrors
+//         };
+//     }
 
-    const { email, password } = result.data;
+//     const { email, password } = result.data;
 
-    try {
-        // 2. Find user
-        const user = await db.query.users.findFirst({
-            where: eq(users.email, email.toLowerCase()),
-        });
+//     try {
+//         // 2. Find user
+//         const user = await db.query.users.findFirst({
+//             where: eq(users.email, email.toLowerCase()),
+//         });
 
-        if (!user) {
-            return { success: false, message: "Invalid email or password" };
-        }
+//         if (!user) {
+//             return { success: false, message: "Invalid email or password" };
+//         }
 
-        // 3. Verify Password
-        const isPasswordValid = await verifyPassword(password, user.password);
-        if (!isPasswordValid) {
-            return { success: false, message: "Invalid email or password" };
-        }
+//         // 3. Verify Password
+//         const isPasswordValid = await verifyPassword(password, user.password);
+//         if (!isPasswordValid) {
+//             return { success: false, message: "Invalid email or password" };
+//         }
 
-        // 4. Generate JWT
-        // SECURITY: We only pass ID and Email. NEVER pass the password into a JWT.
-        const token = await generateJWTToken({ id: user.id, email: user.email, name: user.name });
+//         // 4. Generate JWT
+//         // SECURITY: We only pass ID and Email. NEVER pass the password into a JWT.
+//         const token = await generateJWTToken({ id: user.id, email: user.email, name: user.name });
 
-        // 5. Set Cookie
-        const cookieStore = await cookies();
-        cookieStore.set("auth_token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            path: "/",
-            maxAge: 60 * 60 * 24 * 7, // 7 days
-        });
+//         // 5. Set Cookie
+//         const cookieStore = await cookies();
+//         cookieStore.set("auth_token", token, {
+//             httpOnly: true,
+//             secure: process.env.NODE_ENV === "production",
+//             sameSite: "lax",
+//             path: "/",
+//             maxAge: 60 * 60 * 24 * 7, // 7 days
+//         });
 
-        return { success: true, message: "Signed in successfully" };
+//         return { success: true, message: "Signed in successfully" };
 
-    } catch (error) {
-        console.error("SIGNIN_ERROR:", error);
-        return { success: false, message: "Internal Server Error" };
-    }
-}
+//     } catch (error) {
+//         console.error("SIGNIN_ERROR:", error);
+//         return { success: false, message: "Internal Server Error" };
+//     }
+// }
