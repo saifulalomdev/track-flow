@@ -1,14 +1,13 @@
-import { stripe } from '@/lib/stripe';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default async function PaymentSuccess({ searchParams }: { searchParams: Promise<{ session_id: string }> }) {
-    const { session_id } = await searchParams;
-    const session = await stripe.checkout.sessions.retrieve(session_id);
-    const metadata = session.metadata;
+    // const { session_id } = await searchParams;
+    // const session = await stripe.checkout.sessions.retrieve(session_id);
+    // const metadata = session.metadata;
 
-    if (!session) return <div className="p-20 text-center">Invalid Session</div>;
+    // if (!session) return <div className="p-20 text-center">Invalid Session</div>;
 
     return (
         // py-20 ensures it clears your header comfortably
@@ -20,12 +19,12 @@ export default async function PaymentSuccess({ searchParams }: { searchParams: P
                 <h1 className="text-3xl font-bold tracking-tight mb-2">Success!</h1>
                 
                 <p className="text-muted-foreground mb-8">
-                    You are now on the <span className="text-primary font-bold uppercase">{metadata?.planId}</span> plan.
+                    You are now on the <span className="text-primary font-bold uppercase">{"plan name"}</span> plan.
                 </p>
 
                 <div className="bg-background/50 border border-primary/10 rounded-xl p-4 mb-8 text-sm flex items-center justify-center gap-2">
                     <span className="text-muted-foreground">Account:</span>
-                    <span className="font-medium">{metadata?.userEmail}</span>
+                    <span className="font-medium">{"user email"}</span>
                 </div>
 
                 <Button asChild className="w-full">

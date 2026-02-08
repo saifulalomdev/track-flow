@@ -7,11 +7,6 @@ export const brandFont = localFont({
             weight: "300",
             style: "normal",
         },
-        // {
-        //     path: "../../public/fonts/sk-modernist-mono.otf",
-        //     weight: "500",
-        //     style: "normal",
-        // },
         {
             path: "../../public/fonts/sk-modernist-bold.otf",
             weight: "700",
