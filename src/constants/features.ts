@@ -1,6 +1,6 @@
-import { FeatuersCardProps } from "@/features/landing-page/ui/features-card";
+import { FeaturesCardProps } from "@/features/landing-page/ui/features-card";
 
-export const featuers: FeatuersCardProps[] = [
+export const featuers: FeaturesCardProps[] = [
     {
         title: "Human Origins",
         description: "Skip the guesswork and identify traffic sources instantly. Our platform generates high-fidelity, human-readable origin data within seconds.",
