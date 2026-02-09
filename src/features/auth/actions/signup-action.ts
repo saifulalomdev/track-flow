@@ -45,3 +45,18 @@ export async function signInWithGoogle() {
         redirect(res.url); // Sends the user to Google's login page
     }
 }
+
+export async function signInWithGithub() {
+    const res = await auth.api.signInSocial({
+        body: {
+            provider: "github",
+            callbackURL: "/dashboard", // Where to go after Google success
+        },
+        headers: await headers(),
+    });
+
+    // Better Auth returns a 'url' property for social providers
+    if (res?.url) {
+        redirect(res.url); // Sends the user to Google's login page
+    }
+}
