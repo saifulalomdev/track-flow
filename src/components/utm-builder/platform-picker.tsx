@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { cn } from "@/lib/utils" // Ensure you have this utility from shadcn
 import { platforms } from "@/constants/platforms" // Your platforms list
 import { Input } from '../ui/input';
-import { formatSlug } from '@/lib/formate-slug';
+import { formatSlug } from '@/lib/format-slug';
 
 interface PlatformPickerProps {
   onChange: (utmSource: string) => void;

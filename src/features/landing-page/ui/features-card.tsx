@@ -2,19 +2,19 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ArrowUpRight } from 'lucide-react'
 
-export type FeatuersCardProps = {
+export type FeaturesCardProps = {
     isGradiant?: boolean,
     title: string,
     description: string,
     className?:string
 }
 
-export default function FeatuersCard({ 
+export default function FeaturesCard({ 
     title, 
     description, 
     isGradiant = false,
     className 
-}: FeatuersCardProps ) {
+}: FeaturesCardProps ) {
     return (
         <div className={cn(
             'flex flex-col justify-between p-6 md:p-8 min-h-70 md:min-h-62.5 rounded-3xl md:rounded-4xl border border-primary/20 hover:border-primary/50 transition-colors duration-300',

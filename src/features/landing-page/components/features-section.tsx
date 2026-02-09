@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import FeatuersCard from '../ui/featues-card'
+import FeatuersCard from '../ui/features-card'
 import { featuers } from '@/constants/features'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'

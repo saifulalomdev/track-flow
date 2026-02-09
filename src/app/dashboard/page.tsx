@@ -5,7 +5,11 @@ import {
   MousePointer2,
   TrendingUp,
   Globe,
+<<<<<<< Updated upstream
   Plus
+=======
+  FilterIcon
+>>>>>>> Stashed changes
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 

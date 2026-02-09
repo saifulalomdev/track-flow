@@ -1,8 +1,13 @@
-import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+<<<<<<< Updated upstream
 import { db } from "@/db"; // your drizzle instance
+=======
+>>>>>>> Stashed changes
 import { nextCookies } from "better-auth/next-js";
+import { betterAuth } from "better-auth";
 import { ENV } from "@/config/env";
+import { db } from "@/db";
+import { magicLink } from "better-auth/plugins"; // 1. Import the plugin
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -11,7 +16,22 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
     },
-    plugins: [nextCookies()],
+    plugins: [
+        magicLink({
+            sendMagicLink: async ({ email, url, token }, request) => {
+                // 3. Implement your email logic here
+                console.log(`Sending magic link to ${email}: ${url}`);
+
+                // Example using a hypothetical mail service:
+                // await sendEmail({
+                //     to: email,
+                //     subject: "Login to your account",
+                //     body: `Click here to login: ${url}`
+                // });
+            },
+        }),
+        nextCookies()
+    ],
     socialProviders: {
         google: {
             clientId: ENV.GOOGLE_CLIENT_ID,

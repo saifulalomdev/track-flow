@@ -1,4 +1,4 @@
-import { FeatuersCardProps } from "@/features/landing-page/ui/featues-card";
+import { FeatuersCardProps } from "@/features/landing-page/ui/features-card";
 
 export const featuers: FeatuersCardProps[] = [
     {
