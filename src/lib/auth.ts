@@ -1,8 +1,4 @@
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-<<<<<<< Updated upstream
-import { db } from "@/db"; // your drizzle instance
-=======
->>>>>>> Stashed changes
 import { nextCookies } from "better-auth/next-js";
 import { betterAuth } from "better-auth";
 import { ENV } from "@/config/env";

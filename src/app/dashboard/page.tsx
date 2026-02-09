@@ -5,11 +5,7 @@ import {
   MousePointer2,
   TrendingUp,
   Globe,
-<<<<<<< Updated upstream
-  Plus
-=======
   FilterIcon
->>>>>>> Stashed changes
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -59,7 +55,7 @@ export default function Dashboard() {
           <Button
             className="flex-1 sm:flex-none gap-2 text-xs md:text-sm"
           >
-            <Plus className="w-4 h-4" />
+            <FilterIcon className="w-4 h-4" />
             <span>Create UTM</span>
           </Button>
         </div>
