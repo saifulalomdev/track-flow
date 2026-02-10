@@ -2,7 +2,7 @@ name: Deploy Frontend
 on:
   push:
     branches: [main]
-    paths: ['frontend/**']
+    # paths: ['frontend/**']
 
 jobs:
   deploy:
@@ -31,4 +31,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy frontend/build/client
+          # Add the project name flag here
+          command: pages deploy frontend/build/client --project-name=trackflow-frontend
