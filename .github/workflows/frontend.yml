@@ -31,5 +31,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Path to your static build output
-          command: pages deploy frontend/build/client --project-name=your-pages-project-name
+          command: pages deploy frontend/build/client
