@@ -1,0 +1,35 @@
+name: Deploy Frontend
+on:
+  push:
+    branches: [main]
+    paths: ['frontend/**'] # Only run if frontend files change
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+          cache-dependency-path: './frontend/pnpm-lock.yaml'
+
+      - name: Install & Build
+        run: |
+          cd frontend
+          pnpm install --frozen-lockfile
+          pnpm run build
+        env:
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Path to your static build output
+          command: pages deploy frontend/build/client --project-name=your-pages-project-name
