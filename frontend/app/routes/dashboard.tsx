@@ -1,13 +1,21 @@
 import { Link, Navigate, Outlet } from "react-router";
 import { SignedIn, SignedOut, SignOutButton } from "@clerk/clerk-react";
-import { Sidebar, SidebarFooter, SidebarHeader, SidebarInset, useSidebar } from "~/components/layout/side-bar";
+import { Sidebar, SidebarFooter, SidebarHeader, SidebarInset, SidebarProvider, useSidebar } from "~/components/layout/side-bar";
 import NavUser from "~/components/dashboard/nav-user";
 import { DashboardHeader } from "~/components/layout/dashboard-header";
 import { Button } from "~/components/ui/button";
 import { PlanUsageStats } from "~/components/dashboard/plan-usage-stats";
 import { LogOut, Settings } from "lucide-react";
 
-export default function DashboardLayout() {
+export default function DashboardLayoutWrapper() {
+  return (
+    <SidebarProvider>
+      <DashboardLayout/>
+    </SidebarProvider>
+  )
+}
+
+export  function DashboardLayout() {
   const { close } = useSidebar();
 
   return (
