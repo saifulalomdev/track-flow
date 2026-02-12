@@ -3,7 +3,9 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
+    "dev:node": "tsx --watch src/server.ts",
     "dev": "wrangler dev",
+    "db:generate": "drizzle-kit generate",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
@@ -12,9 +14,14 @@
     "@hono/clerk-auth": "^3.1.0",
     "@hono/swagger-ui": "^0.5.3",
     "@hono/zod-openapi": "^1.2.1",
+    "drizzle-orm": "^0.45.1",
+    "drizzle-zod": "^0.8.3",
     "hono": "^4.11.9"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260210.0",
+    "@hono/node-server": "^1.19.9",
+    "drizzle-kit": "^0.31.9",
     "wrangler": "^4.4.0"
   }
 }

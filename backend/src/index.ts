@@ -1,21 +1,18 @@
-import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
 import { openapiConfig } from './config/openapi';
-import { OpenAPIHono } from '@hono/zod-openapi';
 import { swaggerUI } from '@hono/swagger-ui';
+import eventController from './modules/event/event.controller';
+import { queue } from './queue';
+import { createApp } from './app/create-app';
 
-const app = new OpenAPIHono();
+const app = createApp()
 
-app.use('*', clerkMiddleware())
-
-app.get('/', (c) => {
-    const auth = getAuth(c);
-    console.log(auth)
-
-  return c.text('Hello Hono!')
-})
-
+app.route("/events", eventController)
 
 app.doc("/docs/json", openapiConfig);
+
 app.get("/docs", swaggerUI({ url: "/docs/json" }))
 
-export default app
+export default {
+    fetch: app.fetch,
+    queue
+}

@@ -1,6 +1,38 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "backend",
+  "name": "trackflow-api",
   "main": "src/index.ts",
-  "compatibility_date": "2026-02-09"
+  "compatibility_date": "2026-02-09",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "trackflow-db",
+      "database_id": "893a3b21-f6bf-4881-8337-ac11b0a23214",
+      "migrations_dir": "drizzle/migrations"
+    }
+  ],
+   "queues": {
+    "producers": [
+      {
+        "binding": "EVENTS_QUEUE",
+        "queue": "events-queue"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "events-queue",
+        "max_batch_size": 10,
+        "dead_letter_queue": "my-queue-dlq"
+      }
+    ]
+  },
+  "kv_namespaces": [
+    {
+      "binding": "USER_LIMITS",
+      "id": "a42f78e5983c4c7aacea015ecc374868",
+    }
+  ],
 }
