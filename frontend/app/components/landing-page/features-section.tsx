@@ -58,7 +58,7 @@ export default function FeaturesSection() {
             <div className='flex flex-col sm:flex-row justify-center items-center gap-3 pb-10'>
                 <GetStarted/>
                 <Button size="lg" variant="outline" className='w-full sm:w-auto'>
-                    Slot available
+                    All Systems
                     <span className="relative flex h-3 w-3">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0AC300] opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-3 w-3 bg-[#0AC300]"></span>

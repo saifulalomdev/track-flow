@@ -51,8 +51,9 @@ export default function ClientHeader() {
 
           {/* Mobile Toggle Button */}
           <Button 
-            variant="ghost" 
+            variant="outline" 
             size="icon-lg" 
+            
             className="md:hidden text-white"
             onClick={() => setIsOpen(!isOpen)}
           >

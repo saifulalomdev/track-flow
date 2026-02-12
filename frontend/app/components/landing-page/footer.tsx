@@ -70,7 +70,7 @@ export default function Footer() {
             {/* Copyright and Socials */}
             <div className='flex flex-col md:flex-row justify-between items-center gap-6 py-10'>
                 <p className='text-sm text-muted-foreground order-2 md:order-1'>
-                    © {new Date().getFullYear()} <span className="text-foreground font-medium">trackFlow</span>. All Rights Reserved.
+                    © {new Date().getFullYear()} <span className="text-foreground font-medium">Track Flow</span>. All Rights Reserved.
                 </p>
 
                 <div className='flex gap-3 order-1 md:order-2'>

@@ -1,8 +1,29 @@
 // app/root.tsx
-import { ClerkProvider } from "@clerk/clerk-react";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
-import "./app.css";
 import { TooltipProvider } from "./components/ui/tooltip";
+import { ClerkProvider } from "@clerk/clerk-react";
+import type { LinksFunction } from "react-router";
+import fontStylesheet from "./fonts.css?url";
+import "./app.css";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: fontStylesheet },
+
+  {
+    rel: "preload",
+    href: "/fonts/sk-modernist-regular.otf",
+    as: "font",
+    type: "font/otf",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "preload",
+    href: "/fonts/sk-modernist-bold.otf",
+    as: "font",
+    type: "font/otf",
+    crossOrigin: "anonymous",
+  },
+];
 
 export default function Root() {
   return (
@@ -13,7 +34,7 @@ export default function Root() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="max-w-360 mx-auto">
         <TooltipProvider>
           <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
             <Outlet />

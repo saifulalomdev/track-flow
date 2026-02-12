@@ -1,0 +1,21 @@
+/* app/styles/fonts.css */
+
+@font-face {
+  font-family: 'SK Modernist';
+  src: url('/fonts/sk-modernist-regular.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SK Modernist';
+  src: url('/fonts/sk-modernist-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-brand: 'SK Modernist', sans-serif;
+}
