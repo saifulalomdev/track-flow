@@ -1,83 +1,87 @@
-/**
- * TrackFlow - Privacy-First Analytics Client
- */
 (function () {
     const scriptTag = document.currentScript;
     const customerId = scriptTag?.getAttribute('data-tid');
+    let apiEndpoint = scriptTag?.getAttribute('data-tapi') || 'https://api.tf.saifulalom.com/api/collect';
+    
     if (!customerId) return;
 
-    // 1. Environment Detection
-    const urlParams = new URLSearchParams(window.location.search);
-    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const isDebug = urlParams.has('tf_debug');
+    // Environment Detection
+    const hostname = window.location.hostname;
+    const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
+    const isDebug = new URLSearchParams(window.location.search).has('tf_debug');
 
-    let API_ENDPOINT = 'https://api.tf.saifulalom.com/api/collect';
-    if (isLocal) API_ENDPOINT = 'http://localhost:8787/api/collect';
-    if (isDebug) API_ENDPOINT = 'https://api.staging.tf.saifulalom.com/api/collect';
+    if (isLocal) apiEndpoint = 'http://localhost:8787/api/collect';
+    if (isDebug) apiEndpoint = 'https://api.staging.tf.saifulalom.com/api/collect';
 
+    // Settings
     const STORAGE_KEY = 'tf_uid';
     const BATCH_SIZE = 5;
     let eventBuffer = [];
+    let flushTimer = null;
 
-    // 2. Anonymous Visitor ID (Privacy-First)
+    // 1. Get/Create Anonymous Visitor ID
     const getVisitorId = () => {
         let uid = localStorage.getItem(STORAGE_KEY);
         if (!uid) {
             uid = crypto.randomUUID();
-            localStorage.setItem(STORAGE_KEY, uid);
+            try { localStorage.setItem(STORAGE_KEY, uid); } catch (e) {}
         }
         return uid;
     };
 
-    // 3. Metadata Collection (For your Elegant Dashboard)
-    const getMetadata = () => {
-        return {
-            sw: window.screen.width,   // Screen Width (Mobile vs Desktop)
-            sh: window.screen.height,  // Screen Height
-            lang: navigator.language,  // Browser Language
-            tz: Intl.DateTimeFormat().resolvedOptions().timeZone // Timezone
-        };
-    };
+    // 2. Gather Environment Info
+    const getPageMeta = () => ({
+        sw: window.screen.width,
+        sh: window.screen.height,
+        lang: navigator.language,
+        tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        ref: document.referrer || 'direct'
+    });
 
+    // 3. Send Data to Backend
     const flushEvents = () => {
         if (!eventBuffer.length) return;
 
-        // Use Blob + sendBeacon for reliability on page close
         const payload = JSON.stringify({
-            customer_id: customerId,
+            cid: customerId,
+            vid: getVisitorId(),
+            meta: getPageMeta(),
             events: eventBuffer
         });
 
+        // Use sendBeacon for reliability when closing the tab
         if (navigator.sendBeacon) {
-            navigator.sendBeacon(API_ENDPOINT, payload);
+            navigator.sendBeacon(apiEndpoint, payload);
         } else {
-            fetch(API_ENDPOINT, { method: 'POST', body: payload, keepalive: true });
+            fetch(apiEndpoint, { method: 'POST', body: payload, keepalive: true });
         }
+
         eventBuffer = [];
+        clearTimeout(flushTimer);
+        flushTimer = null;
     };
 
-    window.trackEvent = (eventName, customMeta = {}) => {
+    // 4. Track Event Function
+    window.trackEvent = (eventName, customData = {}) => {
         eventBuffer.push({
-            visitorId: getVisitorId(),
-            eventname : eventName,
-            url: window.location.pathname, 
-            ref: document.referrer || 'direct',
-            // UTMs
-            source: urlParams.get('utm_source'),
-            medium: urlParams.get('utm_medium'),
-            campaign: urlParams.get('utm_campaign'),
-            // Device info
-            meta: { ...getMetadata(), ...customMeta },
-            ts: Date.now()
+            name: eventName,
+            url: window.location.pathname,
+            ts: Date.now(),
+            data: customData
         });
 
-        if (eventBuffer.length >= BATCH_SIZE) flushEvents();
+        // Flush immediately if buffer is full, otherwise wait 5 seconds
+        if (eventBuffer.length >= BATCH_SIZE) {
+            flushEvents();
+        } else if (!flushTimer) {
+            flushTimer = setTimeout(flushEvents, 5000);
+        }
     };
 
-    // Initial Events
+    // --- Initial Events ---
     trackEvent('page_view');
 
-    // Auto-capture Conversions (Example: clicks on anything with data-tf-convert)
+    // --- Auto-capture Clicks ---
     document.addEventListener('click', (e) => {
         const target = e.target.closest('[data-tf-convert]');
         if (target) {
@@ -85,7 +89,7 @@
         }
     });
 
-    // Flush on exit
+    // --- Flush on Exit ---
     window.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') flushEvents();
     });

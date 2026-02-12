@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import type { LinksFunction } from "react-router";
 import fontStylesheet from "./fonts.css?url";
 import "./app.css";
+import { SidebarProvider } from "./components/layout/side-bar";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: fontStylesheet },
@@ -35,12 +36,14 @@ export default function Root() {
         <Links />
       </head>
       <body className="max-w-360 mx-auto">
-        <TooltipProvider>
-          <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
-            <Outlet />
-          </ClerkProvider>
-          <ScrollRestoration />
-        </TooltipProvider>
+        <SidebarProvider>
+          <TooltipProvider>
+            <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
+              <Outlet />
+            </ClerkProvider>
+            <ScrollRestoration />
+          </TooltipProvider>
+        </SidebarProvider>
         <Scripts />
       </body>
     </html>
