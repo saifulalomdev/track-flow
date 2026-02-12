@@ -31,5 +31,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Add the project name flag here
-          command: pages deploy frontend/build/client --project-name=trackflow-frontend
+          command: pages deploy frontend/build/client --project-name=trackflow-frontend --branch=main
