@@ -35,7 +35,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
 
     return (
         <SidebarContext.Provider value={value}>
-            <div className="relative flex h-screen w-full overflow-hidden bg-background">
+            <div className="relative flex h-dvh w-full overflow-hidden bg-background">
                 {children}
             </div>
         </SidebarContext.Provider>
