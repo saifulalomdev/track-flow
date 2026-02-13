@@ -1,12 +1,14 @@
 import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
+import { user } from './user';
+import { website } from './website';
 
 export const event = sqliteTable('event', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
 
   // DATA ISOLATION: The owner of the data
-  customerId: text('customer_id').notNull(),
-  projectId: text('project_id').notNull(),
+  userId: text('user_id').references(() => user.id, { onDelete: "cascade" }).notNull(),
+  projectId: text('project_id').references(() => website.id, { onDelete: "cascade" }).notNull(),
 
   visitorId: text('visitor_id').notNull(),
   path: text('path').notNull().default('/'),
@@ -25,8 +27,7 @@ export const event = sqliteTable('event', {
 
   timestamp: text("timestamp").default(sql`(strftime('%s', 'now'))`)
 }, (table) => ({
-  // The "Super Index" for your dashboard performance
-  mainQueryIdx: index('main_query_idx').on(table.customerId, table.projectId, table.timestamp),
+  mainQueryIdx: index('main_query_idx').on(table.userId, table.projectId, table.timestamp),
   visitorIdx: index('visitor_idx').on(table.visitorId),
 }));
 

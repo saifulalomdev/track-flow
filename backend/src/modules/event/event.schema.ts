@@ -11,9 +11,8 @@ export const eventSchema = createInsertSchema(event, {
     utmMedium: (s) => s.optional(),
     screenWidth: (s) => s.optional(),
     language: (s) => s.optional(),
-    isConversion: (s) => s.optional(),
     timestamp: z.coerce.date().optional()
-});
+}).omit({ id: true });
 
 export const collectBatchSchema = z.object({
     customerId: z.string().openapi({ example: "cust_987" }),

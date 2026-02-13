@@ -40,9 +40,9 @@ const InfraBadge = () => (
         </div>
       </div>
       <div className="flex flex-col text-left leading-tight pr-2">
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground">Active Infrastructure</span>
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Active Infrastructure</span>
         <p className="text-[11px] text-muted-foreground font-medium">
-          Verified across <span className="text-foreground font-bold">330+ Centers</span>
+          Verified across <span className="text-white font-bold">330+ Centers</span>
         </p>
       </div>
     </div>

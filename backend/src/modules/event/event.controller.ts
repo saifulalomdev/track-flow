@@ -9,7 +9,7 @@ eventController.openapi(collectRoute, async (c) => {
 
     const { country, city } = (c.req.raw as any).cf;
 
-    const eventData = data.events.map(({ id, ...e }) => ({ ...e, country, city }));
+    const eventData = data.events.map((e) => ({ ...e, country, city }));
 
     // TODO: chcke if user limits is over or not
     // if limit over simply throw rate limit error
