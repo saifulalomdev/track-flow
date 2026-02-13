@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import {Link} from "react-router";
+import { Link } from "react-router";
 import { Menu, X } from "lucide-react";
 import GetStarted from "../landing-page/get-started-button";
 import { cn } from "~/lib/utils";
-import { SignedOut} from '@clerk/clerk-react'
+import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import { navItems } from "~/constants/nav-items";
 import { Button } from "../ui/button";
 
@@ -37,58 +37,58 @@ export default function ClientHeader() {
         </nav>
 
         <div className="flex items-center gap-4 z-50">
-          <SignedOut>
-            <Link to="/sign-in">
-              <Button variant="ghost" className="hidden sm:flex text-white">
-                Sign in
-              </Button>
-            </Link>
-          </SignedOut>
-          
-          <div className="hidden sm:block">
-            <GetStarted />
-          </div>
+          <LandingCTA  className="hidden md:block"/>
 
           {/* Mobile Toggle Button */}
-          <Button 
-            variant="outline" 
-            size="icon-lg" 
-            
+          <Button
+            variant="outline"
+            size="icon-lg"
+
             className="md:hidden text-white"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X/> : <Menu/>}
+            {isOpen ? <X /> : <Menu />}
           </Button>
         </div>
       </header>
 
       {/* Mobile Nav Overlay */}
-      <nav 
+      <nav
         className={cn(
           "fixed inset-0 z-40 bg-background/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-all duration-300 md:hidden",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none translate-y-2.5"
         )}
       >
         {navItems.map(({ href, name }) => (
-          <Link 
-            to={href} 
-            key={name} 
+          <Link
+            to={href}
+            key={name}
             onClick={() => setIsOpen(false)} // Close on click
             className="text-2xl font-semibold text-white hover:text-primary transition-colors"
           >
             {name}
           </Link>
         ))}
-        
-        <div className="flex flex-col gap-4 w-full px-10 pt-10 border-t border-white/10">
-           <SignedOut>
-              <Link to="/sign-in" className="w-full">
-                <Button variant="outline" size="lg" className="w-full">Sign in</Button>
-              </Link>
-           </SignedOut>
-           <GetStarted />
-        </div>
+        <LandingCTA className="px-6"/>
       </nav>
     </>
   );
+}
+
+
+function LandingCTA({ className }: { className?: string }) {
+  return (
+    <div className={cn("flex flex-col gap-4 w-full border-white/10", className)}>
+      <SignedOut>
+        <GetStarted />
+      </SignedOut>
+      <SignedIn>
+        <Link to="/dashboard" className="w-full md:w-auto">
+          <Button className="w-full md:w-auto">
+            Dashboard
+          </Button>
+        </Link>
+      </SignedIn>
+    </div>
+  )
 }

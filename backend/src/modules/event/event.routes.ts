@@ -3,9 +3,9 @@ import { collectBatchSchema } from "./event.schema";
 
 
 export const collectRoute = createRoute({
-    tags: ["collect"],
+    tags: ["events"],
     method: "post",
-    path: "/collect",
+    path: "/",
     request: {
         body: {
             description: "Batch of tracking events from the client",

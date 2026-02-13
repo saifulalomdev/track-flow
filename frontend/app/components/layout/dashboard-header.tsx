@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useSidebar } from "./side-bar";
 import { Button } from "../ui/button";
+import { UserButton } from "@clerk/clerk-react";
 
 export function DashboardHeader() {
     const { pathname } = useLocation();
@@ -56,14 +57,14 @@ export function DashboardHeader() {
                     </kbd>
                 </button>
 
-                <Button variant="ghost" size="icon" className="relative text-muted-foreground">
+               <Button size="icon" variant="outline" className="rounded-full">
                     <Bell className="h-5 w-5" />
                     <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-background"></span>
                 </Button>
 
-                <Button variant="ghost" className="h-8 w-8 rounded-full border border-white/10 p-0">
-                    <UserCircle className="h-6 w-6" />
-                </Button>
+               <Button size="icon" variant="outline" className="rounded-full">
+                 <UserButton/>
+               </Button>
             </div>
         </nav>
     );
