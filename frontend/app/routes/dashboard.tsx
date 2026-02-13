@@ -5,7 +5,7 @@ import NavUser from "~/components/dashboard/nav-user";
 import { DashboardHeader } from "~/components/layout/dashboard-header";
 import { Button } from "~/components/ui/button";
 import { PlanUsageStats } from "~/components/dashboard/plan-usage-stats";
-import { LogOut, Settings } from "lucide-react";
+import { LogOut, Settings, XIcon } from "lucide-react";
 
 export default function DashboardLayoutWrapper() {
   return (
@@ -27,7 +27,7 @@ export  function DashboardLayout() {
       <SignedIn>
         <Sidebar>
           <SidebarHeader>
-            <NavUser />
+            <NavUser /> 
           </SidebarHeader>
           <SidebarFooter>
             <PlanUsageStats current={300} limit={500} label='Usage' />

@@ -22,7 +22,7 @@ export function DashboardHeader() {
             {/* LEFT: MOBILE MENU + BREADCRUMBS */}
             <div className="flex items-center gap-2">
                 {/* Mobile Sidebar Trigger */}
-                <div className="md:hidden">
+                <div className="lg:hidden">
                     <Button onClick={toggle} variant="outline" size="icon">
                         <Menu className="h-5 w-5" />
                     </Button>
