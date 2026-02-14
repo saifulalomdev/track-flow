@@ -1,20 +1,14 @@
-import { openapiConfig } from './config/openapi';
-import { swaggerUI } from '@hono/swagger-ui';
-import eventController from './modules/event/event.controller';
 import { queue } from './queue';
 import { createApp } from './app/create-app';
-import websiteController from './modules/website/website.controller';
-import webhooksRoutes from './modules/webhook';
+import { registerRoutes } from './app/register-routes';
+import { registerErrorHandler } from './app/register-error-handler';
+import { registerMiddlewares } from './app/register-middlewares';
 
-const app = createApp()
+const app = createApp();
 
-app.route("/events", eventController)
-app.route("/websites", websiteController)
-app.route("/webhooks", webhooksRoutes)
-
-app.doc("/docs/json", openapiConfig);
-
-app.get("/docs", swaggerUI({ url: "/docs/json" }))
+registerMiddlewares(app)
+registerRoutes(app);
+registerErrorHandler(app);
 
 export default {
     fetch: app.fetch,
