@@ -13,6 +13,6 @@ export default defineConfig({
     accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
     // @ts-ignore
     token: process.env.CLOUDFLARE_D1_TOKEN!,
-    databaseId: "893a3b21-f6bf-4881-8337-ac11b0a23214",
+    databaseId: "893a3b21-f6bf-4881-8337-ac11b0a23214"
   }
 });

@@ -9,7 +9,7 @@ export const websiteSchema = createInsertSchema(website, {
 })
 
 export const websiteReqSchema = createInsertSchema(website, {
-    url: z.url(),
-    isActive: z.boolean().default(true),
-    userId: z.string(),
-}).omit({id: true}).openapi("Website")
+    url: z.string().url(),
+    isActive: z.boolean().default(true).optional(),
+    title: z.string().min(1, "Title is required"), 
+}).omit({ id: true, userId: true }).openapi("website");
