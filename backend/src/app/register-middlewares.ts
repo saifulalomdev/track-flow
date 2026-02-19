@@ -5,6 +5,7 @@ import { clerkMiddleware } from "@hono/clerk-auth";
 import * as schema from '../db/schema/index';
 
 export function registerMiddlewares(app: AppInstance) {
+    
     app.use('*', clerkMiddleware());
     
     app.use(cors({ origin: "*" }));

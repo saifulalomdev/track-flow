@@ -18,6 +18,7 @@ export const getWebsites = createRoute({
   tags: ["Websites"],
   method: "get",
   path: "/",
+  security: [{ bearerAuth: [] }],
   responses: {
     200: successResponse(z.array(websiteSchema), "List of websites retrieved."),
   },
@@ -25,9 +26,10 @@ export const getWebsites = createRoute({
 
 // 2. GET BY ID
 export const getWebsiteById = createRoute({
-  tags: ["Websites"],
+  tags: ["websites"],
   method: "get",
   path: "/{id}",
+  security: [{ bearerAuth: [] }],
   request: {
     params: z.object({ id: z.string() }),
   },
@@ -39,9 +41,10 @@ export const getWebsiteById = createRoute({
 
 // 3. CREATE (Existing)
 export const createWebsite = createRoute({
-  tags: ["Websites"],
+  tags: ["websites"],
   method: "post",
   path: "/",
+  security: [{ bearerAuth: [] }],
   request: {
     body: { content: { "application/json": { schema: websiteReqSchema } } },
   },
@@ -53,9 +56,10 @@ export const createWebsite = createRoute({
 
 // 4. UPDATE (Using PATCH for partial updates)
 export const updateWebsite = createRoute({
-  tags: ["Websites"],
+  tags: ["websites"],
   method: "patch",
   path: "/{id}",
+  security: [{ bearerAuth: [] }],
   request: {
     params: z.object({ id: z.string() }),
     body: {
@@ -74,9 +78,10 @@ export const updateWebsite = createRoute({
 
 // 5. DELETE (Existing)
 export const deleteWebsite = createRoute({
-  tags: ["Websites"],
+  tags: ["websites"],
   method: "delete",
   path: "/{id}",
+  security: [{ bearerAuth: [] }],
   request: {
     params: z.object({ id: z.string() }),
   },

@@ -59,7 +59,6 @@ export function DashboardHeader() {
 
                <Button size="icon" variant="outline" className="rounded-full">
                     <Bell className="h-5 w-5" />
-                    <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-background"></span>
                 </Button>
 
                <Button size="icon" variant="outline" className="rounded-full">

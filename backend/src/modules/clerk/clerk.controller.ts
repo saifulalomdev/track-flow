@@ -8,10 +8,8 @@ const clerkController = createApp();
 
 clerkController.post("/clerk", async (c) => {
 
-  const body = await c.req.json();
   const evt = await verifyWebhook(c.req.raw);
   const eventType = evt.type;
-
 
   if (eventType === "user.created") {
     const { email_addresses, id } = evt.data;
