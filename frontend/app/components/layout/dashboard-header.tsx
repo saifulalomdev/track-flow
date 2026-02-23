@@ -48,22 +48,17 @@ export function DashboardHeader() {
             {/* RIGHT: ACTIONS */}
             <div className="flex items-center gap-2 md:gap-4">
 
-                {/* Search - Icon only on mobile */}
-                <button className="flex items-center gap-2 px-2 md:px-3 py-1.5 text-sm text-muted-foreground border border-white/10 rounded-md bg-white/5 hover:bg-white/10 transition-all">
+                <Button size="icon" variant="outline" className="rounded-full" >
                     <Search className="h-4 w-4" />
-                    <span className="hidden md:inline">Search...</span>
-                    <kbd className="hidden md:inline-flex pointer-events-none h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
-                        ⌘K
-                    </kbd>
-                </button>
+                </Button>
 
-               <Button size="icon" variant="outline" className="rounded-full">
+                <Button size="icon" variant="outline" className="rounded-full">
                     <Bell className="h-5 w-5" />
                 </Button>
 
-               <Button size="icon" variant="outline" className="rounded-full">
-                 <UserButton/>
-               </Button>
+                <Button size="icon" variant="outline" className="rounded-full">
+                    <UserButton />
+                </Button>
             </div>
         </nav>
     );

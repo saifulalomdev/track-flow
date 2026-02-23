@@ -13,8 +13,9 @@ export const useSites = () => {
         const fetchSites = async () => {
             setIsLoading(true);
             try {
-                const data = await siteApi.getAll();
+                const {data} = await siteApi.getAll();
                 setSites(data);
+                console.log("use-sites",data)
             } catch (err) {
                 setError(err as Error);
             } finally {
@@ -26,22 +27,11 @@ export const useSites = () => {
 
     // CREATE: Optimistic Add
     const createSite = async (formData: SiteFormData) => {
-        const previousSites = [...sites];
-        const optimisticSite = { 
-            ...formData, 
-            id: `temp-${Date.now()}`, 
-            isOptimistic: true 
-        };
-
-        setSites((prev) => [...prev, optimisticSite]);
-
+       
         try {
             const savedSite = await siteApi.create(formData);
-            setSites((prev) => 
-                prev.map(s => s.id === optimisticSite.id ? savedSite : s)
-            );
+            setSites(p=> ([...p , savedSite]));
         } catch (err) {
-            setSites(previousSites);
             setError(err as Error);
         }
     };

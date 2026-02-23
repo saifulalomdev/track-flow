@@ -6,8 +6,8 @@
     "dev:node": "tsx --watch src/server.ts",
     "dev": "wrangler dev",
     "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
+    "db:migrate:local": "wrangler d1 migrations apply trackflow-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply trackflow-db --remote",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },

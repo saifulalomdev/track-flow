@@ -1,22 +1,24 @@
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
-import { Globe, MoreVertical, Code2, CheckCircle2, AlertCircle, BarChart3 } from 'lucide-react'
+import { Globe, MoreVertical, Code2, CheckCircle2, AlertCircle, BarChart3, PenIcon, Trash2 } from 'lucide-react'
 
 interface SiteListItemProps {
-    siteUrl: string;
+    url: string;
     siteStatus: "Active" | "Close";
     lastPing: string;
     totalVisits: number;
     avgDaily: number;
+    title: string
 }
 
 export default function SiteListItem({
-    siteUrl = "d",
+    url = "d",
     siteStatus = "Active",
     lastPing,
     totalVisits = 2000,
     avgDaily = 250,
+    title
 }: SiteListItemProps) {
     return (
         <Card className="border-white/10 bg-background/50 overflow-hidden">
@@ -27,7 +29,10 @@ export default function SiteListItem({
                     </div>
                     <div>
                         <div className="flex items-center gap-2">
-                            <h3 className="font-bold text-lg">{siteUrl}</h3>
+                            <div>
+                                <h3 className="font-bold text-lg">{title}</h3>
+                                <h3 className="text-muted-foreground">{url}</h3>
+                            </div>
                             {siteStatus === "Active" ? (
                                 <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 gap-1">
                                     <CheckCircle2 className="w-3 h-3" /> Live
@@ -57,11 +62,11 @@ export default function SiteListItem({
                     <Button variant="outline" size="sm" className="gap-2">
                         <Code2 className="w-4 h-4" /> Get Script
                     </Button>
-                    <Button variant="outline" size="sm" className="gap-2">
-                        <BarChart3 className="w-4 h-4" /> View Report
+                    <Button variant="outline" size="icon-sm" className="gap-2">
+                        <PenIcon className="w-4 h-4" />
                     </Button>
-                    <Button variant="outline" size="icon">
-                        <MoreVertical className="w-4 h-4" />
+                    <Button variant="destructive" size="icon-sm">
+                        <Trash2 className="w-4 h-4" />
                     </Button>
                 </div>
             </div>

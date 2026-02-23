@@ -9,15 +9,13 @@ import type { SiteFormData } from '~/features/sites/schema'
 import { useSites } from '~/features/sites/use-sites'
 
 export default function Websites() {
-    // 1. Destructure all needed methods from your custom hook
     const { createSite, isLoading, sites } = useSites();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    // 2. Handle submission and close the dialog
     async function onSubmit(data: SiteFormData) {
         try {
             await createSite(data);
-            setIsDialogOpen(false); // Close dialog on success
+            // setIsDialogOpen(false);
         } catch (error) {
             console.error("Failed to create site", error);
         }
@@ -31,7 +29,6 @@ export default function Websites() {
                     <p className="text-muted-foreground">Track and manage your websites.</p>
                 </div>
 
-                {/* Controlled Dialog */}
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>
                         <Button className="gap-2 w-full md:w-auto">
@@ -46,26 +43,21 @@ export default function Websites() {
                             </DialogDescription>
                         </DialogHeader>
 
-                        {/* 3. Pass the hook's loading state to the form */}
                         <SiteForm onSubmit={onSubmit} isLoading={isLoading} />
                     </DialogContent>
                 </Dialog>
             </div>
 
-            {/* 4. Render the list dynamically */}
             <div className="grid gap-4">
                 {sites.length === 0 && !isLoading && (
-                    <p className="text-center py-10 text-muted-foreground">No websites added yet.</p>
+                    <HelperCard />
                 )}
 
-                {sites.map((site) => (
+                {sites?.map((site) => (
                     <SiteListItem
                         key={site.id}
-                        siteUrl={site.url || site.siteUrl} // Adjust based on your schema
-                        // siteStatus={site.isOptimistic ? 'Pending...' : 'Active'}
-                        // Pass down delete/update if your SiteListItem supports it:
-                        // onDelete={() => deleteSite(site.id)}
-                        // Static data for now as per your original code
+                        title={site.title}
+                        url={site.url}
                         siteStatus='Active'
                         avgDaily={site.avgDaily || 0}
                         lastPing={site.lastPing || 'Never'}
@@ -74,7 +66,7 @@ export default function Websites() {
                 ))}
             </div>
 
-            <HelperCard />
+
         </div>
     )
 }
