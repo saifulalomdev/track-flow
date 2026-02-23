@@ -1,14 +1,14 @@
 import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 import { user } from './user';
-import { website } from './website';
+import { site } from './site';
 
 export const event = sqliteTable('event', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
 
   // DATA ISOLATION: The owner of the data
   userId: text('user_id').references(() => user.id, { onDelete: "cascade" }).notNull(),
-  projectId: text('project_id').references(() => website.id, { onDelete: "cascade" }).notNull(),
+  projectId: text('project_id').references(() => site.id, { onDelete: "cascade" }).notNull(),
 
   visitorId: text('visitor_id').notNull(),
   path: text('path').notNull().default('/'),

@@ -18,7 +18,7 @@ export default function Footer() {
                 <div className='md:col-span-3 xl:col-span-2 pr-0'>
                     <h3 className='text-3xl font-bold tracking-tight'>About Us</h3>
                     <p className='text-lg opacity-70 mt-4 leading-relaxed'>
-                        We’re a team of engineers and data strategists building high-performance tracking tools that empower teams to turn raw data into actionable insights—faster, more accurately, and effortlessly.
+                        We’re a team of engineers and data strategists building high-performance tracking tools that empower teams to turn raw data into actionable insights faster, more accurately, and effortlessly.
                     </p>
                 </div>
 

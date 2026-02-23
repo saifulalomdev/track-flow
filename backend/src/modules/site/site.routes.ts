@@ -1,5 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { websiteReqSchema, websiteSchema } from "./website.schema";
+import { siteReqSchema, siteSchema, siteUpdateSchema } from "./site.schema";
 
 const successResponse = (dataSchema: any, description: string) => ({
   description,
@@ -13,20 +13,24 @@ const successResponse = (dataSchema: any, description: string) => ({
   },
 });
 
+const requestBody = (schema: z.ZodObject) => {
+  return { content: { "application/json": { schema } } }
+}
+
 // 1. GET ALL
-export const getWebsites = createRoute({
-  tags: ["Websites"],
+export const getSites = createRoute({
+  tags: ["sites"],
   method: "get",
   path: "/",
   security: [{ bearerAuth: [] }],
   responses: {
-    200: successResponse(z.array(websiteSchema), "List of websites retrieved."),
+    200: successResponse(z.array(siteSchema), "List of websites retrieved."),
   },
 });
 
 // 2. GET BY ID
-export const getWebsiteById = createRoute({
-  tags: ["websites"],
+export const getSiteById = createRoute({
+  tags: ["sites"],
   method: "get",
   path: "/{id}",
   security: [{ bearerAuth: [] }],
@@ -34,51 +38,45 @@ export const getWebsiteById = createRoute({
     params: z.object({ id: z.string() }),
   },
   responses: {
-    200: successResponse(websiteSchema, "Website found."),
+    200: successResponse(siteSchema, "Website found."),
     404: { description: "Website not found" },
   },
 });
 
 // 3. CREATE (Existing)
-export const createWebsite = createRoute({
-  tags: ["websites"],
+export const createSite = createRoute({
+  tags: ["sites"],
   method: "post",
   path: "/",
   security: [{ bearerAuth: [] }],
   request: {
-    body: { content: { "application/json": { schema: websiteReqSchema } } },
+    body: requestBody(siteReqSchema),
   },
   responses: {
-    201: successResponse(websiteSchema, "Website created successfully."),
+    201: successResponse(siteSchema, "Website created successfully."),
     400: { description: "Invalid input data" },
   },
 });
 
 // 4. UPDATE (Using PATCH for partial updates)
-export const updateWebsite = createRoute({
-  tags: ["websites"],
+export const updateSite = createRoute({
+  tags: ["sites"],
   method: "patch",
   path: "/{id}",
   security: [{ bearerAuth: [] }],
   request: {
     params: z.object({ id: z.string() }),
-    body: {
-      content: {
-        "application/json": {
-          schema: websiteReqSchema.partial(), // .partial() makes all fields optional
-        },
-      },
-    },
+    body: requestBody(siteUpdateSchema)
   },
   responses: {
-    200: successResponse(websiteSchema, "Website updated successfully."),
+    200: successResponse(siteSchema, "Website updated successfully."),
     404: { description: "Website not found" },
   },
 });
 
 // 5. DELETE (Existing)
-export const deleteWebsite = createRoute({
-  tags: ["websites"],
+export const deleteSite = createRoute({
+  tags: ["sites"],
   method: "delete",
   path: "/{id}",
   security: [{ bearerAuth: [] }],
@@ -86,7 +84,7 @@ export const deleteWebsite = createRoute({
     params: z.object({ id: z.string() }),
   },
   responses: {
-    200: successResponse(websiteSchema, "Website deleted successfully."),
+    200: successResponse(siteSchema, "Website deleted successfully."),
     404: { description: "Website not found" },
   },
 });
