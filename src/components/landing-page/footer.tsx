@@ -5,6 +5,7 @@ import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
+    TooltipProvider
 } from '../ui/tooltip'
 
 export default function Footer() {
@@ -30,6 +31,7 @@ export default function Footer() {
                                 className='text-base opacity-75 hover:opacity-100 hover:text-primary transition-all hover:underline w-fit'
                                 key={name}
                                 href={href}
+                                target='_blank'
                             >
                                 {name}
                             </a>
@@ -72,24 +74,26 @@ export default function Footer() {
                     © {new Date().getFullYear()} <span className="text-foreground font-medium">Track Flow</span>. All Rights Reserved.
                 </p>
 
-                <div className='flex gap-3 order-1 md:order-2'>
-                    {socialLinks.map(({ href, name, Icon }) => (
-                        // <Tooltip key={name} delayDuration={0}>
-                        //     <TooltipTrigger asChild>
-                                <a
-                                    className='border border-primary/80 p-2.5 text-primary/80 rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300'
-                                    href={href}
-                                    aria-label={name}
-                                >
-                                    <Icon size={18} />
-                                </a>
-                        //     </TooltipTrigger>
-                        //     <TooltipContent className='bg-primary text-primary-foreground'>
-                        //         <p>{name}</p>
-                        //     </TooltipContent>
-                        // </Tooltip>
-                    ))}
-                </div>
+                <TooltipProvider>
+                    <div className='flex gap-3 order-1 md:order-2'>
+                        {socialLinks.map(({ href, name, Icon }) => (
+                            <Tooltip key={name} delayDuration={0}>
+                                <TooltipTrigger asChild>
+                                    <a
+                                        className='border border-primary/80 p-2.5 text-primary/80 rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300'
+                                        href={href}
+                                        aria-label={name}
+                                    >
+                                        <Icon size={18} />
+                                    </a>
+                                </TooltipTrigger>
+                                <TooltipContent className='bg-primary text-primary-foreground'>
+                                    <p>{name}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        ))}
+                    </div>
+                </TooltipProvider>
             </div>
         </footer>
     )
