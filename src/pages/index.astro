@@ -1,0 +1,56 @@
+---
+// src/pages/index.astro
+import { EmailForm } from "@/components/email-form";
+import Layout from "@/layouts/Layout.astro";
+import "@/styles/global.css";
+---
+
+<Layout>
+	<main class="w-full h-dvh grid grid-cols-1 md:grid-cols-2">
+		<div class="flex flex-col justify-between p-10">
+			<img src="/site-logo.webp" alt="site logo" class="w-40" />
+			<div class="space-y-6">
+				<p
+					class="text-[12px] font-semibold px-2 py-1 rounded-sm bg-gray-200 inline-block"
+				>
+					Launching NOV 24th, 2026
+				</p>
+				<h1 class="text-[40px] font-bold leading-12">
+					Deep insights. Zero tracking.
+				</h1>
+				<p class="text-[16px] text-gray-500">
+					Most analytics tools are heavy and invasive. TrackFlow is
+					light, private, and built for the modern web. Get early
+					access.
+				</p>
+
+				<EmailForm client:visible />
+
+				<div class="flex items-center gap-3 pt-6">
+					<img
+						src="/avatars.webp"
+						alt="User avatars"
+						width="126"
+						height="54"
+						loading="lazy"
+						decoding="async"
+						class="h-auto w-auto"
+					/>
+					<p class="text-[12px] text-gray-500">
+						1000+ users have already joined
+					</p>
+				</div>
+			</div>
+			<p class="text-[16px] text-gray-500">
+				@ 2026 - All rights reserved.
+			</p>
+		</div>
+		<div class="hidden md:block relative w-full h-full overflow-hidden">
+			<img
+				src="/side-image.webp"
+				alt="side-image"
+				class="absolute inset-0 w-full h-full object-bottom object-cover"
+			/>
+		</div>
+	</main>
+</Layout>
