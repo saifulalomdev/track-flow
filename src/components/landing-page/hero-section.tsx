@@ -1,6 +1,6 @@
 import { GlobeIcon, ShieldCheckIcon, ZapIcon } from "lucide-react";
 import { Button } from "../ui/button";
-// import GetStarted from "./get-started-button";
+import GetStarted from "./get-started-button";
 
 type Stat = {
   label: string,
@@ -77,7 +77,7 @@ export default function HeroSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center px-6">
-          {/* <GetStarted /> */}
+          <GetStarted />
           <Button asChild size="lg" variant="outline" className="font-bold w-full md:w-auto">
             <a href="/#features">See Details</a>
           </Button>

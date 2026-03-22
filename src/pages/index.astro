@@ -4,15 +4,15 @@ import HeroSection from "@/components/landing-page/hero-section";
 import PublicHeader from "@/components/landing-page/public-header";
 import FeatureSection from "@/components/landing-page/feature-section";
 import PricingSection from "@/components/landing-page/pricing-section";
-import FAQAndFootersection from "@/components/landing-page/FAQ-and-footer-section";
-import Layout from "@/layouts/main.astro";
+import FAQAndFooterSection from "@/components/landing-page/FAQ-and-footer-section";
+import MainLayout from "@/layouts/main.astro";
 import "@/styles/global.css";
 ---
 
-<Layout>
-    <PublicHeader client:visible />
+<MainLayout>
+    <PublicHeader signedIn={true} client:visible />
     <HeroSection />
     <FeatureSection/>
     <PricingSection/>
-    <FAQAndFootersection client:visible/>
-</Layout>
+    <FAQAndFooterSection client:visible/>
+</MainLayout>

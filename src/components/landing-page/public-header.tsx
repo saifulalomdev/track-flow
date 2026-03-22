@@ -1,18 +1,17 @@
-"use client";
-
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
-// import GetStarted from "../landing-page/get-started-button";
+import { ChevronRight, Menu, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { navItems } from "@/constants/nav-items";
 
-export default function PublicHeader() {
+
+export default function PublicHeader({ signedIn = false }: { signedIn?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <header className="w-full h-16 md:h-20 z-50 flex justify-between items-center px-6 md:px-10 lg:px-20 py-4 fixed top-0 left-0 bg-background/5 backdrop-blur-md border-b border-white/10">
+        {/* site logo */}
         <a href="/" className="shrink-0 z-50">
           <img
             src="/images/logo.svg"
@@ -35,10 +34,8 @@ export default function PublicHeader() {
         </nav>
 
         <div className="flex items-center gap-4 z-50">
-          {/* <LandingCTA  className="hidden md:block"/> */}
-          <Button>
-            Sign in
-          </Button>
+          <LandingCTA signedIn={signedIn} className="hidden md:block"/>
+          
           {/* Mobile Toggle Button */}
           <Button
             variant="outline"
@@ -55,7 +52,7 @@ export default function PublicHeader() {
       {/* Mobile Nav Overlay */}
       <nav
         className={cn(
-          "fixed inset-0 z-40 bg-background/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-all duration-300 md:hidden",
+          "fixed inset-0 z-40 bg-background/95 backdrop-blur-xl flex flex-col items-center justify-center transition-all duration-300 md:hidden",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none translate-y-2.5"
         )}
       >
@@ -64,34 +61,34 @@ export default function PublicHeader() {
             href={href}
             key={name}
             onClick={() => setIsOpen(false)} // Close on click
-            className="text-2xl font-semibold text-white hover:text-primary transition-colors"
+            className="text-[16px] border-b flex justify-between items-center first:border-t border-white/50 w-full p-4 font-semibold text-white hover:text-primary transition-colors"
           >
-            {name}
+            {name} <ChevronRight/>
           </a>
         ))}
-        <Button>
-          Sign in
-        </Button>
-        {/* <LandingCTA className="px-6"/> */}
+        <LandingCTA signedIn={signedIn} className="px-4 mt-5"/>
       </nav>
     </>
   );
 }
 
 
-// function LandingCTA({ className }: { className?: string }) {
-//   return (
-//     <div className={cn("flex flex-col gap-4 w-full border-white/10", className)}>
-//       <SignedOut>
-//         <GetStarted />
-//       </SignedOut>
-//       <SignedIn>
-//         <Link to="/dashboard" className="w-full md:w-auto">
-//           <Button className="w-full md:w-auto">
-//             Dashboard
-//           </Button>
-//         </Link>
-//       </SignedIn>
-//     </div>
-//   )
-// }
+function LandingCTA({ className, signedIn }: { className?: string, signedIn?: boolean }) {
+  return (
+    <div className={cn("flex flex-col gap-4 w-full border-white/10", className)}>
+      {signedIn ? <a href="/dashboard" className="w-full md:w-auto">
+        <Button size="lg" className="w-full md:w-auto">
+          Dashboard
+        </Button>
+      </a> :
+        <a href="/sign-in" className="w-full md:w-auto">
+          <Button size="lg" className="w-full md:w-auto">
+            Sign in
+          </Button>
+        </a>
+      }
+
+
+    </div>
+  )
+}
