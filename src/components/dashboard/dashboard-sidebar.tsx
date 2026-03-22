@@ -36,7 +36,7 @@ export default function DashboardSidebar({ className }: DashboardSidebarProps) {
             </div>
 
             {/* sidebar footer */}
-            <div className='space-y-4'>
+            <div className='space-y-4 border-t pt-4'>
                 <PlanUsageStats
                     current={100}
                     limit={200}
