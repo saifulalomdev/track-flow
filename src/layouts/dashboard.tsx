@@ -16,8 +16,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <DashboardSidebar
                 onClick={() => setIsSidebarOpen(p => !p)}
                 className={cn(
-                    "md:hidden fixed flex top-16 transition-all duration-300 bg-background w-full z-40",
-                    isSidebarOpen? "left-0" : "translate-x-full"
+                    "md:hidden fixed flex top-16 transition-all duration-300 z-40",
+                    isSidebarOpen? "opacity-100 left-0" : "opacity-0 -translate-x-full"
                 )}
             />
             <div className="flex-1">

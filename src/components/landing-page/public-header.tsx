@@ -53,7 +53,7 @@ export default function PublicHeader({ signedIn = false }: { signedIn?: boolean 
       <nav
         className={cn(
           "fixed w-full h-screen z-40 bg-background/95 backdrop-blur-xl mt-16 transition-all duration-300 md:hidden",
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none translate-y-2.5"
+          isOpen ? "opacity-100 left-0" : "opacity-0 -translate-x-full"
         )}
       >
         {navItems.map(({ href, name }) => (
@@ -87,8 +87,6 @@ function LandingCTA({ className, signedIn }: { className?: string, signedIn?: bo
           </Button>
         </a>
       }
-
-
     </div>
   )
 }
