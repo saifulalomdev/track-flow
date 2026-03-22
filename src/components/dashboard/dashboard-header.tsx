@@ -24,7 +24,7 @@ export function DashboardHeader({ onClick, isSidebarOpen }: { onClick: () => voi
                 <Button variant="outline" size="icon">
                     <UserCircle />
                 </Button>
-                <Button onClick={onClick} variant="outline" size="icon" className="md:hidden">
+                <Button onClick={onClick} variant="outline" size="icon" className="lg:hidden">
                     {isSidebarOpen? <X/> : <Menu />}
                 </Button>
             </div>

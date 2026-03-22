@@ -10,11 +10,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return (
         <div className="flex">
             <DashboardSidebar
-                className="hidden md:flex"
+                className="hidden lg:flex"
             />
             <DashboardSidebar
                 className={cn(
-                    "md:hidden fixed flex top-16 h-[calc(100vh-128px)] transition-all duration-300 z-40",
+                    "lg:hidden fixed flex top-16 h-[calc(100vh-128px)] transition-all duration-300 z-40",
                     isSidebarOpen? "opacity-100 left-0" : "opacity-0 -translate-x-full"
                 )}
             />
