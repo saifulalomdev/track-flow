@@ -52,7 +52,7 @@ export default function PublicHeader({ signedIn = false }: { signedIn?: boolean 
       {/* Mobile Nav Overlay */}
       <nav
         className={cn(
-          "fixed inset-0 z-40 bg-background/95 backdrop-blur-xl flex flex-col items-center justify-center transition-all duration-300 md:hidden",
+          "fixed w-full h-screen z-40 bg-background/95 backdrop-blur-xl mt-16 transition-all duration-300 md:hidden",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none translate-y-2.5"
         )}
       >
@@ -60,13 +60,13 @@ export default function PublicHeader({ signedIn = false }: { signedIn?: boolean 
           <a
             href={href}
             key={name}
-            onClick={() => setIsOpen(false)} // Close on click
-            className="text-[16px] border-b flex justify-between items-center first:border-t border-white/50 w-full p-4 font-semibold text-white hover:text-primary transition-colors"
+            onClick={() => setIsOpen(false)}
+            className="text-[16px] border-b flex justify-between items-center first:border-t border-white/20 w-full px-6 py-4 font-semibold text-white hover:text-primary transition-colors"
           >
             {name} <ChevronRight/>
           </a>
         ))}
-        <LandingCTA signedIn={signedIn} className="px-4 mt-5"/>
+        <LandingCTA signedIn={signedIn} className="px-6 mt-5"/>
       </nav>
     </>
   );
