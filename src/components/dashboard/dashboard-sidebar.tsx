@@ -6,13 +6,12 @@ import { cn } from '@/lib/utils';
 import { adminNavItems } from '@/constants/admin-nav-items';
 
 interface DashboardSidebarProps {
-    onClick: () => void;
     className?: string
 }
 
-export default function DashboardSidebar({ className, onClick }: DashboardSidebarProps) {
+export default function DashboardSidebar({ className }: DashboardSidebarProps) {
     return (
-        <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-[calc(100vh-64px)] bg-background flex flex-col justify-between', className)}>
+        <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-dvh bg-background flex flex-col justify-between', className)}>
             <div>
                 {/* sidebar header */}
                 <SidebarUser />
