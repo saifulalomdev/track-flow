@@ -49,7 +49,7 @@ export default function PublicHeader({ signedIn = false }: { signedIn?: boolean 
         </div>
       </header>
 
-      {/* Mobile Nav Overlay */}
+      {/* Mobile Nav and Overlay */}
       <nav
         className={cn(
           "fixed w-full h-screen z-40 bg-background/95 backdrop-blur-xl mt-16 transition-all duration-300 md:hidden",

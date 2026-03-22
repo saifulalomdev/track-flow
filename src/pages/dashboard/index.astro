@@ -1,0 +1,10 @@
+---
+import DashboardLayout from "@/layouts/dashboard";
+import MainLayout from "@/layouts/main.astro";
+---
+
+<MainLayout>
+    <DashboardLayout client:visible>
+        <div>Dashboard</div>
+    </DashboardLayout>
+</MainLayout>
