@@ -26,9 +26,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
             data: body
         }
         
-        await env.EVENTS_QUEUE.send(event);
+        // await env.EVENTS_QUEUE.send(event);
 
-        return new Response(JSON.stringify({ success: true }), { status: 202 });
+        return new Response(JSON.stringify({ success: true , ...event }), { status: 202 });
     } catch (error) {
         return new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 });
     }
