@@ -1,10 +1,137 @@
 ---
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import DashboardLayout from "@/layouts/dashboard";
 import MainLayout from "@/layouts/main.astro";
+import { CloudDownload, FilterIcon } from "lucide-react";
+import { stats } from "@/dummy-data/stats";
+import { recentConversions } from "@/dummy-data/recent-conversions";
+import { Badge } from "@/components/ui/badge";
 ---
 
 <MainLayout>
     <DashboardLayout client:visible>
-        <div>Dashboard</div>
+        <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+        >
+            <div class="space-y-1">
+                <h1 class="text-2xl md:text-3xl font-bold tracking-tight">
+                    Overview
+                </h1>
+                <p class="text-sm md:text-base text-muted-foreground">
+                    Welcome back. Here&apos;s what&apos;s happening today.
+                </p>
+            </div>
+
+            <div class="flex items-center gap-2 md:gap-3">
+                <Button
+                    variant="outline"
+                    className="flex-1 sm:flex-none text-xs md:text-sm"
+                >
+                    Download <span class="hidden xs:inline ml-1">Report</span>
+                    <CloudDownload className="w-4 h-4" />
+                </Button>
+
+                <Button
+                    className="flex-1 sm:flex-none gap-2 text-xs md:text-sm"
+                >
+                    <FilterIcon className="w-4 h-4" />
+                    <span>Create UTM</span>
+                </Button>
+            </div>
+        </div>
+        {/* STATS GRID */}
+        <div class="grid mt-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {
+                stats.map((stat) => (
+                    <Card
+                        key={stat.name}
+                        className="border-white/10 bg-background/50"
+                    >
+                        <CardHeader className="flex flex-row items-center justify-between pb-2">
+                            <CardTitle className="text-sm font-medium text-muted-foreground">
+                                {stat.name}
+                            </CardTitle>
+                            <stat.icon className={`w-4 h-4 ${stat.color}`} />
+                        </CardHeader>
+                        <CardContent>
+                            <div class="text-2xl font-bold">{stat.value}</div>
+                            <p class={`text-xs mt-1 ${stat.color} font-medium`}>
+                                {stat.change}{" "}
+                                <span class="text-muted-foreground">
+                                    from last month
+                                </span>
+                            </p>
+                        </CardContent>
+                    </Card>
+                ))
+            }
+        </div>
+
+        <div class="grid grid-cols-1 mt-6 lg:grid-cols-3 gap-6">
+            {/* CHART PLACEHOLDER (The "Senior" Look) */}
+            <Card className="lg:col-span-2 border-white/10 bg-background/50">
+                <CardHeader>
+                    <CardTitle>Traffic Attribution</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div
+                        class="h-75 w-full bg-primary/5 rounded-lg border border-dashed border-primary/20 flex flex-col items-center justify-center text-muted-foreground"
+                    >
+                        {
+                            /* <BarChart3 className="w-10 h-10 mb-2 opacity-20" /> */
+                        }
+                        <p class="text-sm italic">
+                            Analytics Visualization goes here (Chart.js /
+                            Recharts)
+                        </p>
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* RECENT ACTIVITY FEED */}
+            <Card className="border-white/10 bg-background/50">
+                <CardHeader
+                    className="flex flex-row items-center justify-between"
+                >
+                    <CardTitle>Recent Conversions</CardTitle>
+                    <Button variant="ghost" size="sm" className="text-xs h-8"
+                        >View All</Button
+                    >
+                </CardHeader>
+                <CardContent>
+                    <div class="space-y-6">
+                        {
+                            recentConversions.map((conv, i) => (
+                                <div class="flex items-center gap-4">
+                                    <div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
+                                        {conv.name[0]}
+                                    </div>
+                                    <div class="flex-1 space-y-1">
+                                        <p class="text-sm font-medium leading-none">
+                                            {conv.name}
+                                        </p>
+                                        <p class="text-xs text-muted-foreground">
+                                            {conv.source}
+                                        </p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-[10px] text-muted-foreground uppercase">
+                                            {conv.time}
+                                        </p>
+                                        <Badge
+                                            variant="outline"
+                                            className="text-[9px] px-1 h-4"
+                                        >
+                                            {conv.status}
+                                        </Badge>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
     </DashboardLayout>
 </MainLayout>

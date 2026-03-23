@@ -1,8 +1,8 @@
-import { LogOut, Settings } from 'lucide-react';
-import { Button } from '../ui/button';
-import { PlanUsageStats } from './plan-usage-stats';
-import SidebarUser from './sidebar-user';
 import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
+import SidebarUser from './sidebar-user';
+import { LogOut, Settings } from 'lucide-react';
+import { PlanUsageStats } from './plan-usage-stats';
 import { adminNavItems } from '@/constants/admin-nav-items';
 
 interface DashboardSidebarProps {
@@ -11,13 +11,13 @@ interface DashboardSidebarProps {
 
 export default function DashboardSidebar({ className }: DashboardSidebarProps) {
     return (
-        <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-dvh bg-background flex flex-col justify-between', className)}>
+        <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-dvh bg-background flex flex-col justify-between z-30', className)}>
             <div>
                 {/* sidebar header */}
                 <SidebarUser />
 
                 {/* sidebar navigations */}
-                <nav className='mt-10 space-y-4'>
+                <nav className='mt-4 space-y-4'>
                     {adminNavItems.map(({ href, name, Icon }) => (
                         <a
                             key={href}

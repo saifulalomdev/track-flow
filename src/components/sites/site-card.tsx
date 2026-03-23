@@ -23,7 +23,7 @@ export default function SiteCard({ id, url, status, lastPing, totalVisits, avgDa
 
     return (
         <Card key={id} className="border-white/10 bg-background/50 rounded-md overflow-hidden">
-            <div className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="p-6 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
                 <div className="flex items-start gap-4">
                     <div className="p-3 bg-primary/10 rounded-xl">
                         <Globe className="w-6 h-6 text-primary" />
@@ -45,7 +45,7 @@ export default function SiteCard({ id, url, status, lastPing, totalVisits, avgDa
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-8 px-4">
+                <div className="flex gap-4 px-4">
                     <div>
                         <p className="text-xs text-muted-foreground uppercase tracking-wider">Total Visits</p>
                         <p className="text-xl font-bold">{totalVisits}</p>
@@ -57,13 +57,13 @@ export default function SiteCard({ id, url, status, lastPing, totalVisits, avgDa
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="gap-2">
-                        <Code2 className="w-4 h-4" /> Get Script
+                    <Button variant="outline" className="gap-2">
+                        <Code2 className="w-4 h-4" /> Copy Script
                     </Button>
-                    <Button variant="outline" size="sm" className="gap-2">
+                    <Button variant="outline" className="gap-2">
                         <BarChart3 className="w-4 h-4" /> View Report
                     </Button>
-                    <Button variant="ghost" size="icon">
+                    <Button variant="outline" size="icon">
                         <MoreVertical className="w-4 h-4" />
                     </Button>
                 </div>
