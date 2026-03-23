@@ -13,10 +13,30 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "waitlist",
-			"database_id": "41144ecb-211b-4f7f-bd58-115ed6b681c1",
-			"remote": true,
-			"migrations_dir": "./drizzle"
+			"database_name": "trackflow-db",
+			"database_id": "893a3b21-f6bf-4881-8337-ac11b0a23214",
+			"migrations_dir": "drizzle/migrations"
+		}
+	],
+	"queues": {
+		"producers": [
+			{
+				"binding": "EVENTS_QUEUE",
+				"queue": "events-queue"
+			}
+		],
+		"consumers": [
+			{
+				"queue": "events-queue",
+				"max_batch_size": 10,
+				"dead_letter_queue": "my-queue-dlq"
+			}
+		]
+	},
+	"kv_namespaces": [
+		{
+			"binding": "USER_LIMITS",
+			"id": "a42f78e5983c4c7aacea015ecc374868",
 		}
 	],
 	"observability": {
