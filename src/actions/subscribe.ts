@@ -1,4 +1,4 @@
-import { subscribers, subscriberSchema } from "@/db/schema";
+import { subscribers, subscriberSchema } from "@/db";
 import { defineAction } from "astro:actions";
 import { drizzle } from 'drizzle-orm/d1';
 import { count } from "drizzle-orm";

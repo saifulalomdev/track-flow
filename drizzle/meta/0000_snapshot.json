@@ -1,23 +1,51 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "a015784c-d383-434e-9d84-2a9c91704473",
+  "id": "c98c3783-5044-4df0-857b-e05a27502fb4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "emails": {
-      "name": "emails",
+    "user": {
+      "name": "user",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "email": {
           "name": "email",
           "type": "text",
-          "primaryKey": true,
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         }
       },
       "indexes": {
-        "emails_email_unique": {
-          "name": "emails_email_unique",
+        "user_email_unique": {
+          "name": "user_email_unique",
           "columns": [
             "email"
           ],

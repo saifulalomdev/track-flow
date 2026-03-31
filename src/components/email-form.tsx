@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { subscriberSchema, type Subscriber } from "@/db/schema";
+import { subscriberSchema, type Subscriber } from "@/db";
 import { actions } from "astro:actions"
 import { useState } from "react"
 

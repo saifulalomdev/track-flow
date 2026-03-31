@@ -1,0 +1,10 @@
+---
+// src/pages/sign-in.astro
+import AuthLayout from "@/layouts/auth.astro";
+import SignInForm from "@/components/sign-in/sign-in-form";
+import "@/styles/global.css";
+---
+
+<AuthLayout>
+    <SignInForm client:load/>
+</AuthLayout>
