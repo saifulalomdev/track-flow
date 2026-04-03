@@ -1,12 +1,13 @@
-import { user, signInSchema,type SignIn, type User } from "@/db";
+import { user, signInSchema, type SignIn, type User } from "@/db";
 import { defineAction, ActionError } from "astro:actions";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 
 export const signIn = defineAction({
-    input: signInSchema as any,
-    handler: async (input: SignIn, { locals }) => {
+    input: signInSchema,
+    handler: async (input, { locals }) => {
         const runtime = locals.runtime;
-
+            
         if (!runtime) {
             throw new ActionError({
                 code: "INTERNAL_SERVER_ERROR",
@@ -16,11 +17,11 @@ export const signIn = defineAction({
 
         const db = drizzle(runtime.env.DB);
 
-        
-
-        console.log(input)
         try {
 
+            const [foundUser] = await db.select().from(user).where(eq(user.email, input.email))
+            console.log(foundUser)
+            
             // if (!inserted) {
             //     throw new ActionError({
             //         code: "CONFLICT",
@@ -30,7 +31,7 @@ export const signIn = defineAction({
 
             return {
                 success: true,
-                message: "Welcome to TrackFlow 🚀",
+                message: "Welcome to TrackFlow",
             };
 
         } catch (err) {
