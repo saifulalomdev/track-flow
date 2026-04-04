@@ -1,13 +1,14 @@
-import { user, signInSchema, type SignIn, type User } from "@/db";
+import { user, signInSchema } from "@/db";
+import { session } from "@/db/session";
 import { defineAction, ActionError } from "astro:actions";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 
 export const signIn = defineAction({
     input: signInSchema,
-    handler: async (input, { locals }) => {
+    handler: async (input, { locals, cookies }) => {
         const runtime = locals.runtime;
-            
+
         if (!runtime) {
             throw new ActionError({
                 code: "INTERNAL_SERVER_ERROR",
@@ -18,16 +19,38 @@ export const signIn = defineAction({
         const db = drizzle(runtime.env.DB);
 
         try {
+            const [foundUser] = await db
+                .select()
+                .from(user)
+                .where(eq(user.email, input.email));
 
-            const [foundUser] = await db.select().from(user).where(eq(user.email, input.email))
-            console.log(foundUser)
-            
-            // if (!inserted) {
-            //     throw new ActionError({
-            //         code: "CONFLICT",
-            //         message: "Account already exists",
-            //     });
-            // }
+            if (!foundUser) {
+                throw new ActionError({
+                    code: "UNAUTHORIZED",
+                    message: "Invalid credentials",
+                });
+            }
+
+            // 🔐 Create session
+            const expiresAt = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days
+
+
+            const [insertedSession] = await db
+                .insert(session)
+                .values({
+                    userId: foundUser.id,
+                    expiresAt,
+                }).returning({ id: session.id });
+
+            const sessionId = insertedSession.id;
+
+            cookies.set("session_id", sessionId, {
+                path: "/",
+                httpOnly: true,
+                sameSite: "lax",
+                secure: import.meta.env.PROD,
+                maxAge: 60 * 60 * 24 * 7,
+            });
 
             return {
                 success: true,
@@ -36,12 +59,12 @@ export const signIn = defineAction({
 
         } catch (err) {
             console.error(err);
-            if (err instanceof ActionError) {
-                throw err;
-            }
+
+            if (err instanceof ActionError) throw err;
+
             throw new ActionError({
                 code: "BAD_REQUEST",
-                message: "Signup failed. Try again.",
+                message: "Signin failed. Try again.",
             });
         }
     },

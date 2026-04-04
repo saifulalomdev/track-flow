@@ -15,7 +15,7 @@
 			"binding": "DB",
 			"database_name": "trackflow-db",
 			"database_id": "893a3b21-f6bf-4881-8337-ac11b0a23214",
-			"migrations_dir": "drizzle"
+			"migrations_dir": "./drizzle"
 		}
 	],
 	"queues": {
