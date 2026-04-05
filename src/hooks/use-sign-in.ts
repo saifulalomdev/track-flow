@@ -31,10 +31,10 @@ export default function useSignIn() {
         if (data?.success) {
             toast.success(data.message || "Welcome to Trackflow!")
             form.reset();
-            console.log(navigator.userAgent)
-            // setTimeout(() => {
-            //     window.location.href = "/dashboard";
-            // }, 1500); // 1.5 seconds
+
+            setTimeout(() => {
+                window.location.href = "/dashboard";
+            }, 1500); // 1.5 seconds
         }
     }
 

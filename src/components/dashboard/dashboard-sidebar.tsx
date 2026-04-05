@@ -4,12 +4,22 @@ import SidebarUser from './sidebar-user';
 import { LogOut, Settings } from 'lucide-react';
 import { PlanUsageStats } from './plan-usage-stats';
 import { adminNavItems } from '@/constants/admin-nav-items';
+import { useAction } from '@/hooks/use-action';
+import { actions } from 'astro:actions';
+import { Spinner } from '../ui/spinner';
 
 interface DashboardSidebarProps {
     className?: string
 }
 
 export default function DashboardSidebar({ className }: DashboardSidebarProps) {
+
+    const { execute, isLoading } = useAction(actions.signOut, {
+        loadingMessage: "Signing out...",
+        onSuccess: (data) => {
+            window.location.href = "/dashboard";
+        },
+    })
     return (
         <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-dvh bg-background flex flex-col justify-between z-30', className)}>
             <div>
@@ -52,14 +62,14 @@ export default function DashboardSidebar({ className }: DashboardSidebarProps) {
                     <Settings className="h-4 w-4" />
                     Settings
                 </a>
-                <Button variant="ghost"
+                <Button disabled={isLoading} onClick={async () => await execute()} variant="ghost"
                     className={cn(
                         "flex items-center w-full justify-start gap-3 px-3 py-2 rounded-md transition-colors",
                         "hover:bg-destructive text-destructive",
                     )}
                 >
                     <LogOut className="h-4 w-4" />
-                    Logout
+                    {isLoading ? <Spinner /> : "Sign out"}
                 </Button>
             </div>
         </aside>

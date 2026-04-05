@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 
 export const signIn = defineAction({
-    input: signInSchema,
+    input: signInSchema as any,
     handler: async (input, { locals, cookies }) => {
         const runtime = locals.runtime;
 
@@ -34,7 +34,6 @@ export const signIn = defineAction({
             // 🔐 Create session
             const expiresAt = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days
 
-
             const [insertedSession] = await db
                 .insert(session)
                 .values({
@@ -58,8 +57,6 @@ export const signIn = defineAction({
             };
 
         } catch (err) {
-            console.error(err);
-
             if (err instanceof ActionError) throw err;
 
             throw new ActionError({

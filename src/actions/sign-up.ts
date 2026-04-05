@@ -3,7 +3,7 @@ import { defineAction, ActionError } from "astro:actions";
 import { drizzle } from "drizzle-orm/d1";
 
 export const signUp = defineAction({
-    input: userSchema,
+    input: userSchema as any,
     handler: async (input: User, { locals }) => {
         const runtime = locals.runtime;
 
