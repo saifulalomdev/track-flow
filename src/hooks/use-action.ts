@@ -6,7 +6,6 @@ export function useAction<TInput, TOutput>(
     actionFn: (input?: TInput) => Promise<TOutput>,
     options?: {
         onSuccess?: (data: TOutput) => void;
-        loadingMessage?: string;
     }
 ) {
     const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +15,6 @@ export function useAction<TInput, TOutput>(
         setIsLoading(true);
         setError(null);
 
-        const toastId = toast.loading(options?.loadingMessage || "Processing...");
 
         try {
             const result: any = await actionFn(input);
@@ -25,7 +23,7 @@ export function useAction<TInput, TOutput>(
                 throw new Error(result.message);
             }
 
-            toast.success(result?.message || "Success!", { id: toastId });
+            toast.success(result?.message || "Success!");
 
             if (options?.onSuccess) {
                 options.onSuccess(result);
@@ -35,7 +33,7 @@ export function useAction<TInput, TOutput>(
         } catch (e: any) {
             const errorMessage = e.message || "Something went wrong";
             setError(errorMessage);
-            toast.error(errorMessage, { id: toastId });
+            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }

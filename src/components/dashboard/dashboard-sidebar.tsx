@@ -15,7 +15,6 @@ interface DashboardSidebarProps {
 export default function DashboardSidebar({ className }: DashboardSidebarProps) {
 
     const { execute, isLoading } = useAction(actions.signOut, {
-        loadingMessage: "Signing out...",
         onSuccess: (data) => {
             window.location.href = "/dashboard";
         },
