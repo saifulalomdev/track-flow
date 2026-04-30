@@ -55,12 +55,10 @@ pnpm install
 2. **Database Setup**
 ```bash
 pnpm wrangler d1 migrations apply DB --local
-
 ```
 
 
 3. **Development**
 ```bash
 pnpm run dev
-
 ```

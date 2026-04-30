@@ -18,7 +18,7 @@ export default function SignInForm() {
     return (
         <Form {...form}>
             <Toaster />
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 px-4 max-w-sm w-full">
+            {/* <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 px-4 max-w-sm w-full">
                 <h1 className="text-3xl text-center">Sign In</h1>
                 <FormField
                     control={form.control}
@@ -50,7 +50,9 @@ export default function SignInForm() {
                          Sign up
                     </a>
                 </p>
-            </form>
+            </form> */}
+
+           
         </Form>
     )
 }

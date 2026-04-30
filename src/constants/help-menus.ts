@@ -11,8 +11,4 @@ export const helpMenus = [
         name: "Privacy Policy",
         href: ""
     },
-    {
-        name: "Contact Us",
-        href: ""
-    },
 ]

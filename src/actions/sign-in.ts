@@ -1,4 +1,4 @@
-import { user, signInSchema } from "@/db";
+import { user, signInSchema } from "@/db/schema";
 import { session } from "@/db/session";
 import { defineAction, ActionError } from "astro:actions";
 import { eq } from "drizzle-orm";

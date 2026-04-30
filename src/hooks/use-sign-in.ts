@@ -1,4 +1,3 @@
-import { signInSchema, type SignIn, } from "@/db/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { actions } from "astro:actions";
 import { useState } from "react";
@@ -9,7 +8,7 @@ export default function useSignIn() {
 
     const [isPending, setIsPending] = useState(false);
 
-    const form = useForm<SignIn>({
+    const form = useForm<any>({
         resolver: zodResolver(signInSchema),
         defaultValues: {
             email: "",

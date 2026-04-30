@@ -1,0 +1,4 @@
+// Authentication related tables
+export * from "./user";
+export * from "./account";
+export * from "./verification";

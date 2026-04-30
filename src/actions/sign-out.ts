@@ -1,4 +1,4 @@
-import { session } from "@/db";
+import { session } from "@/db/schema";
 import { ActionError } from "astro:actions";
 import { defineAction } from "astro:actions";
 import { eq } from "drizzle-orm";

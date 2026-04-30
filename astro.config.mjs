@@ -8,8 +8,8 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   output: "server",
   server: {
-      host: true,
-      port: 3000
+    host: true,
+    port: 3000
   },
 
   vite: {

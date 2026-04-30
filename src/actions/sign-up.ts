@@ -1,4 +1,4 @@
-import { user, userSchema, type User } from "@/db";
+import { user, userSchema, type User } from "@/db/schema";
 import { defineAction, ActionError } from "astro:actions";
 import { drizzle } from "drizzle-orm/d1";
 

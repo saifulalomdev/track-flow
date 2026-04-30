@@ -22,16 +22,15 @@ export default function Footer() {
                     </p>
                 </div>
 
-                {/* Useful links */}
+                {/* Navigation links */}
                 <div className='space-y-4'>
-                    <h3 className='text-xl font-bold text-primary'>Useful Links</h3>
+                    <h3 className='text-xl font-bold text-primary'>Navigation Links</h3>
                     <nav className='flex flex-col gap-2'>
                         {navItems.map(({ name, href }) => (
                             <a
                                 className='text-base opacity-75 hover:opacity-100 hover:text-primary transition-all hover:underline w-fit'
                                 key={name}
                                 href={href}
-                                target='_blank'
                             >
                                 {name}
                             </a>
@@ -83,6 +82,7 @@ export default function Footer() {
                                         className='border border-primary/80 p-2.5 text-primary/80 rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300'
                                         href={href}
                                         aria-label={name}
+                                        target='_blank'
                                     >
                                         <Icon size={18} />
                                     </a>
