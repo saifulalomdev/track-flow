@@ -28,8 +28,20 @@ export const userRelations = relations(user, ({ many }) => ({
     accounts: many(account),
 }));
 
+
 // 1. Base Schema (for internal use)
-const baseUserSchema = createInsertSchema(user);
+
+const NAME_MIN_LENGTH = 3;
+const NAME_MAX_LENGTH = 10;
+const PASSWORD_MIN_LENGTH = 8;
+
+const baseUserSchema = createInsertSchema(user, {
+    name: (s) =>
+        s.min(NAME_MIN_LENGTH, { message: `Name must be at least ${NAME_MIN_LENGTH} characters long` })
+            .max(NAME_MAX_LENGTH, { message: `Name must be no more than ${NAME_MAX_LENGTH} characters` }),
+
+    email: (s) => s.email({ message: "Please enter a valid email address" }),
+});
 
 // 2. Signup Schema (User provides Name and Email)
 // Note: You usually handle the password inside the Auth provider, 
@@ -41,7 +53,7 @@ export const signupSchema = baseUserSchema.omit({
     updatedAt: true,
     image: true
 }).extend({
-    password: z.string().min(8, "Password must be at least 8 characters long")
+    password: z.string().min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters long`)
 });
 
 // 3. Update Profile Schema (User only changes Name or Image)
@@ -51,7 +63,7 @@ export const updateUserSchema = baseUserSchema.pick({
 });
 
 // 4. Sign-in Schema (Validation only)
-export const signinSchema = signupSchema.omit({name: true});
+export const signinSchema = signupSchema.omit({ name: true });
 
 // Types based on the schemas above
 export type SignupInput = z.infer<typeof signupSchema>;

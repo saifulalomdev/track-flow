@@ -6,7 +6,7 @@ export function initAuth(env: Env) {
     const db = getDb(env.DB);
 
     return betterAuth({
-        database: drizzleAdapter(db, { provider: "sqlite"}),
-        emailAndPassword: {enabled: true}
+        database: drizzleAdapter(db, { provider: "sqlite" }),
+        emailAndPassword: { enabled: true }
     })
 }

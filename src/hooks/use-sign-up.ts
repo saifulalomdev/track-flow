@@ -1,8 +1,6 @@
-// import { userSchema, type User } from "@/db/user";
 import { signupSchema, type SignupInput } from "@/db/user";
-// import { zodResolver } from "@hookform/resolvers/zod";
-import { zodResolver } from "mantine-form-zod-resolver";
-import { actions } from "astro:actions";
+import { authClient } from "@/lib/auth-client";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -12,7 +10,7 @@ export default function useSignUp() {
     const [isPending, setIsPending] = useState(false);
 
     const form = useForm<SignupInput>({
-        validate: zodResolver(signupSchema),
+        resolver: zodResolver(signupSchema),
         defaultValues: {
             name: "",
             email: "",
@@ -22,24 +20,32 @@ export default function useSignUp() {
 
     async function onSubmit(values: SignupInput) {
         setIsPending(true);
-        console.log(values)
 
-        // const { data, error } = await actions.signUp(values);
+        try {
+            const { data, error } = await authClient.signUp.email({
+                email: values.email,
+                password: values.password,
+                name: values.name,
+            });
 
-        // setIsPending(false);
+            if (error) {
+                toast.error(error.message || "Signup failed");
+                return;
+            }
 
-        // if (error) {
-        //     toast.error(error.message || "Something went wrong!")
-        //     return;
-        // }
+            toast.success("Account created successfully!");
 
-        // if (data?.success) {
-        //     toast.success(data.message || "Welcome to Trackflow!")
-        //     form.reset();
-        //     setTimeout(() => {
-        //         window.location.href = "/sign-in";
-        //     }, 1500); // 1.5 seconds
-        // }
+            form.reset();
+
+            setTimeout(() => {
+                window.location.href = "/sign-in";
+            }, 1500);
+
+        } catch (err) {
+            toast.error("Something went wrong!");
+        } finally {
+            setIsPending(false);
+        }
     }
 
     return { form, onSubmit, isPending }
