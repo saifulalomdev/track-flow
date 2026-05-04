@@ -1,6 +1,6 @@
 {
 	"main": "dist/_worker.js/index.js",
-	"name": "waitlist",
+	"name": "trackflow",
 	"compatibility_date": "2026-03-03",
 	"compatibility_flags": [
 		"nodejs_compat",

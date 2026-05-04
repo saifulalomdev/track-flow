@@ -52,8 +52,6 @@ export const signupSchema = baseUserSchema.omit({
     createdAt: true,
     updatedAt: true,
     image: true
-}).extend({
-    password: z.string().min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters long`)
 });
 
 // 3. Update Profile Schema (User only changes Name or Image)
