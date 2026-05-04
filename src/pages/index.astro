@@ -6,10 +6,11 @@ import FeatureSection from "@/components/landing-page/feature-section";
 import PricingSection from "@/components/landing-page/pricing-section";
 import FAQAndFooterSection from "@/components/landing-page/FAQ-and-footer-section";
 import MainLayout from "@/layouts/main.astro";
-import "@/styles/global.css";
 
-const sessionId = Astro.cookies.get("session_id")?.value;
-const isUserSignedIn = !!sessionId;
+const session = Astro.locals.session;
+const user = Astro.locals.user;
+
+const isUserSignedIn = !!session;
 ---
 
 <MainLayout>

@@ -12,10 +12,13 @@ export function initAuth(env: Env) {
     emailAndPassword: { enabled: false },
     plugins: [
       magicLink({
-        sendMagicLink: async ({ email, token, url, metadata }, ctx) => {
-          console.log(email, token, url, metadata)
+        sendMagicLink: async ({ email, url }, ctx) => {
+          console.log(email, url)
         }
       })
     ],
+    advanced: {
+      useSecureCookies: true,
+    },
   });
 }

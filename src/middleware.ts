@@ -1,14 +1,12 @@
 import { defineMiddleware } from "astro:middleware";
 import { initAuth } from "./lib/auth";
 
-export const onRequest = defineMiddleware(async (context: any, next) => {
+export const onRequest = defineMiddleware(async (context, next) => {
   const auth = initAuth(context.locals.runtime.env);
 
   const session = await auth.api.getSession({
     headers: context.request.headers,
   });
-
-  console.log(session)
 
   if (session) {
     context.locals.user = session.user;
