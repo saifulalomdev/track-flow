@@ -1,7 +1,7 @@
 // @ts-check
+import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-import react from '@astrojs/react';
 import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
@@ -14,6 +14,9 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      external: ['better-auth', '@better-auth/drizzle-adapter']
+    },
     optimizeDeps: {
       exclude: ['better-auth']
     }
