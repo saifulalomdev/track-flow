@@ -1,4 +1,3 @@
-import "@/styles/global.css";
 import React, { useState } from 'react';
 import DashboardSidebar from '@/components/dashboard/dashboard-sidebar';
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
