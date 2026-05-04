@@ -7,8 +7,10 @@ export function initAuth(env: Env) {
   const db = getDb(env.DB);
 
   return betterAuth({
-    database: drizzleAdapter(db, { provider: "sqlite" }),
     baseURL: env.BETTER_AUTH_URL,
+
+    database: drizzleAdapter(db, { provider: "sqlite" }),
+    
     emailAndPassword: { enabled: false },
     plugins: [
       magicLink({

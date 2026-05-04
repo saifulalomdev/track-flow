@@ -13,7 +13,10 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    optimizeDeps: {
+      exclude: ['better-auth']
+    }
   },
 
   integrations: [react()],
