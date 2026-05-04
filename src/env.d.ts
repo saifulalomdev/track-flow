@@ -1,6 +1,6 @@
+// src/env.d.ts
 /// <reference types="astro/client" />
-
-export {};
+import type { User, Session } from 'better-auth'
 
 declare global {
   interface Env {
@@ -14,4 +14,16 @@ declare global {
     GITHUB_CLIENT_ID: string;
     GITHUB_CLIENT_SECRET: string;
   }
+
+  namespace App {
+    interface Locals {
+      user: User | null;
+      session: Session | null;
+      runtime: {
+        env: Env;
+      };
+    }
+  }
 }
+
+export { };

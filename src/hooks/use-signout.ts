@@ -9,17 +9,26 @@ export function useSignout() {
     try {
       setIsLoading(true);
 
-      await authClient.signOut();
-
-      toast.success("Signed out successfully");
-
-      window.location.href = "/auth/sign-in";
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            // This ensures the redirect only happens after the cookie is cleared
+            window.location.href = "/auth/sign-in";
+            toast.success("Signed out successfully");
+          },
+          onError: (ctx) => {
+            toast.error(ctx.error.message || "Failed to sign out");
+          }
+        }
+      });
     } catch (err: any) {
-      toast.error(err?.message || "Failed to sign out");
+      // This catch is still good for unexpected network errors
+      toast.error("A network error occurred");
     } finally {
       setIsLoading(false);
     }
   };
+
 
   return {
     signout,

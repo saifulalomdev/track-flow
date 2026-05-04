@@ -81,7 +81,7 @@ function LandingCTA({ className, signedIn }: { className?: string, signedIn?: bo
           Dashboard
         </Button>
       </a> :
-        <a href="/sign-in" className="w-full md:w-auto">
+        <a href="/auth/sign-in" className="w-full md:w-auto">
           <Button size="lg" className="w-full md:w-auto">
             Sign in
           </Button>
