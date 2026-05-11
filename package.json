@@ -8,7 +8,7 @@
     "preview": "astro preview",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "wrangler d1 migrations apply trackflow-db",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=waitlist",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=trackflow",
     "astro": "astro"
   },
   "dependencies": {
