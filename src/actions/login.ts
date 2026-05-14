@@ -1,13 +1,6 @@
+import { loginSchema } from '@/shcema/login';
 import { defineAction } from 'astro:actions';
-import { z } from 'astro:schema';
 import { SignJWT } from 'jose';
-
-export const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-});
-
-export type LoginInput = z.infer<typeof loginSchema>;
 
 export const login = defineAction({
     accept: 'json',
@@ -15,7 +8,6 @@ export const login = defineAction({
     handler: async (input, context) => {
         const { email, password } = input;
         const { env } = context.locals.runtime;
-        console.log(input)
 
         // 1. Validate Credentials against Environment Secrets
         if (email !== env.ADMIN_EMAIL || password !== env.ADMIN_PASSWORD) {

@@ -2,9 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from "sonner";
-import { loginSchema, type LoginInput } from "@/actions/login"; // Ensure type is exported
 import { actions } from "astro:actions";
 import { navigate } from "astro:transitions/client";
+import { type LoginInput, loginSchema } from "@/shcema/login";
 
 export default function useLogIn() {
   const [isPending, setIsPending] = useState(false);
@@ -13,7 +13,7 @@ export default function useLogIn() {
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: "", // Added password to default values
+      password: "",
     },
   });
 
