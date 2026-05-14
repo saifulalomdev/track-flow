@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { navItems } from "@/constants/nav-items";
 
 
-export default function PublicHeader({ signedIn = false }: { signedIn?: boolean }) {
+export default function PublicHeader() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -34,7 +34,7 @@ export default function PublicHeader({ signedIn = false }: { signedIn?: boolean 
         </nav>
 
         <div className="flex items-center gap-4 z-50">
-          <LandingCTA signedIn={signedIn} className="hidden md:block"/>
+          <LandingCTA className="hidden md:block"/>
           
           {/* Mobile Toggle Button */}
           <Button
@@ -66,27 +66,21 @@ export default function PublicHeader({ signedIn = false }: { signedIn?: boolean 
             {name} <ChevronRight/>
           </a>
         ))}
-        <LandingCTA signedIn={signedIn} className="px-6 mt-5"/>
+        <LandingCTA className="px-6 mt-5"/>
       </nav>
     </>
   );
 }
 
 
-function LandingCTA({ className, signedIn }: { className?: string, signedIn?: boolean }) {
+function LandingCTA({ className}: { className?: string }) {
   return (
     <div className={cn("flex flex-col gap-4 w-full border-white/10", className)}>
-      {signedIn ? <a href="/dashboard" className="w-full md:w-auto">
+      <a href="/dashboard" className="w-full md:w-auto">
         <Button size="lg" className="w-full md:w-auto">
           Dashboard
         </Button>
-      </a> :
-        <a href="/auth/sign-in" className="w-full md:w-auto">
-          <Button size="lg" className="w-full md:w-auto">
-            Sign in
-          </Button>
-        </a>
-      }
+      </a> 
     </div>
   )
 }
