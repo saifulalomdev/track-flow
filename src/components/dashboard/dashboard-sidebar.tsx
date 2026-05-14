@@ -5,14 +5,13 @@ import { LogOut, Settings } from 'lucide-react';
 import { PlanUsageStats } from './plan-usage-stats';
 import { adminNavItems } from '@/constants/admin-nav-items';
 import { Spinner } from '../ui/spinner';
-import { useSignout } from '@/hooks/use-signout';
 
 interface DashboardSidebarProps {
     className?: string
 }
 
 export default function DashboardSidebar({ className }: DashboardSidebarProps) {
-    const { isLoading, signout } = useSignout();
+    const { isLoading, signout } = "next" as any;
 
     return (
         <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-dvh bg-background flex flex-col justify-between z-30', className)}>
