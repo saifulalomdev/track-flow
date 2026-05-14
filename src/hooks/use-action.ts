@@ -1,43 +1,54 @@
-import { useState } from "react";
-import { toast } from "sonner";
-import { isActionError } from "astro:actions";
+// src/hooks/use-action.ts
+import { useState, useTransition } from 'react';
+import { toast } from 'sonner';
 
-export function useAction<TInput, TOutput>(
-    actionFn: (input?: TInput) => Promise<TOutput>,
-    options?: {
-        onSuccess?: (data: TOutput) => void;
-    }
+interface UseActionOptions<TData> {
+  onSuccess?: (data: TData) => void;
+  onError?: (error: string) => void;
+  successMessage?: string;
+}
+
+export function useAction<TInput, TData>(
+  actionFn: (input: TInput) => Promise<{ data?: TData; error?: any }>,
+  options?: UseActionOptions<TData>
 ) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
-    const execute = async (input?: TInput) => {
-        setIsLoading(true);
-        setError(null);
-
-
-        try {
-            const result: any = await actionFn(input);
-
-            if (isActionError(result)) {
-                throw new Error(result.message);
-            }
-
-            toast.success(result?.message || "Success!");
-
-            if (options?.onSuccess) {
-                options.onSuccess(result);
-            }
-
-            return result;
-        } catch (e: any) {
-            const errorMessage = e.message || "Something went wrong";
-            setError(errorMessage);
-            toast.error(errorMessage);
-        } finally {
-            setIsLoading(false);
+  const execute = (input: TInput) => {
+    setError(null);
+    
+    startTransition(async () => {
+      try {
+        const result = await actionFn(input);
+        
+        // Astro actions return error objects inside the response structure
+        if (result.error) {
+          const errMsg = result.error.message || "An unexpected error occurred.";
+          setError(errMsg);
+          if (options?.onError) options.onError(errMsg);
+          else toast.error(errMsg);
+          return;
         }
-    };
 
-    return { execute, isLoading, error };
+        if (options?.successMessage) {
+          toast.success(options.successMessage);
+        }
+
+        if (options?.onSuccess && result.data) {
+          options.onSuccess(result.data as TData);
+        }
+      } catch (err: any) {
+        const fallBackMsg = err.message || "Failed to execute mutation.";
+        setError(fallBackMsg);
+        toast.error(fallBackMsg);
+      }
+    });
+  };
+
+  return {
+    execute,
+    isLoading: isPending,
+    error,
+  };
 }

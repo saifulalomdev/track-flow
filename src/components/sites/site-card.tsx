@@ -6,17 +6,18 @@ import {
     CheckCircle2,
     Code2,
     Globe,
-    MoreVertical
+    MoreVertical,
+    Play
 } from 'lucide-react'
 import { Badge } from '../ui/badge'
 
 export interface SiteCardProps {
     id: string;
     url: string;
-    status: "active" | "inactive";
-    lastPing: string;
-    totalVisits: string;
-    avgDaily: string;
+    status?: "active" | "inactive";
+    lastPing?: string;
+    totalVisits?: string;
+    avgDaily?: string;
 };
 
 export default function SiteCard({ id, url, status, lastPing, totalVisits, avgDaily }: SiteCardProps) {
@@ -61,7 +62,7 @@ export default function SiteCard({ id, url, status, lastPing, totalVisits, avgDa
                         <Code2 className="w-4 h-4" /> Copy Script
                     </Button>
                     <Button variant="outline" className="gap-2">
-                        <BarChart3 className="w-4 h-4" /> View Report
+                        <Play className="w-4 h-4" /> Test
                     </Button>
                     <Button variant="outline" size="icon">
                         <MoreVertical className="w-4 h-4" />

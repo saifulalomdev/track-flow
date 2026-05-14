@@ -36,7 +36,7 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       drizzle-orm:
-        specifier: ^0.45.1
+        specifier: ^0.45.2
         version: 0.45.2(@cloudflare/workers-types@4.20260430.1)(@prisma/client@5.22.0)(@types/pg@8.20.0)(better-sqlite3@12.9.0)(kysely@0.28.16)(pg@8.20.0)
       drizzle-zod:
         specifier: ^0.8.3
