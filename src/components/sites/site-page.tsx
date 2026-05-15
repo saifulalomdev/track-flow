@@ -22,9 +22,10 @@ interface SitePageProps {
 }
 
 export default function SitePage({ initialWebsites }: SitePageProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [sites, setSites] = useState<Site[] | []>(initialWebsites)
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingSite, setEditingSite] = useState<Site | null>(null);
-  
+
   // Form Field States (Matching your Drizzle/Zod single source of truth schema)
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
@@ -33,8 +34,8 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
   const createAction = useAction(actions.createSite, {
     successMessage: "Website created successfully!",
     onSuccess: () => {
-      setIsOpen(false);
-      window.location.reload(); // Refresh the server-rendered container view
+      setIsDialogOpen(false);
+      window.location.reload();
     },
   });
 
@@ -42,7 +43,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
   const updateAction = useAction(actions.updateSite, {
     successMessage: "Website updated successfully!",
     onSuccess: () => {
-      setIsOpen(false);
+      setIsDialogOpen(false);
       window.location.reload();
     },
   });
@@ -62,7 +63,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
     setEditingSite(null);
     setTitle("");
     setUrl("");
-    setIsOpen(true);
+    setIsDialogOpen(true);
   };
 
   // Open modal for Updating
@@ -70,7 +71,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
     setEditingSite(site);
     setTitle(site.title);
     setUrl(site.url);
-    setIsOpen(true);
+    setIsDialogOpen(true);
   };
 
   // Handle Save (Dispatches the payload up to your Edge Services through the hooks)
@@ -99,45 +100,22 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
       </div>
 
       {/* Grid/List of Sites */}
-      {initialWebsites.length === 0 ? (
+      {sites.length === 0 ? (
         <DomainEmptyState />
       ) : (
         <div className="space-y-4">
-          {initialWebsites.map((site) => (
-            <div key={site.id} className="relative group">
-              <SiteCard {...site} />
-              
-              {/* Action Buttons Container */}
-              <div className="absolute top-4 right-4 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  disabled={isLoading}
-                  onClick={() => handleOpenUpdate(site)}
-                >
-                  <Edit2 className="w-4 h-4 text-muted-foreground hover:text-foreground" />
-                </Button>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  disabled={isLoading}
-                  onClick={() => {
-                    if (confirm("Are you sure you want to delete this site?")) {
-                      deleteAction.execute({ id: site.id });
-                    }
-                  }}
-                >
-                  <Trash2 className="w-4 h-4 text-destructive" />
-                </Button>
-              </div>
-            </div>
+          {sites.map((site) => (
+            <SiteCard
+              {...site}
+              onUpdate={() => handleOpenUpdate(site)}
+            />
           ))}
         </div>
       )}
 
       {/* Shared Dialog for Create / Update */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-106">
           <DialogHeader>
             <DialogTitle>
               {editingSite ? "Update Website" : "Add New Website"}
@@ -168,7 +146,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
               />
             </div>
             <DialogFooter className="pt-2">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)} disabled={isLoading}>
+              <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} disabled={isLoading}>
                 Cancel
               </Button>
               <Button type="submit" disabled={isLoading}>

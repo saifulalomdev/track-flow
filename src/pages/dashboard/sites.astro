@@ -5,9 +5,7 @@ import MainLayout from "@/layouts/main.astro";
 import { sites } from "@/db/schema";
 import { getDb } from "@/lib/get-db";
 
-// 1. Initialize context-aware DB on Cloudflare Edge Runtime
 const db = getDb(Astro.locals.runtime?.env);
-// 2. Query data live from D1 DB
 const activeWebsites = await db.select().from(sites);
 ---
 
