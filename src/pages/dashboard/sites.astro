@@ -10,7 +10,7 @@ const activeWebsites = await db.select().from(sites);
 ---
 
 <MainLayout>
-    <DashboardLayout client:visible>
+    <DashboardLayout client:load>
         <SitePage client:load initialWebsites={activeWebsites} />
     </DashboardLayout>
 </MainLayout>

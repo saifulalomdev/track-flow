@@ -100,12 +100,11 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
       </div>
 
       {/* Grid/List of Sites */}
-      {sites.length === 0 ? (
-        <DomainEmptyState />
-      ) : (
+      {sites.length === 0 ? (<DomainEmptyState />) : (
         <div className="space-y-4">
           {sites.map((site) => (
             <SiteCard
+              key={site.id}
               {...site}
               onUpdate={() => handleOpenUpdate(site)}
             />
