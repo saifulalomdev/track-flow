@@ -21,31 +21,27 @@ interface SitePageProps {
   initialWebsites: Site[];
 }
 
+const siteDefaultValue: Site = {
+  id: "",
+  isActive: true,
+  title: "",
+  url: ""
+}
 export default function SitePage({ initialWebsites }: SitePageProps) {
   const [sites, setSites] = useState<Site[] | []>(initialWebsites)
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingSite, setEditingSite] = useState<Site | null>(null);
-
-  // Form Field States (Matching your Drizzle/Zod single source of truth schema)
-  const [title, setTitle] = useState("");
-  const [url, setUrl] = useState("");
+  const [editingSite, setEditingSite] = useState<Site>(siteDefaultValue);
 
   // 1. Hook for Create Action
   const createAction = useAction(actions.createSite, {
     successMessage: "Website created successfully!",
-    onSuccess: () => {
-      setIsDialogOpen(false);
-      window.location.reload();
-    },
+    onSuccess: () => { setIsDialogOpen(false); },
   });
 
   // 2. Hook for Update Action
   const updateAction = useAction(actions.updateSite, {
     successMessage: "Website updated successfully!",
-    onSuccess: () => {
-      setIsDialogOpen(false);
-      window.location.reload();
-    },
+    onSuccess: () => { setIsDialogOpen(false); },
   });
 
   // 3. Hook for Delete Action
@@ -58,29 +54,30 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
 
   const isLoading = createAction.isLoading || updateAction.isLoading || deleteAction.isLoading;
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditingSite(p => ({ ...p, [name]: value }))
+  };
   // Open modal for Creating
   const handleOpenCreate = () => {
-    setEditingSite(null);
-    setTitle("");
-    setUrl("");
+    setEditingSite(siteDefaultValue);
     setIsDialogOpen(true);
   };
 
   // Open modal for Updating
   const handleOpenUpdate = (site: Site) => {
     setEditingSite(site);
-    setTitle(site.title);
-    setUrl(site.url);
     setIsDialogOpen(true);
   };
 
   // Handle Save (Dispatches the payload up to your Edge Services through the hooks)
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    const { title, url, id } = editingSite;
     if (!title.trim() || !url.trim()) return;
 
-    if (editingSite) {
-      updateAction.execute({ id: editingSite.id, title, url });
+    if (id) {
+      updateAction.execute(editingSite);
     } else {
       createAction.execute({ title, url });
     }
@@ -104,9 +101,10 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
         <div className="space-y-4">
           {sites.map((site) => (
             <SiteCard
-              key={site.id}
               {...site}
+              key={site.id}
               onUpdate={() => handleOpenUpdate(site)}
+              onDelete={() => deleteAction.execute({ id: site.id })}
             />
           ))}
         </div>
@@ -125,8 +123,9 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
               <Label htmlFor="title">Website Name</Label>
               <Input
                 id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={editingSite.title}
+                name="title"
+                onChange={handleChange}
                 disabled={isLoading}
                 placeholder="My Awesome App"
                 required
@@ -136,9 +135,10 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
               <Label htmlFor="url">Website URL</Label>
               <Input
                 id="url"
+                name="url"
                 type="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
+                value={editingSite.url}
+                onChange={handleChange}
                 disabled={isLoading}
                 placeholder="https://example.com"
                 required
@@ -149,7 +149,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
                 Cancel
               </Button>
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Saving..." : editingSite ? "Save Changes" : "Create Site"}
+                {isLoading ? "Saving..." : editingSite.id ? "Save Changes" : "Create Site"}
               </Button>
             </DialogFooter>
           </form>

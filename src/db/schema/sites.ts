@@ -49,7 +49,9 @@ export const createSiteSchema = createInsertSchema(sites, {
 }).omit({
     id: true,
 });
-export const updateSiteSchema = createSiteSchema.partial()
+export const updateSiteSchema = createSiteSchema.partial().extend({
+    id: z.uuid()
+})
 
 export const selectSiteSchema = createSelectSchema(sites);
 

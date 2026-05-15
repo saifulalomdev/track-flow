@@ -4,18 +4,31 @@ import {
     Play,
     Trash2,
     Pencil,
-    CheckCircle2, // UI for active status
-    AlertCircle   // UI for inactive status
+    AlertCircle,
+    CheckCircle2,
 } from 'lucide-react'
 import type { Site } from '@/db/schema'
 import CopyToClipboard from '../ui/copy-to-clipboard'
 import { getBaseUrl } from '@/lib/get-base-url'
 import { cn } from '@/lib/utils'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 interface SiteCardProps extends Site {
     onUpdate?: () => void;
     onDelete?: () => void;
     onTest?: () => void;
+    isDeleting?: boolean;
+    
 }
 
 export default function SiteCard({
@@ -23,6 +36,7 @@ export default function SiteCard({
     url,
     title,
     isActive,
+    isDeleting,
     onTest,
     onDelete,
     onUpdate
@@ -36,14 +50,14 @@ export default function SiteCard({
             <div className="flex items-center gap-4 w-full md:w-auto">
                 <div className={cn(
                     "p-2.5 rounded-xl border transition-colors duration-200",
-                    isActive 
-                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400" 
+                    isActive
+                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
                         : "border-neutral-800 bg-neutral-900 text-neutral-500"
                 )}>
                     {isActive ? (
-                        <CheckCircle2/>
+                        <CheckCircle2 />
                     ) : (
-                        <AlertCircle/>
+                        <AlertCircle />
                     )}
                 </div>
 
@@ -69,9 +83,29 @@ export default function SiteCard({
                 <Button onClick={onUpdate} variant="outline" size="icon">
                     <Pencil className="h-4 w-4" />
                 </Button>
-                <Button onClick={onDelete} variant="destructive" size="icon">
-                    <Trash2 className="h-4 w-4" />
-                </Button>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive" size="icon">
+                            <Trash2 className="h-4 w-4" />
+                        </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your
+                                account from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction variant="destructive" onClick={onDelete}>
+                              {isDeleting ? "Deleteing website and its all data..." : "Delete Site & All related data"}  
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+
             </div>
         </Card>
     )

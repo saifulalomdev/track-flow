@@ -23,6 +23,7 @@ export const updateSite = defineAction({
     handler: async (input, context) => {
         const env = context.locals.runtime?.env;
         const db = getDb(env);
+        console.log(input)
 
         const { id, ...data } = input;
         const updatedSite = await siteService.update(db, id, data);
