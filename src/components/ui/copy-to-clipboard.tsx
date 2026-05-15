@@ -22,7 +22,7 @@ export default function CopyToClipboard({ title, data, errorMessage, successMess
 
   return (
     <Button onClick={handleCopy} variant="outline" className="gap-2">
-      <Code2 className="w-4 h-4" /> {title}
+      <Code2/> {title}
     </Button>
   )
 }
