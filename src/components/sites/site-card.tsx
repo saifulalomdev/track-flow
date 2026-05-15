@@ -1,13 +1,18 @@
 import { Card } from '../ui/card'
 import { Button } from "@/components/ui/button"
 import {
-    MoreVertical,
+    Play,
     Globe,
-    Play
+    Trash2,
+    EllipsisVerticalIcon,
+    MoreVertical,
+    ExternalLink,
+    Pencil
 } from 'lucide-react'
 import type { Site } from '@/db/schema'
 import CopyToClipboard from '../ui/copy-to-clipboard'
 import { getBaseUrl } from '@/lib/get-base-url'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/custom-dropdown'
 
 interface SiteCardProps extends Site {
     onUpdate?: () => void;
@@ -30,13 +35,11 @@ export default function SiteCard({
 
     return (
         <Card key={id} className="border-white/10 bg-background/50 justify-between gap-6 p-6 flex flex-col md:flex-row">
-            <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/10 rounded-xl relative">
-                    <Globe className="w-6 h-6 text-primary" />
-                </div>
+            <div className="flex items-center gap-4">
+                <Globe className="w-6 h-6 text-primary" />
                 <div>
                     <h3 className="font-bold text-lg">{title}</h3>
-                    <h3 className="text-sm">{url}</h3>
+                    <h3 className="text-sm opacity-70">{url}</h3>
                 </div>
             </div>
 
@@ -52,10 +55,32 @@ export default function SiteCard({
                 <Button onClick={onTest} variant="outline" className="gap-2">
                     <Play className="w-4 h-4" /> Test
                 </Button>
+                
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="icon">
+                            <MoreVertical className="w-4 h-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
 
-                <Button variant="outline" size="icon">
-                    <MoreVertical className="w-4 h-4" />
-                </Button>
+                        <DropdownMenuItem onClick={() => window.open(url, '_blank')}>
+                            <ExternalLink className="mr-2 h-4 w-4" /> Visit Site
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem onClick={onUpdate}>
+                            <Pencil className="mr-2 h-4 w-4" /> Edit Site
+                        </DropdownMenuItem>
+
+                        <DropdownMenuSeparator />
+
+                        <DropdownMenuItem onClick={onDelete} className="text-destructive">
+                            <Trash2 className="mr-2 h-4 w-4" /> Delete Site
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </Card>
     )

@@ -91,7 +91,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row gap-3 justify-between md:items-end">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Websites</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Websites</h1>
           <p className="text-muted-foreground">Track and manage your websites.</p>
         </div>
         <Button onClick={handleOpenCreate} disabled={isLoading} className="gap-2 w-full md:w-auto">
