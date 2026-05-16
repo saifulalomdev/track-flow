@@ -3,19 +3,11 @@ import React, { useState } from "react";
 import { actions } from "astro:actions";
 import { useAction } from "@/hooks/use-action";
 import { Button } from "@/components/ui/button";
-import { Plus, Edit2, Trash2 } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import SiteCard from "@/components/sites/site-card";
+import { Plus } from "lucide-react";
 import DomainEmptyState from "@/components/sites/domain-empty-state";
+import SiteCard from "@/components/sites/site-card";
 import type { Site } from "@/db/schema";
+import SiteForm from "./site-form";
 
 interface SitePageProps {
   initialWebsites: Site[];
@@ -71,15 +63,13 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
   };
 
   // Handle Save (Dispatches the payload up to your Edge Services through the hooks)
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    const { title, url, id } = editingSite;
-    if (!title.trim() || !url.trim()) return;
+  const handleSave = (data: Partial<Site>) => {
+    const { id, ...restData } = data;
 
     if (id) {
       updateAction.execute(editingSite);
     } else {
-      createAction.execute({ title, url });
+      createAction.execute(restData);
     }
   };
 
@@ -110,51 +100,13 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
         </div>
       )}
 
-      {/* Shared Dialog for Create / Update */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-106">
-          <DialogHeader>
-            <DialogTitle>
-              {editingSite ? "Update Website" : "Add New Website"}
-            </DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSave} className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="title">Website Name</Label>
-              <Input
-                id="title"
-                value={editingSite.title}
-                name="title"
-                onChange={handleChange}
-                disabled={isLoading}
-                placeholder="My Awesome App"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="url">Website URL</Label>
-              <Input
-                id="url"
-                name="url"
-                type="url"
-                value={editingSite.url}
-                onChange={handleChange}
-                disabled={isLoading}
-                placeholder="https://example.com"
-                required
-              />
-            </div>
-            <DialogFooter className="pt-2">
-              <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} disabled={isLoading}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Saving..." : editingSite.id ? "Save Changes" : "Create Site"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <SiteForm
+        onSubmit={handleSave}
+        isLoading={isLoading}
+        initialData={editingSite}
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+      />
     </div>
   );
 }
