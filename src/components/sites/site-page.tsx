@@ -3,19 +3,11 @@ import React, { useState } from "react";
 import { actions } from "astro:actions";
 import { useAction } from "@/hooks/use-action";
 import { Button } from "@/components/ui/button";
-import { Plus, Edit2, Trash2 } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import SiteCard from "@/components/sites/site-card";
+import { Plus } from "lucide-react";
 import DomainEmptyState from "@/components/sites/domain-empty-state";
+import SiteCard from "@/components/sites/site-card";
 import type { Site } from "@/db/schema";
+import SiteForm from "./site-form";
 
 interface SitePageProps {
   initialWebsites: Site[];
@@ -35,29 +27,38 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
   // 1. Hook for Create Action
   const createAction = useAction(actions.createSite, {
     successMessage: "Website created successfully!",
-    onSuccess: () => { setIsDialogOpen(false); },
+    onSuccess: ({ data }) => {
+      if (data && "id" in data) {
+        setSites((prevSites) => [...prevSites, data as Site]);
+      }
+      setIsDialogOpen(false);
+    },
   });
 
   // 2. Hook for Update Action
   const updateAction = useAction(actions.updateSite, {
     successMessage: "Website updated successfully!",
-    onSuccess: () => { setIsDialogOpen(false); },
+    onSuccess: ({ data }) => {
+      if (data && data.id) {
+        setSites((prevSites) => prevSites.map((site) => site.id === data.id ? (data as Site) : site))
+      }
+      setIsDialogOpen(false);
+    }
   });
 
   // 3. Hook for Delete Action
   const deleteAction = useAction(actions.deleteSite, {
     successMessage: "Website deleted successfully!",
-    onSuccess: () => {
-      window.location.reload();
+    onSuccess: ({ data: { id } }) => {
+      if (id) {
+        setSites((prevSites) => prevSites.filter((site) => site.id !== id));
+      }
+      setIsDialogOpen(false);
     },
   });
 
   const isLoading = createAction.isLoading || updateAction.isLoading || deleteAction.isLoading;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setEditingSite(p => ({ ...p, [name]: value }))
-  };
   // Open modal for Creating
   const handleOpenCreate = () => {
     setEditingSite(siteDefaultValue);
@@ -71,15 +72,13 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
   };
 
   // Handle Save (Dispatches the payload up to your Edge Services through the hooks)
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    const { title, url, id } = editingSite;
-    if (!title.trim() || !url.trim()) return;
+  const handleSave = (data: Partial<Site>) => {
+    const { id, ...restData } = data;
 
     if (id) {
-      updateAction.execute(editingSite);
+      updateAction.execute(data);
     } else {
-      createAction.execute({ title, url });
+      createAction.execute(restData);
     }
   };
 
@@ -110,51 +109,13 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
         </div>
       )}
 
-      {/* Shared Dialog for Create / Update */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-106">
-          <DialogHeader>
-            <DialogTitle>
-              {editingSite ? "Update Website" : "Add New Website"}
-            </DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSave} className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="title">Website Name</Label>
-              <Input
-                id="title"
-                value={editingSite.title}
-                name="title"
-                onChange={handleChange}
-                disabled={isLoading}
-                placeholder="My Awesome App"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="url">Website URL</Label>
-              <Input
-                id="url"
-                name="url"
-                type="url"
-                value={editingSite.url}
-                onChange={handleChange}
-                disabled={isLoading}
-                placeholder="https://example.com"
-                required
-              />
-            </div>
-            <DialogFooter className="pt-2">
-              <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} disabled={isLoading}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Saving..." : editingSite.id ? "Save Changes" : "Create Site"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <SiteForm
+        onSubmit={handleSave}
+        isLoading={isLoading}
+        initialData={editingSite}
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+      />
     </div>
   );
 }
