@@ -27,29 +27,38 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
   // 1. Hook for Create Action
   const createAction = useAction(actions.createSite, {
     successMessage: "Website created successfully!",
-    onSuccess: () => { setIsDialogOpen(false); },
+    onSuccess: ({ data }) => {
+      if (data && "id" in data) {
+        setSites((prevSites) => [...prevSites, data as Site]);
+      }
+      setIsDialogOpen(false);
+    },
   });
 
   // 2. Hook for Update Action
   const updateAction = useAction(actions.updateSite, {
     successMessage: "Website updated successfully!",
-    onSuccess: () => { setIsDialogOpen(false); },
+    onSuccess: ({ data }) => {
+      if (data && data.id) {
+        setSites((prevSites) => prevSites.map((site) => site.id === data.id ? (data as Site) : site))
+      }
+      setIsDialogOpen(false);
+    }
   });
 
   // 3. Hook for Delete Action
   const deleteAction = useAction(actions.deleteSite, {
     successMessage: "Website deleted successfully!",
-    onSuccess: () => {
-      window.location.reload();
+    onSuccess: ({ data: { id } }) => {
+      if (id) {
+        setSites((prevSites) => prevSites.filter((site) => site.id !== id));
+      }
+      setIsDialogOpen(false);
     },
   });
 
   const isLoading = createAction.isLoading || updateAction.isLoading || deleteAction.isLoading;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setEditingSite(p => ({ ...p, [name]: value }))
-  };
   // Open modal for Creating
   const handleOpenCreate = () => {
     setEditingSite(siteDefaultValue);
@@ -67,7 +76,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
     const { id, ...restData } = data;
 
     if (id) {
-      updateAction.execute(editingSite);
+      updateAction.execute(data);
     } else {
       createAction.execute(restData);
     }
