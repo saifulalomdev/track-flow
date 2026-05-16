@@ -7,23 +7,16 @@ import { CloudDownload, FilterIcon } from "lucide-react";
 import { stats } from "@/dummy-data/stats";
 import { recentConversions } from "@/dummy-data/recent-conversions";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
 ---
 
 <MainLayout>
     <DashboardLayout client:visible>
-        <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+        <PageHeader
+            title="Overview"
+            description="Welcome back. Here's what's happening today."
         >
-            <div class="space-y-1">
-                <h1 class="text-2xl md:text-3xl font-bold tracking-tight">
-                    Overview
-                </h1>
-                <p class="text-sm md:text-base text-muted-foreground">
-                    Welcome back. Here&apos;s what&apos;s happening today.
-                </p>
-            </div>
-
-            <div class="flex items-center gap-2 md:gap-3">
+            <div class="flex items-center gap-2 md:gap-3 w-full">
                 <Button
                     variant="outline"
                     className="flex-1 sm:flex-none text-xs md:text-sm"
@@ -39,7 +32,8 @@ import { Badge } from "@/components/ui/badge";
                     <span>Create UTM</span>
                 </Button>
             </div>
-        </div>
+        </PageHeader>
+
         {/* STATS GRID */}
         <div class="grid mt-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {

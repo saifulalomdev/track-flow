@@ -8,6 +8,7 @@ import DomainEmptyState from "@/components/sites/domain-empty-state";
 import SiteCard from "@/components/sites/site-card";
 import type { Site } from "@/db/schema";
 import SiteForm from "./site-form";
+import { PageHeader } from "../ui/page-header";
 
 interface SitePageProps {
   initialWebsites: Site[];
@@ -84,16 +85,14 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
 
   return (
     <div className="max-w-6xl mx-auto space-y-10">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row gap-3 justify-between md:items-end">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Websites</h1>
-          <p className="text-muted-foreground">Track and manage your websites.</p>
-        </div>
+      <PageHeader
+        title="Websites"
+        description="Track and manage your websites."
+      >
         <Button onClick={handleOpenCreate} disabled={isLoading} className="gap-2 w-full md:w-auto">
           <Plus className="w-4 h-4" /> Add New Site
         </Button>
-      </div>
+      </PageHeader>
 
       {/* Grid/List of Sites */}
       {sites.length === 0 ? (<DomainEmptyState />) : (
