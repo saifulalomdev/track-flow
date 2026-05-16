@@ -8,8 +8,8 @@ An edge-native, privacy-first web analytics platform engineered for zero-latency
 
 * [🧐 What is TrackFlow?](#-what-is-trackflow)
 * [🎯 Why It Matters](#-why-it-matters)
-  * For Business
-  * For Architecture
+  * [For Business](#for-business)
+  * [For Architecture](#for-architecture)
 
 
 * [🛠️ Architectural Choices: The "Why"](#️-architectural-choices-the-why)
@@ -140,7 +140,7 @@ Prisma relies on a heavy, pre-compiled Rust binary engine tool wrapper that must
 
 1. **Clone and Install Dependencies:**
 ```bash
-git clone [https://github.com/your-username/track-flow.git](https://github.com/your-username/track-flow.git)
+git clone https://github.com/saifulalomdev/track-flow.git
 cd track-flow
 pnpm install
 
@@ -152,7 +152,7 @@ pnpm install
 pnpm run db:generate
 ```
 
-3. **Generate Local Database Migrations:**
+3. **Migrate Local Database Migrations:**
 ```bash
 pnpm run db:migrate
 ```
@@ -162,7 +162,5 @@ pnpm run db:migrate
 ```bash
 pnpm dev
 ```
-
-
 
 Your local edge environment is now running dynamically at `http://localhost:3000`.
