@@ -1,166 +1,141 @@
-# 📊 TrackFlow
+# TrackFlow
 
-An edge-native, privacy-first web analytics platform engineered for zero-latency event ingestion and real-time dashboard tracking. Built entirely on top of the Cloudflare network layer.
+TrackFlow is a privacy-first web analytics platform hosted at [trackflow.saifulalom.com](https://trackflow.saifulalom.com). It helps website owners track visits, unique users, traffic sources, and conversions with a lightweight edge-based setup.
 
----
+## What it does
 
-## 🗺️ Table of Contents
+TrackFlow collects website event data and turns it into a simple dashboard that shows:
+- total visits
+- unique visitors
+- active sites
+- conversion value
+- traffic trends by day, week, month, and year
+- traffic source breakdown
+- country and platform breakdown
 
-* [🧐 What is TrackFlow?](#-what-is-trackflow)
-* [🎯 Why It Matters](#-why-it-matters)
-  * [For Business](#for-business)
-  * [For Architecture](#for-architecture)
+## Why I built it
 
+I built TrackFlow to create a faster and simpler analytics tool for small businesses, startups, and freelance clients who need useful insights without heavy tracking scripts or expensive tooling.
 
-* [🛠️ Architectural Choices: The "Why"](#️-architectural-choices-the-why)
-* [🚫 Architectural Choices: The "Why Not"](#-architectural-choices-the-why-not-levant)
-* [📂 Project Structure](#-project-structure)
-* [🚀 Getting Started](#-getting-started)
-* [Prerequisites](#prerequisites)
-* [Local Development Setup](#local-development-setup)
+## Key features
 
+- Lightweight tracking script.
+- Event ingestion from websites.
+- Dashboard with site filters.
+- Time range filters for week, month, and year.
+- Unique visitor and session tracking.
+- Traffic source, country, and platform analytics.
+- Conversion tracking.
+- Admin access for managing data.
 
+## Who it is for
 
----
+TrackFlow is useful for:
+- freelancers building analytics or reporting tools for clients
+- small businesses that want simple website insights
+- startups that need lightweight dashboards
+- developers who want a privacy-focused analytics solution
 
-## 🧐 What is TrackFlow?
+## How it works
 
-TrackFlow is a lightweight, self-hosted web analytics infrastructure that replaces heavy, cookie-based tracking setups with a high-performance, privacy-focused tracking script (`pixel.js`). It securely captures, streams, and visualizes web interaction events directly from the network edge to a localized relational datastore.
+1. A website loads the tracking script.
+2. The script sends event data to TrackFlow.
+3. The backend validates and stores the data.
+4. Dashboard data is read from the database and cached for fast access.
+5. The admin dashboard shows analytics for each selected site.
 
----
+## Tech stack
 
-## 🎯 Why It Matters
+- Astro
+- React
+- TypeScript
+- Hono
+- Cloudflare Workers
+- Cloudflare D1
+- Cloudflare KV
+- Drizzle ORM
+- GitHub Actions
 
-### For Business
+## Architecture
 
-* **Unbeatable Performance Costs:** Running workloads entirely on a serverless edge environment reduces infrastructure bills down to near-zero margins at low to medium scales.
-* **Flawless Core Web Vitals:** The lightweight tracking script executes asynchronously without blocking the main browser execution thread, ensuring your analytics script never degrades your site's SEO or Google Lighthouse scores.
-* **Privacy Compliance by Design:** TrackFlow operates completely without persistent third-party tracking cookies, ensuring effortless alignment with modern global data privacy standards (GDPR, CCPA).
+TrackFlow is built for the Cloudflare edge environment, so it stays lightweight and fast.
 
-### For Architecture
+- **Astro** is used for the frontend and dashboard.
+- **Cloudflare D1** stores structured analytics data.
+- **Cloudflare KV** is used for fast dashboard reads and cached values.
+- **Drizzle ORM** provides type-safe database access.
+- **Cloudflare Queues** will be used later for faster ingestion and background processing.
 
-* **Zero Cold Starts:** Applications deploy globally across Cloudflare's edge network, ensuring instant, sub-millisecond responses worldwide.
-* **Predictable Design:** Built on top of strict, type-safe data validation contracts that catch schema anomalies before compilation, ensuring extreme system resilience.
-* **Minimal Boundary Overhead:** Server actions, edge database interactions, and user interface island layouts coexist inside a single integrated repository configuration.
+## Security
 
----
+TrackFlow is designed with simple and practical security in mind:
+- admin login protected by runtime secrets
+- validation before saving event data
+- separate dashboard access
+- planned rate limiting for ingestion
+- anonymous tracking by default unless identity is available
 
-## 🛠️ Architectural Choices: The "Why"
-
-Our technical stack is selected for maximum throughput efficiency, strict type-safety, and minimal cold-start overhead.
-
-```
-                  ┌──────────────────────────────────────────┐
-                  │          Edge Network (Astro)            │
-                  │   - Fast Server-Side Rendering           │
-                  │   - Lightweight Client Hydration         │
-                  └────────────────────┬─────────────────────┘
-                                       │
-                        ┌──────────────┴──────────────┐
-                        ▼                             ▼
-          ┌───────────────────────────┐ ┌───────────────────────────┐
-          │  Ingestion Pipeline       │ │  Management Dashboard     │
-          │  - `/api/events` Endpoints│ │  - Real-time Analytics    │
-          │  - Low Latency Edge Workers│ │  - Site Administration    │
-          └─────────────┬─────────────┘ └─────────────┬─────────────┘
-                        │                             │
-                        └──────────────┬──────────────┘
-                                       │  (Type-Safe Queries via Drizzle)
-                                       ▼
-                  ┌──────────────────────────────────────────┐
-                  │       Cloudflare D1 (SQLite DB)          │
-                  │   - Localized Data Access at the Edge    │
-                  │   - Zero Connection Pool Management      │
-                  └──────────────────────────────────────────┘
-
-```
-
-### Why Astro?
-
-Astro provides server-side rendering (SSR) speeds that rival static sites. Its **Islands Architecture** ensures that dashboard shell pages remain pure, lightweight HTML, while highly interactive visual panels hydrate independently. This eliminates bloated client-side framework runtime overhead.
-
-### Why Cloudflare D1?
-
-D1 brings native, serverless SQLite compliance directly to edge worker threads. This places your storage architecture right beside your code execution compute, completely avoiding the network round-trip delays common in centralized cloud datacenters.
-
-### Why Drizzle ORM?
-
-Drizzle functions as a lightweight, type-safe SQL query generator rather than a heavy, magical abstraction layer. It matches database table schemas exactly to TypeScript compiler types, allowing you to run raw SQL performance speeds without the runtime penalty.
-
----
-
-## 🚫 Architectural Choices: The "Why Not Levant"
-
-Every architectural paradigm involves explicit trade-offs. Here is why alternative industry-standard technologies were excluded from our production pipeline:
-
-### ❌ Why Not Next.js?
-
-Next.js features a massive framework runtime that adds unnecessary complexity and weight. It relies heavily on traditional Node.js layer APIs that frequently clash with modern V8 edge runtimes. Astro offers a leaner container footprint and native compatibility with serverless environments.
-
-### ❌ Why Not a Separate Backend API Server?
-
-Splitting frontend views and backend intake logic into separate microservices introduces unnecessary API communication overhead, duplicate type definitions, and complex orchestration tracking. By leveraging **Astro Actions**, frontend UI views directly trigger backend edge handlers with full type safety across network boundaries.
-
-### ❌ Why Not PostgreSQL?
-
-Traditional PostgreSQL databases require persistent connection pools, complex VPC network security configurations, and expensive compute sizing models. D1 scales dynamically on a serverless pricing index, eliminating connection allocation overhead at the network edge.
-
-### ❌ Why Not Prisma?
-
-Prisma relies on a heavy, pre-compiled Rust binary engine tool wrapper that must be initiated on start. This architecture creates significant bundle bloat and deployment limitations in V8 engine environments like Cloudflare Workers. Drizzle compiles down to pure JavaScript queries, making it much faster at the edge.
-
----
-
-## 📂 Project Structure
+## Project structure
 
 ```text
-├── src/
-│   ├── actions/          # Type-safe form mutations & transaction pipelines
-│   ├── components/       # Composable UI primitives, layouts, & page forms
-│   ├── db/               # Drizzle database schemas & edge query services
-│   ├── hooks/            # Client state & fetch synchronization logic
-│   └── pages/            # App view routing & analytics API ingestion endpoints
-├── public/               # Static assets & asynchronous client tracking scripts (`pixel.js`)
-├── wrangler.jsonc        # Cloudflare architecture distribution manifest
-└── astro.config.mjs      # Astro compiler configuration lifecycle
+src/
+├── actions/       # app actions and mutations
+├── components/    # UI components
+├── db/            # database schema and queries
+├── hooks/         # client-side logic
+└── pages/         # routes and API endpoints
 
+public/
+└── pixel.js       # tracking script
 ```
 
----
+## Local development
 
-## 🚀 Getting Started
+### Requirements
+- Node.js 18+
+- pnpm
+- Wrangler CLI
 
-### Prerequisites
+### Setup
 
-* **Node.js** (v18 or higher)
-* **pnpm** (Preferred fast package manager)
-* **Wrangler CLI** (Installed globally: `npm i -g wrangler`)
-
-### Local Development Setup
-
-1. **Clone and Install Dependencies:**
 ```bash
 git clone https://github.com/saifulalomdev/track-flow.git
 cd track-flow
 pnpm install
-
-```
-
-
-2. **Generate Local Database Migrations:**
-```bash
 pnpm run db:generate
-```
-
-3. **Migrate Local Database Migrations:**
-```bash
 pnpm run db:migrate
-```
-
-
-3. **Run the Edge Development Environment:**
-```bash
 pnpm dev
 ```
 
-Your local edge environment is now running dynamically at `http://localhost:3000`.
+## Deployment
+
+TrackFlow is deployed on Cloudflare and available at:
+[trackflow.saifulalom.com](https://trackflow.saifulalom.com)
+
+## Freelance value
+
+This project shows that I can build:
+- analytics dashboards
+- admin panels
+- event tracking systems
+- client reporting tools
+- edge-deployed web apps
+- database-backed business tools
+
+## What I learned
+
+This project helped me improve my skills in:
+- backend development
+- database design
+- edge deployment
+- analytics workflows
+- product thinking
+- building real-world software for businesses
+
+## Contact
+
+Built by Saiful Alom.
+
+- GitHub: [saifulalomdev](https://github.com/saifulalomdev)
+- Portfolio: [saifulalom.com](https://saifulalom.com)
+- TrackFlow: [trackflow.saifulalom.com](https://trackflow.saifulalom.com)
