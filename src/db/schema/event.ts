@@ -3,6 +3,7 @@ import { generateUUID } from '@/lib/generate-uuid';
 import { sql } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
+import { site } from './site';
 
 // ==========================================
 // 1. DOMAIN CONFIGURATION
@@ -14,12 +15,14 @@ export const EVENT_RULES = {
 // ==========================================
 // 2. DATABASE TABLE DEFINITION
 // ==========================================
-export const events = sqliteTable("event", {
+export const event = sqliteTable("event", {
   id: text("id")
     .notNull()
     .primaryKey()
     .$defaultFn(() => generateUUID()),
-  websiteId: text("website_id").notNull(),
+  websiteId: text("website_id")
+    .references(() => site.id, { onDelete: "cascade" })
+    .notNull(),
   sessionId: text("session_id").notNull(),
   path: text("path").notNull(),
   pageTitle: text("page_title").notNull(),
@@ -53,7 +56,7 @@ export const events = sqliteTable("event", {
 // ==========================================
 // src/db/schema/event.ts
 
-export const createEventSchema = createInsertSchema(events, {
+export const createEventSchema = createInsertSchema(event, {
   websiteId: z.string().uuid({ message: "Invalid tracking token identifier string." }),
   sessionId: z.string().min(1, { message: "Active tracking session token required." }),
   path: z.string().startsWith("/", { message: "Root relative directory structure required." }),
@@ -79,7 +82,7 @@ export const createEventSchema = createInsertSchema(events, {
   timestamp: true,
 });
 
-export const selectEventSchema = createSelectSchema(events);
+export const selectEventSchema = createSelectSchema(event);
 
 // ==========================================
 // 4. TYPESCRIPT TYPES

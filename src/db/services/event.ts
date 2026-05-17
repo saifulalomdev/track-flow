@@ -1,5 +1,5 @@
 import { eq, and, gte, lte, desc } from "drizzle-orm";
-import { events } from "../schema"; 
+import { event } from "../schema"; 
 import type { NewTrackFlowEvent, TrackFlowEvent } from "../schema/event";
 import type { D1Instance } from "@/lib/get-db";
 
@@ -9,7 +9,7 @@ export const eventService = {
    */
   async ingest(db: D1Instance, data: NewTrackFlowEvent): Promise<TrackFlowEvent> {
     const [newEvent] = await db
-      .insert(events)
+      .insert(event)
       .values(data)
       .returning();
       
@@ -26,9 +26,9 @@ export const eventService = {
   ): Promise<TrackFlowEvent[]> {
     return await db
       .select()
-      .from(events)
-      .where(eq(events.websiteId, websiteId))
-      .orderBy(desc(events.timestamp))
+      .from(event)
+      .where(eq(event.websiteId, websiteId))
+      .orderBy(desc(event.timestamp))
       .limit(limitNum);
   },
 
@@ -43,14 +43,14 @@ export const eventService = {
   ): Promise<TrackFlowEvent[]> {
     return await db
       .select()
-      .from(events)
+      .from(event)
       .where(
         and(
-          eq(events.websiteId, websiteId),
-          gte(events.timestamp, startDateISO),
-          lte(events.timestamp, endDateISO)
+          eq(event.websiteId, websiteId),
+          gte(event.timestamp, startDateISO),
+          lte(event.timestamp, endDateISO)
         )
       )
-      .orderBy(desc(events.timestamp));
+      .orderBy(desc(event.timestamp));
   }
 };

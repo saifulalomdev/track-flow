@@ -1,6 +1,6 @@
 // src/db/services/site.ts
 import { eq } from "drizzle-orm";
-import { sites } from "../schema"; 
+import { site } from "../schema"; 
 import type { NewSite, Site } from "../schema"; // Importing single source of truth inferred types
 import type { D1Instance } from "@/lib/get-db";
 
@@ -10,7 +10,7 @@ export const siteService = {
    */
   async create(db: D1Instance, data: NewSite): Promise<Site> {
     const [newSite] = await db
-      .insert(sites)
+      .insert(site)
       .values(data)
       .returning();
       
@@ -22,9 +22,9 @@ export const siteService = {
    */
   async update(db: D1Instance, id: string, data: Partial<NewSite>): Promise<Site> {
     const [updatedSite] = await db
-      .update(sites)
+      .update(site)
       .set(data) 
-      .where(eq(sites.id, id))
+      .where(eq(site.id, id))
       .returning();
       
     return updatedSite;
@@ -35,8 +35,8 @@ export const siteService = {
    */
   async delete(db: D1Instance, id: string): Promise<Site> {
     const [deletedSite] = await db
-      .delete(sites)
-      .where(eq(sites.id, id))
+      .delete(site)
+      .where(eq(site.id, id))
       .returning();
       
     return deletedSite;
