@@ -86,12 +86,12 @@ export default function SiteForm({
                         onChange={handleChange}
                     />
                     <DialogFooter className="pt-2">
-                        <DialogClose className="w-full">
-                            <Button type="button" variant="outline" className="w-full">
+                        <DialogClose asChild>
+                            <Button type="button" variant="outline" className="flex-1">
                                 Cancel
                             </Button>
                         </DialogClose>
-                        <Button type="submit" disabled={isLoading}>
+                        <Button type="submit" disabled={isLoading} className="flex-1">
                             {isLoading ? "Saving..." : site.id ? "Save Changes" : "Create Site"}
                         </Button>
                     </DialogFooter>
