@@ -27,7 +27,7 @@ interface SiteCardProps extends Site {
     onUpdate?: () => void;
     onDelete?: () => void;
     onTest?: () => void;
-    isDeleting?: boolean;    
+    isDeleting?: boolean;
 }
 
 export default function SiteCard({
@@ -42,7 +42,8 @@ export default function SiteCard({
 }: SiteCardProps) {
 
     const scriptUrl = `${getBaseUrl()}/script.js`;
-    const trackingScript = `<script async defer src="${scriptUrl}" data-website-id="${id}"></script>`;
+    const apiEndPoint = `${getBaseUrl()}/api/events`;
+    const trackingScript = `<script async defer src="${scriptUrl}" data-website-id="${id}" data-api="${apiEndPoint}"/>`;
 
     return (
         <Card key={id} className="border-white/10 bg-background/50 justify-between gap-6 p-6 flex flex-col md:flex-row items-center">
@@ -99,7 +100,7 @@ export default function SiteCard({
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction variant="destructive" onClick={onDelete}>
-                              {isDeleting ? "Deleteing website and its all data..." : "Delete Site & All related data"}  
+                                {isDeleting ? "Deleteing website and its all data..." : "Delete Site & All related data"}
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
