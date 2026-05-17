@@ -1,4 +1,4 @@
-import { loginSchema } from '@/shcema/login';
+import { loginSchema } from '@/schema/login';
 import { defineAction } from 'astro:actions';
 import { SignJWT } from 'jose';
 

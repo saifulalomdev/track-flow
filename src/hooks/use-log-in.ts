@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { actions } from "astro:actions";
 import { navigate } from "astro:transitions/client";
-import { type LoginInput, loginSchema } from "@/shcema/login";
+import { type LoginInput, loginSchema } from "@/schema/login";
 
 export default function useLogIn() {
   const [isPending, setIsPending] = useState(false);
