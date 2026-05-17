@@ -1,4 +1,4 @@
-CREATE TABLE `event` (
+CREATE TABLE IF NOT EXISTS `event` (
 	`id` text PRIMARY KEY NOT NULL,
 	`website_id` text NOT NULL,
 	`session_id` text NOT NULL,
@@ -16,5 +16,5 @@ CREATE TABLE `event` (
 	`timestamp` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL
 );
 --> statement-breakpoint
-CREATE INDEX `idx_events_website_time` ON `event` (`website_id`,`timestamp`);--> statement-breakpoint
-CREATE INDEX `idx_events_session` ON `event` (`session_id`);
+CREATE INDEX IF NOT EXISTS `idx_events_website_time` ON `event` (`website_id`,`timestamp`);--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS `idx_events_session` ON `event` (`session_id`);
