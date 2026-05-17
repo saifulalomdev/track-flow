@@ -6,6 +6,7 @@ interface UseActionOptions<TData> {
   onSuccess?: (data: TData) => void;
   onError?: (error: string) => void;
   successMessage?: string;
+  loadingMessage?: string;
 }
 
 export function useAction<TInput, TData>(
@@ -17,22 +18,23 @@ export function useAction<TInput, TData>(
 
   const execute = (input: TInput) => {
     setError(null);
-    
+
+    const toastId = toast.loading(options?.loadingMessage || "Processing your request...");
+
     startTransition(async () => {
       try {
         const result = await actionFn(input);
-        
-        // Astro actions return error objects inside the response structure
+
         if (result.error) {
           const errMsg = result.error.message || "An unexpected error occurred.";
           setError(errMsg);
-          if (options?.onError) options.onError(errMsg);
-          else toast.error(errMsg);
+          if (options?.onError) options?.onError(errMsg);
+          toast.error(errMsg, { id: toastId });
           return;
         }
 
         if (options?.successMessage) {
-          toast.success(options.successMessage);
+          toast.success(options.successMessage, { id: toastId });
         }
 
         if (options?.onSuccess && result.data) {
@@ -41,7 +43,7 @@ export function useAction<TInput, TData>(
       } catch (err: any) {
         const fallBackMsg = err.message || "Failed to execute mutation.";
         setError(fallBackMsg);
-        toast.error(fallBackMsg);
+        toast.error(fallBackMsg, { id: toastId });
       }
     });
   };

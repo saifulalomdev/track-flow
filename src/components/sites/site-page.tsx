@@ -1,14 +1,14 @@
 // src/components/sites/site-page.tsx
-import React, { useState } from "react";
-import { actions } from "astro:actions";
-import { useAction } from "@/hooks/use-action";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import DomainEmptyState from "@/components/sites/domain-empty-state";
-import SiteCard from "@/components/sites/site-card";
-import type { Site } from "@/db/schema";
+import { useState } from "react";
 import SiteForm from "./site-form";
+import { Plus } from "lucide-react";
+import { actions } from "astro:actions";
+import type { Site } from "@/db/schema";
+import { useAction } from "@/hooks/use-action";
 import { PageHeader } from "../ui/page-header";
+import { Button } from "@/components/ui/button";
+import SiteCard from "@/components/sites/site-card";
+import DomainEmptyState from "@/components/sites/domain-empty-state";
 
 interface SitePageProps {
   initialWebsites: Site[];
@@ -58,7 +58,17 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
     },
   });
 
-  const isLoading = createAction.isLoading || updateAction.isLoading || deleteAction.isLoading;
+  // 4. Hook for Script Verification Action
+  const verifyAction = useAction(actions.verifyTrackingScript, {
+    successMessage: "Tracking script verified successfully!",
+    loadingMessage: "Verifying tracking script placement...",
+  });
+
+  const isLoading =
+    createAction.isLoading ||
+    updateAction.isLoading ||
+    deleteAction.isLoading ||
+    verifyAction.isLoading
 
   // Open modal for Creating
   const handleOpenCreate = () => {
@@ -103,6 +113,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
               key={site.id}
               onUpdate={() => handleOpenUpdate(site)}
               onDelete={() => deleteAction.execute({ id: site.id })}
+              onTest={() => verifyAction.execute({ url: site.url, websiteId: site.id })}
             />
           ))}
         </div>
