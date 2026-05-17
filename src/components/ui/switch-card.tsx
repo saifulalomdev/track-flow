@@ -20,7 +20,7 @@ export function SwitchChoiceCard({ name, onChange, value, title, description }: 
     const switchId = `switch-${name}`;
 
     return (
-        <FieldGroup className="w-full max-w-sm">
+        <FieldGroup className="w-full">
             <FieldLabel htmlFor={switchId}>
                 <Field orientation="horizontal">
                     <FieldContent>
