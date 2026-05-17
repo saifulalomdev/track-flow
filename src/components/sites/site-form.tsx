@@ -86,7 +86,7 @@ export default function SiteForm({
                         onChange={handleChange}
                     />
                     <DialogFooter className="pt-2">
-                        <DialogClose className="w-full">
+                        <DialogClose className="w-full" asChild>
                             <Button type="button" variant="outline" className="w-full">
                                 Cancel
                             </Button>
