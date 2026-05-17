@@ -27,8 +27,7 @@ interface SiteCardProps extends Site {
     onUpdate?: () => void;
     onDelete?: () => void;
     onTest?: () => void;
-    isDeleting?: boolean;
-    
+    isDeleting?: boolean;    
 }
 
 export default function SiteCard({
@@ -39,10 +38,10 @@ export default function SiteCard({
     isDeleting,
     onTest,
     onDelete,
-    onUpdate
+    onUpdate,
 }: SiteCardProps) {
 
-    const scriptUrl = `${getBaseUrl()}/js/script.js`;
+    const scriptUrl = `${getBaseUrl()}/script.js`;
     const trackingScript = `<script async defer src="${scriptUrl}" data-website-id="${id}"></script>`;
 
     return (
