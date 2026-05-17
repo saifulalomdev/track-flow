@@ -1,0 +1,9 @@
+packages:
+  - '.'
+allowBuilds:
+  '@prisma/client': false
+  better-sqlite3: false
+  esbuild: false
+  msw: false
+  sharp: false
+  workerd: false

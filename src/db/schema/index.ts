@@ -1,2 +1,2 @@
-export * from './sites'
+export * from './site'
 export * from "./event"

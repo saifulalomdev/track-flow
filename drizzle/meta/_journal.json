@@ -43,6 +43,13 @@
       "when": 1779011943589,
       "tag": "0005_slow_the_liberteens",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1779013404481,
+      "tag": "0006_optimal_korath",
+      "breakpoints": true
     }
   ]
 }

@@ -2,11 +2,11 @@
 import SitePage from "@/components/sites/site-page";
 import DashboardLayout from "@/layouts/dashboard";
 import MainLayout from "@/layouts/main.astro";
-import { sites } from "@/db/schema";
+import { site } from "@/db/schema";
 import { getDb } from "@/lib/get-db";
 
 const db = getDb(Astro.locals.runtime?.env);
-const activeWebsites = await db.select().from(sites);
+const activeWebsites = await db.select().from(site);
 ---
 
 <MainLayout>
