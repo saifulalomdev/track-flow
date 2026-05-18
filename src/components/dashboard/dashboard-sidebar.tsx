@@ -17,7 +17,7 @@ export default function DashboardSidebar({ className }: DashboardSidebarProps) {
         <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-dvh bg-background flex flex-col justify-between z-30', className)}>
             <div>
                 {/* sidebar header */}
-                <SidebarBranding />
+                <SidebarBranding className="border-2" />
 
                 {/* sidebar navigations */}
                 <nav className='mt-4 space-y-4'>
