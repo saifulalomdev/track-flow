@@ -24,7 +24,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     try {
         // 2. Read the raw JSON body transmission channel safely
         const rawBody = await request.json() as any;
-        console.log("rawbody", rawBody);
+
         // 3. Extract Cloudflare Edge location data properties natively
         const cf = (request as any).cf;
 
@@ -41,15 +41,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
             screenHeight: rawBody.screen?.height,
             lang: rawBody.lang || null,
             params: rawBody.params || null,
-            platform: request.headers.get("sec-ch-ua-platform")?.replace(/"/g, "") || "Unknown",
+            referrer: rawBody.referrer || rawBody.params.utm_source || "Direct",
             country: cf?.country || "LocalDev",
         });
 
         // 5. Fire your type-safe database service ingestion operation block!
         const savedRecord = await eventService.ingest(db, validatedPayload);
 
-        console.log("savedRecord", savedRecord);
-        
         // 6. Return a highly optimized, clean response payload structure back to the browser
         return new Response(JSON.stringify({ success: true, id: savedRecord.id }), {
             status: 200,

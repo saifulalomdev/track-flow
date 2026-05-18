@@ -36,7 +36,7 @@ export const event = sqliteTable("event", {
   screenWidth: integer("screen_width"),
   screenHeight: integer("screen_height"),
   lang: text("lang"),
-  platform: text("platform"),
+  referrer: text("referrer"),
   country: text("country"),
 
   // Structured URL Dynamic Parameters object mapping
@@ -72,7 +72,7 @@ export const createEventSchema = createInsertSchema(event, {
 
   // Make these explicitly nullable string values
   lang: z.string().trim().nullable().default(null),
-  platform: z.string().trim().nullable().default(null),
+  referrer: z.string().trim().nullable().default(null),
   country: z.string().trim().nullable().default(null),
 
   // Tighten the Record type to match Drizzle's exact expectation
