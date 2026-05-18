@@ -35,7 +35,11 @@
         };
     }
 
-    async function sendEvent(event_type, value = null, currency = null) {
+    async function sendEvent(
+        event_type,
+        value = null,
+        currency = null
+    ) {
         const payload = {
             ...basePayload(),
             event: {
@@ -63,7 +67,7 @@
     sendEvent("page_view");
 
     // Attach to window (global SDK)
-    window.trackflow = {
+    (window).trackflow = {
         track: sendEvent,
     };
 })();

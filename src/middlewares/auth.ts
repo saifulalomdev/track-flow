@@ -1,4 +1,4 @@
-import { MiddlewareHandler } from "astro";
+import type { MiddlewareHandler } from "astro";
 import { jwtVerify } from "jose";
 
 export const authMiddleware: MiddlewareHandler = async (context, next) => {
