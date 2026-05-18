@@ -58,5 +58,17 @@ export const siteService = {
       .execute();
 
     return activeSite || null;
+  },
+
+  /**
+   * FIND ALL: Retrieves all site profiles registered in the system
+   */
+  async findAll(db: D1Instance): Promise<Site[]> {
+    const records = await db
+      .select()
+      .from(site)
+      .execute();
+
+    return records || [];
   }
 };

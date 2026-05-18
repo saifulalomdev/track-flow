@@ -1,16 +1,16 @@
 ---
 import SitePage from "@/components/sites/site-page";
+import { siteService } from "@/db";
 import DashboardLayout from "@/layouts/dashboard";
 import MainLayout from "@/layouts/main.astro";
-import { site } from "@/db/schema";
 import { getDb } from "@/lib/get-db";
 
 const db = getDb(Astro.locals.runtime?.env);
-const activeWebsites = await db.select().from(site);
+const websites = await siteService.findAll(db);
 ---
 
 <MainLayout>
     <DashboardLayout client:load>
-        <SitePage client:load initialWebsites={activeWebsites} />
+        <SitePage client:load initialWebsites={websites} />
     </DashboardLayout>
 </MainLayout>
