@@ -44,7 +44,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         const validatedPayload = createEventSchema.parse({
             websiteId: rawBody.website_id,
             sessionId: rawBody.tf_session_id,
-            path: rawBody.path,
+            url: rawBody.url,
             pageTitle: rawBody.page_title,
             eventType: rawBody.event?.type,
             eventValue: rawBody.event?.value ? parseFloat(rawBody.event.value) : null,
@@ -56,6 +56,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
             referrer: rawBody.referrer || rawBody.params.utm_source || "Direct",
             country: cf?.country || "LocalDev",
         });
+
 
         // 6. Fire your type-safe database service ingestion operation block!
         const savedRecord = await eventService.ingest(db, validatedPayload);

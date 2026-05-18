@@ -24,7 +24,7 @@ export const event = sqliteTable("event", {
     .references(() => site.id, { onDelete: "cascade" })
     .notNull(),
   sessionId: text("session_id").notNull(),
-  path: text("path").notNull(),
+  url: text("url").notNull(),
   pageTitle: text("page_title").notNull(),
 
   // Flattened Custom Event Handling
@@ -59,7 +59,7 @@ export const event = sqliteTable("event", {
 export const createEventSchema = createInsertSchema(event, {
   websiteId: z.string().uuid({ message: "Invalid tracking token identifier string." }),
   sessionId: z.string().min(1, { message: "Active tracking session token required." }),
-  path: z.string().startsWith("/", { message: "Root relative directory structure required." }),
+  url: z.url(),
   pageTitle: z.string().trim(),
   eventType: z.string().min(1, { message: "Missing required analytics designation type." }),
 
