@@ -24,7 +24,7 @@
             website_id,
             tf_session_id: getSessionId(),
             params: Object.fromEntries(new URLSearchParams(window.location.search)),
-            path: window.location.pathname,
+            url: window.location.href,
             referrer: document.referrer || null,
             page_title: document.title,
             screen: {
