@@ -1,5 +1,5 @@
 // src/db/services/site.ts
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { site } from "../schema"; 
 import type { NewSite, Site } from "../schema"; // Importing single source of truth inferred types
 import type { D1Instance } from "@/lib/get-db";
@@ -40,5 +40,23 @@ export const siteService = {
       .returning();
       
     return deletedSite;
+  },
+
+  /**
+   * FIND ACTIVE: Retrieves a site profile only if it is currently active
+   */
+  async findActive(db: D1Instance, id: string): Promise<Site | null> {
+    const [activeSite] = await db
+      .select()
+      .from(site)
+      .where(
+        and(
+          eq(site.id, id),
+          eq(site.isActive, true)
+        )
+      )
+      .execute();
+
+    return activeSite || null;
   }
 };

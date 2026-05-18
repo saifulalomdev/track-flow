@@ -1,5 +1,5 @@
 // src/pages/api/events.ts
-import { createEventSchema, eventService } from "@/db";
+import { createEventSchema, eventService, siteService } from "@/db";
 import { getDb } from "@/lib/get-db";
 import type { APIRoute } from "astro";
 
@@ -27,8 +27,20 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
         // 3. Extract Cloudflare Edge location data properties natively
         const cf = (request as any).cf;
+        // 4. Verify the site exists and is allowed to ingest data
+        const targetSite = await siteService.findActive(db, rawBody.website_id);
 
-        // 4. Flatten and parse the body to match your strict database expectations
+        if (!targetSite) {
+            return new Response(
+                JSON.stringify({
+                    success: false,
+                    error: "Ingestion rejected: Website profile is inactive or does not exist."
+                }),
+                { status: 403, headers: { "Content-Type": "application/json" } }
+            );
+        }
+
+        // 5. Flatten and parse the body to match your strict database expectations
         const validatedPayload = createEventSchema.parse({
             websiteId: rawBody.website_id,
             sessionId: rawBody.tf_session_id,
@@ -45,10 +57,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
             country: cf?.country || "LocalDev",
         });
 
-        // 5. Fire your type-safe database service ingestion operation block!
+        // 6. Fire your type-safe database service ingestion operation block!
         const savedRecord = await eventService.ingest(db, validatedPayload);
 
-        // 6. Return a highly optimized, clean response payload structure back to the browser
+        // 7. Return a highly optimized, clean response payload structure back to the browser
         return new Response(JSON.stringify({ success: true, id: savedRecord.id }), {
             status: 200,
             headers: {
