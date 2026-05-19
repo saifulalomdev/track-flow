@@ -1,4 +1,3 @@
-// src/hooks/use-action.ts
 import { useState, useTransition } from 'react';
 import { toast } from 'sonner';
 
@@ -9,8 +8,13 @@ interface UseActionOptions<TData> {
   loadingMessage?: string;
 }
 
+type ActionResult<TData> = {
+  data?: TData;
+  error?: { message?: string } | string | null;
+};
+
 export function useAction<TInput, TData>(
-  actionFn: (input: TInput) => Promise<{ data?: TData; error?: any }>,
+  actionFn: (input: TInput) => Promise<ActionResult<TData>>,
   options?: UseActionOptions<TData>
 ) {
   const [isPending, startTransition] = useTransition();
@@ -18,39 +22,41 @@ export function useAction<TInput, TData>(
 
   const execute = (input: TInput) => {
     setError(null);
-
-    const toastId = toast.loading(options?.loadingMessage || "Processing your request...");
+    const toastId = toast.loading(options?.loadingMessage ?? 'Processing your request...');
 
     startTransition(async () => {
       try {
         const result = await actionFn(input);
 
         if (result.error) {
-          const errMsg = result.error.message || "An unexpected error occurred.";
+          const errMsg =
+            typeof result.error === 'string'
+              ? result.error
+              : result.error.message ?? 'An unexpected error occurred.';
+
           setError(errMsg);
-          if (options?.onError) options?.onError(errMsg);
+          options?.onError?.(errMsg);
           toast.error(errMsg, { id: toastId });
           return;
         }
 
         if (options?.successMessage) {
           toast.success(options.successMessage, { id: toastId });
+        } else {
+          toast.dismiss(toastId);
         }
 
-        if (options?.onSuccess && result.data) {
-          options.onSuccess(result.data as TData);
+        if (result.data) {
+          options?.onSuccess?.(result.data);
         }
-      } catch (err: any) {
-        const fallBackMsg = err.message || "Failed to execute mutation.";
-        setError(fallBackMsg);
-        toast.error(fallBackMsg, { id: toastId });
+      } catch (err) {
+        const errMsg = err instanceof Error ? err.message : 'Failed to execute mutation.';
+        setError(errMsg);
+        options?.onError?.(errMsg);
+        toast.error(errMsg, { id: toastId });
       }
     });
   };
 
-  return {
-    execute,
-    isLoading: isPending,
-    error,
-  };
+  return { execute, isLoading: isPending, error };
 }
