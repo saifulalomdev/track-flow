@@ -91,16 +91,17 @@ export default function SiteCard({
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
-                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogTitle>
+                                Delete site and all data?
+                            </AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your
-                                account from our servers.
+                                This will permanently delete the site, all associated events, and analytics history. This action cannot be undone.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction variant="destructive" onClick={onDelete}>
-                                {isDeleting ? "Deleteing website and its all data..." : "Delete Site & All related data"}
+                                {isDeleting ? "Deleting site and data..." : "Delete site and data"}
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
