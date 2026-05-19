@@ -6,7 +6,16 @@ import {
     Pencil,
     AlertCircle,
     CheckCircle2,
+    MoreVertical,
 } from 'lucide-react'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import type { Site } from '@/db/schema'
 import CopyToClipboard from '../ui/copy-to-clipboard'
 import { getBaseUrl } from '@/lib/get-base-url'
@@ -22,6 +31,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useState } from 'react'
 
 interface SiteCardProps extends Site {
     onUpdate?: () => void;
@@ -40,6 +50,7 @@ export default function SiteCard({
     onDelete,
     onUpdate,
 }: SiteCardProps) {
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
     const scriptUrl = `${getBaseUrl()}/script.js`;
     const apiEndPoint = `${getBaseUrl()}/api/events`;
@@ -52,17 +63,25 @@ export default function SiteCard({
                     "p-2.5 rounded-xl border transition-colors duration-200",
                     isActive
                         ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
-                        : "border-neutral-800 bg-neutral-900 text-neutral-500"
+                        : "border-amber-500/20 bg-amber-500/10 text-amber-400"
                 )}>
                     {isActive ? (
-                        <CheckCircle2 />
+                        <CheckCircle2 className="w-5 h-5" />
                     ) : (
-                        <AlertCircle />
+                        <AlertCircle className="w-5 h-5" />
                     )}
                 </div>
 
                 <div>
-                    <h3 className="font-bold text-lg tracking-tight">{title}</h3>
+                    <div className="flex items-center gap-2">
+                        <h3 className="font-bold text-lg tracking-tight">{title}</h3>
+                        <span className={cn(
+                            "text-xs px-2 py-0.5 rounded-full font-medium",
+                            isActive ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"
+                        )}>
+                            {isActive ? "Active" : "No Data Yet"}
+                        </span>
+                    </div>
                     <a href={url} target='_blank' rel="noopener noreferrer" className="text-sm opacity-60 hover:opacity-100 transition-opacity underline block mt-0.5">
                         {url}
                     </a>
@@ -77,36 +96,67 @@ export default function SiteCard({
                     successMessage="Tracking script copied to clipboard!"
                     errorMessage="Failed to copy script. Please try again."
                 />
-                <Button onClick={onTest} variant="outline" size="icon">
-                    <Play className="w-4 h-4" />
-                </Button>
-                <Button onClick={onUpdate} variant="outline" size="icon">
-                    <Pencil className="h-4 w-4" />
-                </Button>
-                <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button variant="destructive" size="icon">
-                            <Trash2 className="h-4 w-4" />
-                        </Button>
-                    </AlertDialogTrigger>
+
+                <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground">
+                                <MoreVertical className="h-4 w-4" />
+                                <span className="sr-only">Open options</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        
+                        <DropdownMenuContent className="w-48" align="end">
+                            <DropdownMenuLabel>Site Options</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            
+                            <DropdownMenuItem onClick={onTest} className="gap-2 cursor-pointer">
+                                <Play className="w-4 h-4 text-muted-foreground" />
+                                <span>Test Connection</span>
+                            </DropdownMenuItem>
+                            
+                            <DropdownMenuItem onClick={onUpdate} className="gap-2 cursor-pointer">
+                                <Pencil className="h-4 w-4 text-muted-foreground" />
+                                <span>Edit Details</span>
+                            </DropdownMenuItem>
+                            
+                            <DropdownMenuSeparator />
+                            
+                            <AlertDialogTrigger asChild>
+                                <DropdownMenuItem 
+                                    className="gap-2 cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                    <span>Delete Site</span>
+                                </DropdownMenuItem>
+                            </AlertDialogTrigger>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
                     <AlertDialogContent>
                         <AlertDialogHeader>
                             <AlertDialogTitle>
-                                Delete site and all data?
+                                Are you absolutely sure?
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                                This will permanently delete the site, all associated events, and analytics history. This action cannot be undone.
+                                This will permanently delete <strong>{title}</strong> and remove all historical event metrics from our servers. This configuration cannot be undone.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction variant="destructive" onClick={onDelete}>
-                                {isDeleting ? "Deleting site and data..." : "Delete site and data"}
+                            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction 
+                                variant="destructive" 
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onDelete?.();
+                                }}
+                                disabled={isDeleting}
+                            >
+                                {isDeleting ? "Deleting..." : "Yes, Delete Site"}
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
-
             </div>
         </Card>
     )
