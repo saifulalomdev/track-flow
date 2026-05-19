@@ -1,4 +1,3 @@
-<!-- .github/pull_request_template.md -->
 ## 📝 Description
 Provide a brief summary of the changes introduced by this PR.
 

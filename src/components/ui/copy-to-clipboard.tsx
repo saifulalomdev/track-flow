@@ -1,15 +1,20 @@
-import { Code2 } from 'lucide-react'
+import { Copy } from 'lucide-react'
 import { Button } from './button'
 import { toast } from 'sonner';
 
 interface CopyToClipboardProps {
   data: string;
-  title: string;
+  title?: string;
   successMessage: string;
   errorMessage: string;
 }
 
-export default function CopyToClipboard({ title, data, errorMessage, successMessage }: CopyToClipboardProps) {
+export default function CopyToClipboard({
+  title = "Copy Code",
+  data,
+  errorMessage,
+  successMessage
+}: CopyToClipboardProps) {
 
   async function handleCopy() {
     try {
@@ -21,8 +26,9 @@ export default function CopyToClipboard({ title, data, errorMessage, successMess
   }
 
   return (
-    <Button onClick={handleCopy} variant="outline" className="gap-2">
-      <Code2/> {title}
+    <Button onClick={handleCopy} variant="outline"  >
+      <Copy className="w-3.5 h-3.5" />
+      {title}
     </Button>
   )
 }
