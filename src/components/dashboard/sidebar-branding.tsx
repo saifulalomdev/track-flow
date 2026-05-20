@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 export default function SidebarBranding({ className }: { className?: string }) {
     return (
         <div className={cn(
-            "flex items-center gap-3 px-3 py-2.5",
+            "flex items-center gap-3 px-3 py-2.5 rounded-lg",
             className
         )}>
             {/* Brand Context */}

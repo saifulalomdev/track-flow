@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
     <div 
     className={cn(
       "focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50",
-      "relative w-full flex items-center border border-input px-4"
+      "relative w-full flex items-center border border-input px-4 rounded-full"
     )}
     >
       {type === "email" && <Mail size={16}/>}
