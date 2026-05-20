@@ -4,8 +4,6 @@ import {
     Play,
     Trash2,
     Pencil,
-    AlertCircle,
-    CheckCircle2,
     MoreVertical,
 } from 'lucide-react'
 import {
@@ -32,6 +30,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useState } from 'react'
+import { StatusIcon } from './status-icon';
 
 interface SiteCardProps extends Site {
     onUpdate?: () => void;
@@ -59,18 +58,7 @@ export default function SiteCard({
     return (
         <Card key={id} className="border-white/10 bg-background/50 justify-between gap-6 p-6 flex flex-col md:flex-row items-center">
             <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className={cn(
-                    "p-2.5 rounded-xl border transition-colors duration-200",
-                    isActive
-                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
-                        : "border-amber-500/20 bg-amber-500/10 text-amber-400"
-                )}>
-                    {isActive ? (
-                        <CheckCircle2 className="w-5 h-5" />
-                    ) : (
-                        <AlertCircle className="w-5 h-5" />
-                    )}
-                </div>
+            <StatusIcon isActive={isActive}/>
 
                 <div>
                     <div className="flex items-center gap-2">
@@ -139,7 +127,7 @@ export default function SiteCard({
                                 Are you absolutely sure?
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                                This will permanently delete <strong>{title}</strong> and remove all historical event metrics from our servers. This configuration cannot be undone.
+                                This will permanently delete <strong className='font-bold text-destructive text-2xl'>{title}</strong> and remove all historical event metrics from your servers. This configuration cannot be undone.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
