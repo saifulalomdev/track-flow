@@ -1,31 +1,96 @@
-import {
-    Bell,
-    Menu,
-    UserCircle,
-    X
-} from "lucide-react";
+import { LogOut, Menu, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAction } from "@/hooks/use-action"; // Adjust this hook import path based on your layout
+import { actions } from "astro:actions";
+import {
+    AlertDialog,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
+interface DashboardHeaderProps {
+    onClick: () => void;
+    isSidebarOpen: boolean;
+}
 
-export function DashboardHeader({ onClick, isSidebarOpen }: { onClick: () => void, isSidebarOpen: boolean }) {
+export function DashboardHeader({ onClick, isSidebarOpen }: DashboardHeaderProps) {
+    // Hook configuration using your native type-safe useAction pipeline
+    const { execute: handleLogout, isLoading } = useAction(actions.logout, {
+        loadingMessage: "Signing you out safely...",
+        successMessage: "Logged out successfully.",
+        onSuccess: () => {
+            // Force safe top-level redirection to eliminate stale memory context
+            window.location.href = "/login";
+        }
+    });
 
     return (
         <nav className="sticky shrink-0 top-0 left-0 z-50 flex h-16 w-full items-center justify-between border-b border-white/10 bg-background/60 p-4 backdrop-blur-md">
-            <div className="flex items-center font-bold gap-2">
+            <div className="flex items-center font-bold gap-2 text-foreground">
                 Dashboard
             </div>
 
             {/* RIGHT: ACTIONS */}
             <div className="flex items-center gap-2 md:gap-4">
-                <Button variant="outline" size="icon" className="relative">
-                    <Bell />
-                    <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-background"></span>
-                </Button>
-                <Button variant="outline" size="icon">
-                    <UserCircle />
-                </Button>
-                <Button onClick={onClick} variant="outline" size="icon" className="lg:hidden">
-                    {isSidebarOpen? <X/> : <Menu />}
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        {/* UX: Keeping the top bar clean with a muted variant. Destructive action is handled in the dialog modal. */}
+                        <Button 
+                            variant="ghost" 
+                            size="sm"
+                            className="text-muted-foreground hover:text-foreground gap-2"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                                <LogOut className="h-4 w-4" />
+                            )}
+                            <span className="hidden sm:inline">Logout</span>
+                        </Button>
+                    </AlertDialogTrigger>
+                    
+                    <AlertDialogContent className="border border-white/10 bg-background/95 backdrop-blur-lg max-w-[400px]">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle className="text-xl font-semibold tracking-tight">
+                                End your session?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription className="text-sm text-muted-foreground pt-1">
+                                You will need to sign back in to access your secure client tracking pipelines and data views.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        
+                        <AlertDialogFooter className="mt-4 gap-2">
+                            <AlertDialogCancel asChild>
+                                <Button 
+                                    variant="outline" 
+                                    className="border-white/10 hover:bg-white/5"
+                                    disabled={isLoading}
+                                >
+                                    Stay logged in
+                                </Button>
+                            </AlertDialogCancel>
+                            
+                            {/* UX: The actual action button takes immediate focus and clearly represents safety risk */}
+                            <Button
+                                variant="destructive"
+                                onClick={() => handleLogout({})}
+                                disabled={isLoading}
+                            >
+                                {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+                                Sign out
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+
+                <Button onClick={onClick} variant="outline" size="icon" className="lg:hidden border-white/10">
+                    {isSidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
                 </Button>
             </div>
         </nav>
