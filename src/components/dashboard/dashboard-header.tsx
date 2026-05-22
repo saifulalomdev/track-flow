@@ -39,19 +39,13 @@ export function DashboardHeader({ onClick, isSidebarOpen }: DashboardHeaderProps
             <div className="flex items-center gap-2 md:gap-4">
                 <AlertDialog>
                     <AlertDialogTrigger asChild>
-                        {/* UX: Keeping the top bar clean with a muted variant. Destructive action is handled in the dialog modal. */}
-                        <Button 
-                            variant="ghost" 
-                            size="sm"
-                            className="text-muted-foreground hover:text-foreground gap-2"
-                            disabled={isLoading}
-                        >
+                        <Button variant="ghost" disabled={isLoading} className="text-destructive">
                             {isLoading ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />
                             ) : (
                                 <LogOut className="h-4 w-4" />
                             )}
-                            <span className="hidden sm:inline">Logout</span>
+                            <span>Logout</span>
                         </Button>
                     </AlertDialogTrigger>
                     
@@ -83,7 +77,7 @@ export function DashboardHeader({ onClick, isSidebarOpen }: DashboardHeaderProps
                                 disabled={isLoading}
                             >
                                 {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-                                Sign out
+                                Log out
                             </Button>
                         </AlertDialogFooter>
                     </AlertDialogContent>

@@ -1,3 +1,4 @@
+import { getAnalyticsAndSites } from "./get-analytics";
 import { login } from "./login";
 import { logout } from "./logout";
 import * as siteActions from './site'
@@ -7,5 +8,6 @@ export const server = {
     login,
     logout,
     ...siteActions,
-    verifyTrackingScript
+    verifyTrackingScript,
+    getAnalyticsAndSites
 };

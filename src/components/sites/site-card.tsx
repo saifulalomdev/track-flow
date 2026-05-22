@@ -88,7 +88,7 @@ export default function SiteCard({
                 <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground">
+                            <Button variant="ghost" size="icon">
                                 <MoreVertical className="h-4 w-4" />
                                 <span className="sr-only">Open options</span>
                             </Button>

@@ -1,16 +1,28 @@
 ---
 import SitePage from "@/components/sites/site-page";
-import { siteService } from "@/db";
+import { siteService, type Site } from "@/db";
 import DashboardLayout from "@/layouts/dashboard";
 import MainLayout from "@/layouts/main.astro";
 import { getDb } from "@/lib/get-db";
 
-const db = getDb(Astro.locals.runtime?.env);
-const websites = await siteService.findAll(db);
+let initialSites: Site[] = [];
+let errorMsg = null;
+
+try {
+    const db = getDb(Astro.locals.runtime?.env);
+    initialSites = await siteService.findAll(db);
+} catch (error: any) {
+    errorMsg = error.message || "Something went wrong!";
+    console.log((error as any).message);
+}
 ---
 
 <MainLayout>
     <DashboardLayout client:load>
-        <SitePage client:load initialWebsites={websites} />
+        <SitePage
+            initialWebsites={initialSites}
+            errorMsg={errorMsg}
+            client:load
+        />
     </DashboardLayout>
 </MainLayout>
