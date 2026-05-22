@@ -1,37 +1,47 @@
 name: Deploy Frontend
 on:
   push:
-    branches: [main]
+    branches: [main,features]
 
 jobs:
   deploy:
+    name: Run Tests and Deploy Application
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Package Manager (pnpm)
+        uses: pnpm/action-setup@v4
         with:
           version: 9
-      - uses: actions/setup-node@v4
+
+      - name: Setup Node.js Runtime Environment
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache-dependency-path: 'pnpm-lock.yaml'
 
-      - name: Install & Build
+      - name: Install Application Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Execute Test Suites (Vitest)
+        run: pnpm run test run
+
+      - name: Compile and Build Assets
         env:
           PUBLIC_SITE_URL: https://tf.saifulalom.com
           PUBLIC_SITE_NAME: TrackFlow
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm run build
+        run: pnpm run build
 
-      - name: Apply D1 Migrations
+      - name: Apply Cloudflare D1 Migrations
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: d1 migrations apply trackflow-db --remote
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy Build to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
