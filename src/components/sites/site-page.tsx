@@ -9,9 +9,11 @@ import { PageHeader } from "../ui/page-header";
 import { Button } from "@/components/ui/button";
 import SiteCard from "@/components/sites/site-card";
 import DomainEmptyState from "@/components/sites/domain-empty-state";
+import ErrorAlert from "../ui/error-alart";
 
 interface SitePageProps {
   initialWebsites: Site[];
+  errorMsg: string | null
 }
 
 const siteDefaultValue: Site = {
@@ -20,7 +22,7 @@ const siteDefaultValue: Site = {
   title: "",
   url: ""
 }
-export default function SitePage({ initialWebsites }: SitePageProps) {
+export default function SitePage({ initialWebsites, errorMsg }: SitePageProps) {
   const [sites, setSites] = useState<Site[] | []>(initialWebsites)
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingSite, setEditingSite] = useState<Site>(siteDefaultValue);
@@ -95,6 +97,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
 
   return (
     <div className="max-w-6xl mx-auto space-y-10">
+      <ErrorAlert errorMsg={errorMsg} />
       <PageHeader
         title="Websites"
         description="Track and manage your websites."
@@ -105,7 +108,7 @@ export default function SitePage({ initialWebsites }: SitePageProps) {
       </PageHeader>
 
       {/* Grid/List of Sites */}
-      {sites.length === 0 ? (<DomainEmptyState />) : (
+      {!errorMsg && sites.length === 0 ? (<DomainEmptyState />) : (
         <div className="space-y-4">
           {sites.map((site) => (
             <SiteCard
