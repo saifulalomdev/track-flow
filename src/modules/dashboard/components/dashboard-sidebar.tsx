@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
-import SidebarBranding from './sidebar-branding';
 import { adminNavItems } from '@/constants/admin-nav-items';
+import { AppBranding } from '@/components/brand';
 
 interface DashboardSidebarProps {
     className?: string
@@ -12,8 +12,7 @@ export default function DashboardSidebar({ className }: DashboardSidebarProps) {
         <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-dvh bg-background flex flex-col justify-between z-30', className)}>
             <div>
                 {/* sidebar header */}
-                <SidebarBranding className="border-2" />
-
+                <AppBranding border={true}/>
                 {/* sidebar navigations */}
                 <nav className='mt-4 space-y-4'>
                     {adminNavItems.map(({ href, name, Icon }) => (

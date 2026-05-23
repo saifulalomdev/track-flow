@@ -1,19 +1,16 @@
 import { Target, Timer, Undo, Users } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card'
+import type { DashboardStatsProps } from '../dashboard.types'
 
-interface StatsProps {
-    name?: "conversionRate" | "avgSessionDuration" | "bounceRate" | "totalTraffic",
-    value?: number,
-    change?: number,
-    label?: string
-}
-
-export default function StatCard({ name, value, change = 0, label }: StatsProps) {
+export default function DashboardStatCard({ name, value, change = 0 }: DashboardStatsProps) {
     return (
         <Card key={name} className="border-white/10 bg-background/50">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                    {label}
+                    {name === "avgSessionDuration" && "Avg. Session Duration" }
+                    {name === "totalTraffic" && "Total Traffic"}
+                    {name === "conversionRate" && "Conversion Rate"}
+                    {name === "bounceRate" && "Bounce Rate"}
                 </CardTitle>
                 {name === "avgSessionDuration" && <Timer size={20} />}
                 {name === "totalTraffic" && <Users size={20} />}

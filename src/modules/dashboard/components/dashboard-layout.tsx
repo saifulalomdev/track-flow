@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import DashboardSidebar from '@/components/dashboard/dashboard-sidebar';
-import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { cn } from "@/lib/utils";
+import { DashboardHeader } from './dashboard-header';
+import DashboardSidebar from './dashboard-sidebar';
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export function DashboardLayout({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (

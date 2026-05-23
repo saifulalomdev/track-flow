@@ -32,7 +32,7 @@ export default function SitePage({ initialWebsites, errorMsg }: SitePageProps) {
     successMessage: "Website created successfully!",
     onSuccess: ({ data }) => {
       if (data && "id" in data) {
-        setSites((prevSites) => [...prevSites, data as Site]);
+        setSites((prevSites) => [data as Site ,...prevSites]);
       }
       setIsDialogOpen(false);
     },

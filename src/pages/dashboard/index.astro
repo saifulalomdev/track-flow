@@ -1,39 +1,45 @@
 ---
+import type { Site } from "@/db";
 import MainLayout from "@/layouts/main.astro";
-import DashboardLayout from "@/layouts/dashboard";
-import DashboardPage from "@/components/dashboard/dashboard-page";
-import { siteService, type Site } from "@/db";
 import { getDb } from "@/lib/get-db";
-import { actions } from "astro:actions";
+import { DashboardLayout, DashboardPage } from "@/modules/dashboard";
+import { dashboardService } from "@/modules/dashboard/dashboard.service";
+import { undefined } from "astro:schema";
 
 const db = getDb(Astro.locals.runtime.env);
-let sitesList: Site[] = [];
-let dbError = null;
+
+let dateRange: any = null;
+let sites: Site[] = [];
+let defaultSiteId;
+let dashboardStats: any = "";
+let errorMsg;
 
 try {
-    sitesList = await siteService.findAll(db);
+    const data = await dashboardService.getOverviewData({ db });
+
+    // 2. Map data onto our mutable tracking containers on success
+    dateRange = data.dateRange;
+    sites = data.sites;
+    defaultSiteId = data.defaultSiteId;
+    dashboardStats = data.dashboardStats;
 } catch (error) {
-    console.error("Failed to load dashboard sites:", error);
-    dbError =
-        "We encountered a problem reaching our analytics database. Please check back shortly.";
+    // 3. Gracefully trap errors (database drops, worker timeout, network failures)
+    console.error("Dashboard overview fetch error:", error);
+    errorMsg =
+        error instanceof Error
+            ? error.message
+            : "Failed to load dashboard overview analytics data.";
 }
-
-const { data, error } = await Astro.callAction(
-  actions.getAnalyticsAndSites,
-  {                         
-    websiteId: "",
-    range: { from: "", to: "" },
-  }
-);
-
-console.log(data, error);
 ---
 
 <MainLayout>
     <DashboardLayout client:load>
         <DashboardPage
-            initialSites={sitesList}
-            errorMsg={dbError}
+            sites={sites}
+            defaultSiteId={defaultSiteId}
+            dateRange={dateRange}
+            dashboardStats={dashboardStats}
+            errorMsg={errorMsg}
             client:load
         />
     </DashboardLayout>
