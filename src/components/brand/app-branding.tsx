@@ -1,12 +1,9 @@
+// src/components/ui/brand/AppBranding.tsx
 import { cn } from "@/lib/utils";
 
-export default function SidebarBranding({ className }: { className?: string }) {
+export  function AppBranding({ border}: { border?: boolean }) {
     return (
-        <div className={cn(
-            "flex items-center gap-3 px-3 py-2.5 rounded-lg",
-            className
-        )}>
-            {/* Brand Context */}
+        <div className={cn("flex items-center gap-3 px-3 py-2.5 rounded-lg", border ? "border-2" : "")}>
             <div className="flex-1 overflow-hidden">
                 <div className="flex items-center justify-between">
                     <span className="text-sm font-black text-white tracking-wider uppercase">

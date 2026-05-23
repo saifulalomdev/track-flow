@@ -3,7 +3,7 @@ import * as React from "react";
 import { type DateRange } from "react-day-picker";
 import { PageHeader } from "@/components/ui/page-header";
 import { CalendarDateRangePicker } from "@/components/dashboard/date-range-picker";
-import StatCard from "./dashboard-stats";
+import StatCard from "../../modules/dashboard/components/dashboard-stats";
 import { subMonths, parseISO, format } from 'date-fns';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 import type { Site } from "@/db/schema/site"; // Import your type definition

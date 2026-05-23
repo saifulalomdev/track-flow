@@ -1,6 +1,6 @@
 // src/db/services/site.ts
-import { and, eq } from "drizzle-orm";
-import { site } from "../schema"; 
+import { and, desc, eq, sql } from "drizzle-orm";
+import { site } from "../schema";
 import type { NewSite, Site } from "../schema"; // Importing single source of truth inferred types
 import type { D1Instance } from "@/lib/get-db";
 
@@ -13,7 +13,7 @@ export const siteService = {
       .insert(site)
       .values(data)
       .returning();
-      
+
     return newSite;
   },
 
@@ -23,10 +23,10 @@ export const siteService = {
   async update(db: D1Instance, id: string, data: Partial<NewSite>): Promise<Site> {
     const [updatedSite] = await db
       .update(site)
-      .set(data) 
+      .set(data)
       .where(eq(site.id, id))
       .returning();
-      
+
     return updatedSite;
   },
 
@@ -38,7 +38,7 @@ export const siteService = {
       .delete(site)
       .where(eq(site.id, id))
       .returning();
-      
+
     return deletedSite;
   },
 
@@ -67,8 +67,22 @@ export const siteService = {
     const records = await db
       .select()
       .from(site)
+      .orderBy(desc(sql`rowid`))
       .execute();
 
     return records || [];
+  },
+  /**
+ * FIND LATEST: Retrieves the single most recently updated or created site profile
+ */
+  async findLatest(db: D1Instance): Promise<Site | null> {
+    const records = await db
+      .select()
+      .from(site)
+      .orderBy(desc(sql`rowid`))
+      .limit(1)
+      .execute();
+
+    return records[0] || null;
   }
 };

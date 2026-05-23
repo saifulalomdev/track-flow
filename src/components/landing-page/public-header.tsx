@@ -3,7 +3,7 @@ import { ChevronRight, Menu, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { navItems } from "@/constants/nav-items";
-import SidebarBranding from "../dashboard/sidebar-branding";
+import { AppBranding } from "../brand";
 
 
 export default function PublicHeader() {
@@ -12,7 +12,7 @@ export default function PublicHeader() {
   return (
     <>
       <header className="w-full h-16 md:h-20 z-50 flex justify-between items-center px-6 md:px-10 lg:px-20 py-4 fixed top-0 left-0 bg-background/5 backdrop-blur-md border-b border-white/10">
-        <SidebarBranding />
+        <AppBranding />
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-13">

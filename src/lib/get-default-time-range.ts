@@ -1,9 +1,10 @@
-import { format, subMonths } from "date-fns";
+import { subMonths } from "date-fns";
+import type { DateRange } from "react-day-picker";
 
-export function getDefaultTimeRange() {
+export function getDefaultTimeRange(): DateRange {
     const today = new Date();
     return {
-        from: format(subMonths(today, 1), "yyyy-MM-dd HH:mm:ss"),
-        to: format(today, "yyyy-MM-dd HH:mm:ss")
+        from: subMonths(today, 1), 
+        to: today
     };
 }
