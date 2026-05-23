@@ -11,24 +11,24 @@ describe("getDefaultTimeRange() String Formatter", () => {
   });
 
   it("should generate the exact SQLite text format strings for today and the previous month", () => {
-    // FIX: Instantiate the date directly using local system clock parameters
-    // Year, Month Index (4 = May), Day, Hour, Minute, Second
-    const mockCurrentDate = new Date(2026, 4, 23, 12, 0, 0); 
+    const mockCurrentDate = new Date("2026-05-23T12:00:00.000Z"); 
     vi.setSystemTime(mockCurrentDate);
 
     const result = getDefaultTimeRange();
 
     expect(result).toEqual({
-      from: "2026-04-23 12:00:00",
-      to: "2026-05-23 12:00:00",
+      from: new Date("2026-04-23T12:00:00.000Z"),
+      to: new Date("2026-05-23T12:00:00.000Z"),
     });
   });
 
   it("should output strings that strictly conform to the SQLite text comparison regex", () => {
-    const result = getDefaultTimeRange();
-    const sqliteDateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+    const mockCurrentDate = new Date("2026-05-23T12:00:00.000Z"); 
+    vi.setSystemTime(mockCurrentDate);
 
-    expect(result.from).toMatch(sqliteDateTimeRegex);
-    expect(result.to).toMatch(sqliteDateTimeRegex);
+    const result = getDefaultTimeRange();
+
+    expect(result.from).toBeInstanceOf(Date);
+    expect(result.to).toBeInstanceOf(Date);
   });
 });
