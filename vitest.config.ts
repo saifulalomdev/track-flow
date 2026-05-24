@@ -3,7 +3,7 @@ import path from 'path'; // 1. Import Node's path utility
 
 export default defineConfig({
     test: {
-        include: ["**/__test__/**"]
+        include: ["**/__tests__/**"]
     },
     resolve: {
         alias: {
