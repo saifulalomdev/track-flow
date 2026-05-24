@@ -47,31 +47,35 @@ export const dashboardService = {
         }
 
         // 4. Raw D1 query execution utilizing Drizzle's schema interpolator safely
-        // 4. Raw D1 query execution utilizing Drizzle's schema interpolator safely
-        const metricsQuery = await db.run(
-            sql`
-    WITH session_metrics AS (
-        SELECT 
-            session_id,
-            count(id) as hits_count,
-            (strftime('%s', max(timestamp)) - strftime('%s', min(timestamp))) as duration_seconds,
-            sum(case when event_type = 'conversion' then 1 else 0 end) as conversion_count
-        FROM ${event}
-        WHERE website_id = ${activeSiteId} 
-          -- Force conversion to string primitives using .toISOString() or direct string casting
-          AND timestamp >= ${queryDateFrom instanceof Date ? queryDateFrom.toISOString() : String(queryDateFrom)} 
-          AND timestamp <= ${queryDateTo instanceof Date ? queryDateTo.toISOString() : String(queryDateTo)}
-        GROUP BY session_id
-    )
-    SELECT
-        count(session_id) as total_traffic,
-        coalesce(round((count(case when hits_count = 1 then 1 end) * 100.0) / nullif(count(session_id), 0), 2), 0) as bounce_rate,
-        coalesce(round(avg(duration_seconds), 0), 0) as avg_session_duration,
-        coalesce(round((count(case when conversion_count > 0 then 1 end) * 100.0) / nullif(count(session_id), 0), 2), 0) as conversion_rate
-    FROM session_metrics
-    `
+        const metricsQuery = await db.run(sql`
+            WITH session_metrics AS (
+                SELECT 
+                    session_id,
+                    count(id) as hits_count,
+                    (strftime('%s', max(timestamp)) - strftime('%s', min(timestamp))) as duration_seconds,
+                    sum(case when event_type = 'conversion' then 1 else 0 end) as conversion_count
+                FROM ${event}
+                WHERE website_id = ${activeSiteId} 
+                AND timestamp >= ${queryDateFrom instanceof Date ? queryDateFrom.toISOString() : String(queryDateFrom)} 
+                AND timestamp <= ${queryDateTo instanceof Date ? queryDateTo.toISOString() : String(queryDateTo)}
+                GROUP BY session_id
+            )
+            SELECT
+                count(session_id) as total_traffic,
+                coalesce(round((count(case when hits_count = 1 then 1 end) * 100.0) / nullif(count(session_id), 0), 2), 0) as bounce_rate,
+                coalesce(round(avg(duration_seconds), 0), 0) as avg_session_duration,
+                coalesce(round((count(case when conversion_count > 0 then 1 end) * 100.0) / nullif(count(session_id), 0), 2), 0) as conversion_rate
+            FROM session_metrics`
         );
 
+        const practiceData = await db.get(sql`
+        select country 
+        from ${event}
+        where website_id = ${activeSiteId}
+        `);
+
+
+        console.log(practiceData)
         // D1 safe array extractor boundary layout mapping
         const rawMetrics = (metricsQuery.results?.[0] as any) || {};
 

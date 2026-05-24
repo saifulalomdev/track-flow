@@ -5,7 +5,7 @@ import {
     AccordionTrigger,
 } from "../ui/accordion";
 import Footer from "./footer";
-import { faqs } from "@/constants/faqs";
+import { faqs } from "@/data/faqs";
 import GetStarted from "./get-started-button";
 
 

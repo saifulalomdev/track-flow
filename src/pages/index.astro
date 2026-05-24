@@ -1,17 +1,17 @@
 ---
 // src/pages/index.astro
 import MainLayout from "@/layouts/main.astro";
-import HeroSection from "@/components/landing-page/hero-section";
-import PublicHeader from "@/components/landing-page/public-header";
-import FeatureSection from "@/components/landing-page/feature-section";
-// import PricingSection from "@/components/landing-page/pricing-section";
-import FAQAndFooterSection from "@/components/landing-page/FAQ-and-footer-section";
+import {
+    FAQAndFootersection,
+    PublicHeader,
+    HeroSection,
+    FeaturesSection,
+} from "@/modules/marketing";
 ---
 
 <MainLayout>
     <PublicHeader client:visible />
     <HeroSection />
-    <FeatureSection/>
-    <!-- <PricingSection/> -->
-    <FAQAndFooterSection client:visible/>
+    <FeaturesSection />
+    <FAQAndFootersection client:visible />
 </MainLayout>

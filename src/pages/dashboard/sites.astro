@@ -1,9 +1,9 @@
 ---
-import SitePage from "@/components/sites/site-page";
 import { siteService, type Site } from "@/db";
 import { DashboardLayout } from "@/modules/dashboard";
 import MainLayout from "@/layouts/main.astro";
 import { getDb } from "@/lib/get-db";
+import { WebsiteManager } from "@/modules/websites";
 
 let initialSites: Site[] = [];
 let errorMsg = null;
@@ -19,7 +19,7 @@ try {
 
 <MainLayout>
     <DashboardLayout client:load>
-        <SitePage
+        <WebsiteManager
             initialWebsites={initialSites}
             errorMsg={errorMsg}
             client:load

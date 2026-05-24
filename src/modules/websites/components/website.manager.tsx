@@ -1,31 +1,31 @@
 // src/components/sites/site-page.tsx
 import { useState } from "react";
-import SiteForm from "./site-form";
 import { Plus } from "lucide-react";
 import { actions } from "astro:actions";
 import type { Site } from "@/db/schema";
 import { useAction } from "@/hooks/use-action";
-import { PageHeader } from "../ui/page-header";
 import { Button } from "@/components/ui/button";
-import SiteCard from "@/components/sites/site-card";
-import DomainEmptyState from "@/components/sites/domain-empty-state";
-import ErrorAlert from "../ui/error-alart";
+import SiteForm from "./website.form";
+import ErrorAlert from "@/components/ui/error-alert";
+import { PageHeader } from "@/components/ui/page-header";
+import SiteCard from "./website.card";
+import DomainEmptyState from "./websites.empty.state";
 
-interface SitePageProps {
+interface WebsitePageProps {
   initialWebsites: Site[];
   errorMsg: string | null
 }
 
-const siteDefaultValue: Site = {
+const websiteDefaultValue: Site = {
   id: "",
   isActive: true,
   title: "",
   url: ""
 }
-export default function SitePage({ initialWebsites, errorMsg }: SitePageProps) {
+export function WebsiteManager({ initialWebsites, errorMsg }: WebsitePageProps) {
   const [sites, setSites] = useState<Site[] | []>(initialWebsites)
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingSite, setEditingSite] = useState<Site>(siteDefaultValue);
+  const [editingSite, setEditingSite] = useState<Site>(websiteDefaultValue);
 
   // 1. Hook for Create Action
   const createAction = useAction(actions.createSite, {
@@ -74,7 +74,7 @@ export default function SitePage({ initialWebsites, errorMsg }: SitePageProps) {
 
   // Open modal for Creating
   const handleOpenCreate = () => {
-    setEditingSite(siteDefaultValue);
+    setEditingSite(websiteDefaultValue);
     setIsDialogOpen(true);
   };
 

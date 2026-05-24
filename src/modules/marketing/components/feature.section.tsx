@@ -1,10 +1,10 @@
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import { featuers } from '@/data/features'
 import { cn } from '@/lib/utils'
-import FeaturesCard from './features-card'
-import GetStarted from './get-started-button'
+import { FeaturesCard } from './features.card'
+import { GetStarted } from './get.started.button'
 
-export default function FeaturesSection() {
+export function FeaturesSection() {
     return (
         <section id='features' className='px-6 md:px-10 lg:px-20 mt-10 md:mt-19.5 space-y-10 md:space-y-14 overflow-hidden'>
             {/* Header Section */}
@@ -56,7 +56,7 @@ export default function FeaturesSection() {
 
             {/* CTA Buttons */}
             <div className='flex flex-col sm:flex-row justify-center items-center gap-3 pb-10'>
-                <GetStarted/>
+                <GetStarted />
                 <Button size="lg" variant="outline" className='w-full sm:w-auto'>
                     All Systems
                     <span className="relative flex h-3 w-3">

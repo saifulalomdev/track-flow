@@ -2,10 +2,10 @@
 import { ChevronRight, CircleCheck } from "lucide-react"
 import type { Plan } from "@/config/pricing-plans"
 import { cn } from "@/lib/utils"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 
 
-export default function PricingCard({ id, name, desc, price, features }: Plan) {
+export  function PricingCard({ id, name, desc, price, features }: Plan) {
     const freePlan = name === "Free"
     const proPlan = name === "Pro"
     const teamPlan = name === "Team"
