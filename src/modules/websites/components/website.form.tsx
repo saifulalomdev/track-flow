@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -6,14 +7,13 @@ import {
     DialogFooter,
     DialogClose,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { SwitchChoiceCard } from "@/components/ui/switch-card";
 import type { Site } from "@/db/schema";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { SwitchChoiceCard } from "../ui/switch-card";
 
-interface SiteFormProps {
+interface WebsiteFormProps {
     initialData: Site;
     isLoading?: boolean;
     isDialogOpen?: boolean;
@@ -21,13 +21,13 @@ interface SiteFormProps {
     onSubmit: (data: Partial<Site>) => void;
 }
 
-export default function SiteForm({
+export default function WebsiteForm({
     onSubmit,
     isLoading,
     isDialogOpen,
     setIsDialogOpen,
     initialData
-}: SiteFormProps) {
+}: WebsiteFormProps) {
     const [site, setSite] = useState<Site>(initialData);
 
     useEffect(() => {

@@ -6,9 +6,9 @@ import {
     TooltipContent,
     TooltipTrigger,
     TooltipProvider
-} from '../ui/tooltip'
+} from '@/components/ui/tooltip'
 
-export default function Footer() {
+export function Footer() {
     return (
         <footer id='footer' className='px-6 md:px-10 lg:px-15 xl:px-25 pt-15 border-t'>
             {/* Navigations Section */}

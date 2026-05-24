@@ -2,10 +2,10 @@
 import * as React from "react";
 import { type DateRange } from "react-day-picker";
 import { PageHeader } from "@/components/ui/page-header";
-import ErrorAlert from "@/components/ui/error-alart";
-import DashboardSiteSelector from "./dashboard-site-sector";
-import { DashboardDateRangePicker } from "./dashboard-date-picker";
-import DashboardStatCard from "./dashboard-stats";
+import ErrorAlert from "@/components/ui/error-alert";
+import DashboardSiteSelector from "./dashboard.site.selector";
+import { DashboardDateRangePicker } from "./dashboard.date.picker";
+import DashboardStatCard from "./dashboard.stats";
 import type { DashboardPageProps } from "../dashboard.types";
 
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
-import { cn } from '@/lib/utils'; // Adjust this import path based on your project structure
+import { cn } from '@/lib/utils';
 
-interface StatusIconProps extends React.HTMLAttributes<HTMLDivElement> {
+interface WebsiteStatusIconProps extends React.HTMLAttributes<HTMLDivElement> {
   isActive: boolean | null;
 }
 
-export const StatusIcon = React.forwardRef<HTMLDivElement, StatusIconProps>(
+export const WebsiteStatusIcon = React.forwardRef<HTMLDivElement, WebsiteStatusIconProps>(
   ({ className, isActive, ...props }, ref) => {
     return (
       <div
@@ -30,4 +30,4 @@ export const StatusIcon = React.forwardRef<HTMLDivElement, StatusIconProps>(
   }
 );
 
-StatusIcon.displayName = "StatusIcon";
+WebsiteStatusIcon.displayName = "WebsiteStatusIcon";

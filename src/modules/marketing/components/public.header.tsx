@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { ChevronRight, Menu, X } from "lucide-react";
-import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { navItems } from "@/config/nav-items";
-import { AppBranding } from "../brand";
+import { Button } from "@/components/ui/button";
+import { AppBranding } from "@/components/brand";
+import { ChevronRight, Menu, X } from "lucide-react";
 
 
-export default function PublicHeader() {
+export  function PublicHeader() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

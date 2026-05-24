@@ -1,7 +1,7 @@
-import { Card, CardContent } from '../ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Globe } from 'lucide-react'
 
-export default function DomainEmptyState() {
+export default function WebsitesEmptyState() {
     return (
         <Card className="border-dashed border-white/20 bg-transparent rounded-md">
             <CardContent className="p-12 flex flex-col items-center text-center space-y-4">

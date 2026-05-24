@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { adminNavItems } from '@/constants/admin-nav-items';
+import { adminNavItems } from '@/config/admin-nav-items';
 import { AppBranding } from '@/components/brand';
 
 interface DashboardSidebarProps {

@@ -1,4 +1,3 @@
-import { Card } from '../ui/card'
 import { Button } from "@/components/ui/button"
 import {
     Play,
@@ -15,7 +14,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Site } from '@/db/schema'
-import CopyToClipboard from '../ui/copy-to-clipboard'
 import { getBaseUrl } from '@/lib/get-base-url'
 import { cn } from '@/lib/utils'
 import {
@@ -30,7 +28,9 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useState } from 'react'
-import { StatusIcon } from './status-icon';
+import { WebsiteStatusIcon } from './website.status.icon';
+import CopyToClipboard from '@/components/ui/copy-to-clipboard';
+import { Card } from "@/components/ui/card";
 
 interface SiteCardProps extends Site {
     onUpdate?: () => void;
@@ -58,7 +58,7 @@ export default function SiteCard({
     return (
         <Card key={id} className="border-white/10 bg-background/50 rounded-lg justify-between gap-6 p-6 flex flex-col md:flex-row items-center">
             <div className="flex items-center gap-4 w-full md:w-auto">
-            <StatusIcon isActive={isActive}/>
+            <WebsiteStatusIcon isActive={isActive}/>
 
                 <div>
                     <div className="flex items-center gap-2">

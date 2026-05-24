@@ -1,4 +1,4 @@
-import { logInFields } from "@/constants/login-fields";
+import { logInFields } from "@/config/login-fields";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
