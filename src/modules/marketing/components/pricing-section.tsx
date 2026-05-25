@@ -1,5 +1,5 @@
 import { plans } from '@/config/pricing-plans'
-import PricingCard from './pricing.card'
+import { PricingCard } from './pricing.card'
 
 export default function PricingSection() {
     return (
