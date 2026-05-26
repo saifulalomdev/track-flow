@@ -24,7 +24,7 @@ export function DashboardDateRangePicker({
           {date?.from ? (
             date.to ? (
               <>
-                {formatDate(date.from)} - {formatDate(date.to)}
+                {formatDate(date.from)} <span className="text-muted-foreground">to</span> {formatDate(date.to)}
               </>
             ) : (
               formatDate(date.from)

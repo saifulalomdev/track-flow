@@ -1,126 +1,98 @@
-import { and, gte, lte, sql, desc, eq } from "drizzle-orm";
-import { event } from "@/db/schema";
-import { getDefaultTimeRange, type D1Instance } from "@/lib";
+// src/modules/dashboard/dashboard.service.ts
+import { getDefaultTimeRange } from "@/lib";
 import { siteService } from "@/db";
-import type { DashboardPageProps, DashboardStatsProps } from "./dashboard.types";
-import type { DateRange } from "react-day-picker";
-import { format } from "date-fns";
-
-interface GetOverviewParams {
-    db: D1Instance;
-    websiteId?: string;
-    dateRange?: DateRange;
-}
+import { format, subDays, differenceInCalendarDays } from "date-fns";
+import { dashboardRepository } from "./dashboard.repository";
+import type { DashboardPageProps, DashboardStatItem, GetOverviewParams } from "./dashboard.types";
 
 export const dashboardService = {
-    async getOverviewData({ db, websiteId, dateRange }: GetOverviewParams): Promise<DashboardPageProps> {
-        // 1. Establish absolute time boundaries for the database query
+    async getOverviewData({ db, websiteId, dateRange }: GetOverviewParams): Promise<DashboardPageProps | null> {
         const defaultRange = getDefaultTimeRange();
+        const dateFrom = dateRange?.from || defaultRange.from || new Date();
+        const dateTo = dateRange?.to || defaultRange.to || new Date();
 
-        // Use custom ranges if picked, otherwise drop back into raw date-fns fallbacks
-        // Keep these as strings specifically for the raw SQLite text query filter match
-        const queryDateFrom = dateRange?.from
-            ? format(dateRange.from, "yyyy-MM-dd HH:mm:ss")
-            : defaultRange.from;
-        const queryDateTo = dateRange?.to
-            ? format(dateRange.to, "yyyy-MM-dd HH:mm:ss")
-            : defaultRange.to;
+        const daysDifference = differenceInCalendarDays(dateTo, dateFrom) + 1;
+        const prevDateFrom = subDays(dateFrom, daysDifference);
+        const prevDateTo = subDays(dateTo, daysDifference);
 
-        // 2. Fetch baseline context models
+        // 1. Resolve site information instantly to prevent client-side UI flickering
         const latestSite = await siteService.findLatest(db);
         const siteList = await siteService.findAll(db);
+        const activeSiteId = websiteId || latestSite?.id || "";
 
-        // Compute targets: Use passed websiteId or default to the most recent one
-        const activeSiteId = websiteId || latestSite?.id;
+        const queryCtx = {
+            activeSiteId,
+            currentFromStr: format(dateFrom, "yyyy-MM-dd HH:mm:ss"),
+            currentToStr: format(dateTo, "yyyy-MM-dd HH:mm:ss"),
+            prevFromStr: format(prevDateFrom, "yyyy-MM-dd HH:mm:ss"),
+            prevToStr: format(prevDateTo, "yyyy-MM-dd HH:mm:ss")
+        };
 
-        // 3. Fallback structures if no websites exist yet
-        if (!activeSiteId) {
-            return {
-                dateRange: {
-                    from: dateRange?.from || defaultRange.from || new Date(),
-                    to: dateRange?.to || defaultRange.to || new Date()
-                },
-                defaultSiteId: undefined,
-                sites: [],
-                dashboardStats: this.getEmptyStats()
-            };
-        }
+        if (!queryCtx.activeSiteId) return null;
 
-        // 4. Raw D1 query execution utilizing Drizzle's schema interpolator safely
-        const metricsQuery = await db.run(sql`
-            WITH session_metrics AS (
-                SELECT 
-                    session_id,
-                    count(id) as hits_count,
-                    (strftime('%s', max(timestamp)) - strftime('%s', min(timestamp))) as duration_seconds,
-                    sum(case when event_type = 'conversion' then 1 else 0 end) as conversion_count
-                FROM ${event}
-                WHERE website_id = ${activeSiteId} 
-                AND timestamp >= ${queryDateFrom instanceof Date ? queryDateFrom.toISOString() : String(queryDateFrom)} 
-                AND timestamp <= ${queryDateTo instanceof Date ? queryDateTo.toISOString() : String(queryDateTo)}
-                GROUP BY session_id
-            )
-            SELECT
-                count(session_id) as total_traffic,
-                coalesce(round((count(case when hits_count = 1 then 1 end) * 100.0) / nullif(count(session_id), 0), 2), 0) as bounce_rate,
-                coalesce(round(avg(duration_seconds), 0), 0) as avg_session_duration,
-                coalesce(round((count(case when conversion_count > 0 then 1 end) * 100.0) / nullif(count(session_id), 0), 2), 0) as conversion_rate
-            FROM session_metrics`
-        );
+        // 2. Parallelize standalone query functions via Promise.all
+        const [statsQuery, pageviewsQuery, devicesQuery, countriesQuery, trendsQuery] = await Promise.all([
+            dashboardRepository.getStats(db, queryCtx),
+            dashboardRepository.getPageviews(db, queryCtx),
+            dashboardRepository.getDevices(db, queryCtx),
+            dashboardRepository.getCountries(db, queryCtx),
+            dashboardRepository.getTrends(db, queryCtx)
+        ]);
 
-        const practiceData = await db.get(sql`
-        select country 
-        from ${event}
-        where website_id = ${activeSiteId}
-        `);
+        const rawStats = (statsQuery.results?.[0] as Record<string, unknown>) || {};
+        const rawPageviews = (pageviewsQuery.results || []) as Record<string, unknown>[];
+        const rawDevices = (devicesQuery.results || []) as Record<string, unknown>[];
+        const rawCountries = (countriesQuery.results || []) as Record<string, unknown>[];
+        const rawTrends = (trendsQuery.results || []) as Record<string, unknown>[];
 
-
-        console.log(practiceData)
-        // D1 safe array extractor boundary layout mapping
-        const rawMetrics = (metricsQuery.results?.[0] as any) || {};
-
-        // 5. Structure fields explicitly using DashboardStatsProps[] typing with 'as const'
-        const stats: DashboardStatsProps[] = [
+        // 3. Transform database stats into explicitly typed items
+        const stats: DashboardStatItem[] = [
             {
-                name: "totalTraffic" as const,
-                value: Number(rawMetrics.total_traffic || 0),
-                change: 0.0,
+                name: "totalTraffic",
+                value: Number(rawStats.total_traffic || 0) >= 1000 
+                    ? `${(Number(rawStats.total_traffic || 0) / 1000).toFixed(0)}k` 
+                    : String(rawStats.total_traffic || 0),
+                changes: `${Number(rawStats.total_traffic || 0) >= Number(rawStats.prev_total_traffic || 0) ? "+" : ""}${Math.round(((Number(rawStats.total_traffic || 0) - Number(rawStats.prev_total_traffic || 0)) / (Number(rawStats.prev_total_traffic || 1) || 1)) * 100)}%`
             },
             {
-                name: "bounceRate" as const,
-                value: Number(rawMetrics.bounce_rate || 0),
-                change: 0.0,
+                name: "bounceRate",
+                value: `${rawStats.bounce_rate || 0}%`,
+                changes: "0%"
             },
             {
-                name: "avgSessionDuration" as const,
-                value: Number(rawMetrics.avg_session_duration || 0),
-                change: 0.0,
+                name: "avgSessionDuration",
+                value: `${rawStats.avg_duration || 0}s`,
+                changes: "0%"
             },
             {
-                name: "conversionRate" as const,
-                value: Number(rawMetrics.conversion_rate || 0),
-                change: 0.0,
-            },
+                name: "conversionRate",
+                value: `${rawStats.conversion_rate || 0}%`,
+                changes: "0%"
+            }
         ];
 
         return {
-            // Return authentic JavaScript Date targets back out to page layouts
-            dateRange: {
-                from: dateRange?.from || defaultRange.from || new Date(),
-                to: dateRange?.to || defaultRange.to || new Date()
+            dateRange : {
+                from: dateFrom,
+                to: dateTo
             },
-            defaultSiteId: activeSiteId,
+            stats,
+            pageviews: rawPageviews.map(p => ({ 
+                title: String(p.title || ""), 
+                url: String(p.url || ""), 
+                views: Number(p.views || 0) 
+            })),
+            devices: rawDevices.map(d => ({ 
+                name: String(d.name || ""), 
+                value: String(d.value || "0%") 
+            })),
+            trafficTrends: rawTrends.map(t => Number(t.current_views || 0)),
+            countries: rawCountries.map(c => ({ 
+                name: String(c.name || ""), 
+                trafficPercent: String(c.traffic_percent || "0%") 
+            })),
             sites: siteList,
-            dashboardStats: stats
+            activeSiteId
         };
-    },
-
-    getEmptyStats(): DashboardStatsProps[] {
-        return [
-            { name: "totalTraffic" as const, value: 0, change: 0 },
-            { name: "bounceRate" as const, value: 0, change: 0 },
-            { name: "avgSessionDuration" as const, value: 0, change: 0 },
-            { name: "conversionRate" as const, value: 0, change: 0 },
-        ];
     }
 };

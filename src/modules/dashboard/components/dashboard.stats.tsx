@@ -1,5 +1,5 @@
 import { Target, Timer, Undo, Users } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { DashboardStatsProps } from '../dashboard.types'
 
 export default function DashboardStatCard({ name, value, change = 0 }: DashboardStatsProps) {
@@ -20,7 +20,7 @@ export default function DashboardStatCard({ name, value, change = 0 }: Dashboard
             <CardContent>
                 <div className="text-2xl font-bold">{value ? value : "--"}</div>
                 <p className={`text-xs mt-1 font-medium ${change > 0 ? "text-green-400" : "text-red-400"}`}>
-                    {change} % <span className="text-muted-foreground">from last month</span>
+                    {change} % <span className="text-muted-foreground">from last period</span>
                 </p>
             </CardContent>
         </Card >

@@ -9,8 +9,8 @@ import DashboardStatCard from "./dashboard.stats";
 import type { DashboardPageProps } from "../dashboard.types";
 
 
-export function DashboardPage({ sites, errorMsg, defaultSiteId, dateRange, dashboardStats }: DashboardPageProps) {
-    const [siteId, setSiteId] = React.useState<string>(defaultSiteId || "");
+export function DashboardPage({ sites, errorMsg, activeSiteId, dateRange, stats }: DashboardPageProps) {
+    const [siteId, setSiteId] = React.useState<string>(activeSiteId || "");
     const [date, setDate] = React.useState<DateRange | undefined>(dateRange);
 
     return (
@@ -37,8 +37,8 @@ export function DashboardPage({ sites, errorMsg, defaultSiteId, dateRange, dashb
 
             {/* STATS GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {Array.isArray(dashboardStats) ? (
-                    dashboardStats.map((stat) => (
+                {Array.isArray(stats) ? (
+                    stats.map((stat) => (
                         <DashboardStatCard key={stat.name} {...stat} />
                     ))
                 ) : (
