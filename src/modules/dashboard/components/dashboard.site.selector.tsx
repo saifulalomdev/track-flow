@@ -23,7 +23,7 @@ export default function DashboardSiteSelector({
 }: DashboardSiteSelectorProps) {
   return (
     <Select value={selectedSiteId} onValueChange={onSiteChange}>
-      <SelectTrigger className="w-full max-w-48">
+      <SelectTrigger className="w-full">
         <SelectValue placeholder="Select a site" />
       </SelectTrigger>
       

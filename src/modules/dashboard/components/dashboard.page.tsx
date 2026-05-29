@@ -5,12 +5,22 @@ import { PageHeader } from "@/components/ui/page-header";
 import ErrorAlert from "@/components/ui/error-alert";
 import DashboardSiteSelector from "./dashboard.site.selector";
 import { DashboardDateRangePicker } from "./dashboard.date.picker";
-import DashboardStatCard from "./dashboard.stats";
 import type { DashboardPageProps } from "../dashboard.types";
+import { PageviewsCard } from "./dashboard.pageviews";
+import DashboardStatsGrid from "./dashboard.stats.grid";
+import TrafficMap from "./dashboard.trafic.map";
 
 
-export function DashboardPage({ sites, errorMsg, defaultSiteId, dateRange, dashboardStats }: DashboardPageProps) {
-    const [siteId, setSiteId] = React.useState<string>(defaultSiteId || "");
+export function DashboardPage({
+    sites,
+    errorMsg,
+    activeSiteId,
+    dateRange,
+    stats,
+    pageviews,
+    countries
+}: DashboardPageProps) {
+    const [siteId, setSiteId] = React.useState<string>(activeSiteId || "");
     const [date, setDate] = React.useState<DateRange | undefined>(dateRange);
 
     return (
@@ -35,18 +45,11 @@ export function DashboardPage({ sites, errorMsg, defaultSiteId, dateRange, dashb
                 </div>
             </PageHeader>
 
-            {/* STATS GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {Array.isArray(dashboardStats) ? (
-                    dashboardStats.map((stat) => (
-                        <DashboardStatCard key={stat.name} {...stat} />
-                    ))
-                ) : (
-                    <p className="text-sm text-muted-foreground col-span-full">
-                        Metrics array is temporarily unavailable.
-                    </p>
-                )}
-            </div>
+            <DashboardStatsGrid stats={stats} />
+                <PageviewsCard pageviews={pageviews} />
+            {/* <div className="flex gap-4">
+                <TrafficMap countries={countries} />
+            </div> */}
         </div>
     );
 }
