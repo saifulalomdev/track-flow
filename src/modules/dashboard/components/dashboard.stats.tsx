@@ -1,8 +1,8 @@
 import { Target, Timer, Undo, Users } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import type { DashboardStatsProps } from '../dashboard.types'
+import type { DashboardStatItem } from '../dashboard.types'
 
-export default function DashboardStatCard({ name, value, change = 0 }: DashboardStatsProps) {
+export default function DashboardStatCard({ name, value, changes }: DashboardStatItem) {
     return (
         <Card key={name} className="border-white/10 bg-background/50">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -19,8 +19,8 @@ export default function DashboardStatCard({ name, value, change = 0 }: Dashboard
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">{value ? value : "--"}</div>
-                <p className={`text-xs mt-1 font-medium ${change > 0 ? "text-green-400" : "text-red-400"}`}>
-                    {change} % <span className="text-muted-foreground">from last period</span>
+                <p className={`text-xs mt-1 font-medium ${Number(changes) > 0 ? "text-green-400" : "text-red-400"}`}>
+                    {changes} % <span className="text-muted-foreground">from last period</span>
                 </p>
             </CardContent>
         </Card >

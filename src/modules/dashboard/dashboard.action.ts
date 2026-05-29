@@ -4,11 +4,11 @@ import { getDb } from "@/lib/get-db";
 import { siteService } from "@/db";
 import { subMonths, format } from "date-fns";
 import { dashboardService } from "./dashboard.service";
-import { getOverviewSchema } from "./dashboard.schema";
+import { getAnalyticsSchema } from "./dashboard.schema";
 
 export const getDashboardOverview = defineAction({
     accept: "json",
-    input: getOverviewSchema,
+    input: getAnalyticsSchema as any,
     handler: async (input, context) => {
         // 1. Core platform initialization
         const env = context.locals.runtime?.env;
@@ -42,8 +42,10 @@ export const getDashboardOverview = defineAction({
         const data = await dashboardService.getOverviewData({
             db,
             websiteId,
-            dateFrom,
-            dateTo,
+            dateRange: {
+                from: dateFrom,
+                to: dateTo
+            }
         });
 
         return {

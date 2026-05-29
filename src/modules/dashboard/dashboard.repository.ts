@@ -72,9 +72,7 @@ export const dashboardRepository = {
 
     getCountries: (db: D1Instance, { activeSiteId, currentFromStr, currentToStr }: RepositoryQueryParams) => {
         return db.run(sql`
-            SELECT 
-                coalesce(country, 'Unknown') as name,
-                coalesce(round((count(DISTINCT session_id) * 100.0) / nullif((SELECT count(DISTINCT session_id) FROM ${event} WHERE website_id = ${activeSiteId} AND timestamp >= ${currentFromStr} AND timestamp <= ${currentToStr}), 0), 0), 0) || '%' as traffic_percent
+            SELECT country as name, sum(distinct session_id) as visitors
             FROM ${event}
             WHERE website_id = ${activeSiteId} AND timestamp >= ${currentFromStr} AND timestamp <= ${currentToStr}
             GROUP BY country 

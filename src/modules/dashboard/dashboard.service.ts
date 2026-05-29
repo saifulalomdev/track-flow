@@ -87,10 +87,7 @@ export const dashboardService = {
                 value: String(d.value || "0%") 
             })),
             trafficTrends: rawTrends.map(t => Number(t.current_views || 0)),
-            countries: rawCountries.map(c => ({ 
-                name: String(c.name || ""), 
-                trafficPercent: String(c.traffic_percent || "0%") 
-            })),
+            countries: rawCountries.map(c => (c)) as any,
             sites: siteList,
             activeSiteId
         };

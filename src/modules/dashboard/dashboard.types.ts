@@ -21,7 +21,7 @@ export interface DeviceItem {
 
 export interface CountryItem {
     name: string;
-    trafficPercent: string;
+    visitors: number;
 }
 
 export interface DashboardPageProps {
