@@ -11,7 +11,21 @@ import { PageviewsCard } from "./dashboard.pageviews";
 import type { DashboardPageProps } from "../dashboard.types";
 import { useAction } from "@/hooks/use-action";
 import { actions } from "astro:actions";
+import { ReferrerChart } from "@/components/ui/donut";
 
+const referrers = [
+
+    { name: 'Direct', visitors: 2 },
+
+    { name: 'Perplexity', visitors: 1 },
+
+    { name: 'Google', visitors: 1 },
+
+    { name: 'Brave', visitors: 1 },
+
+    { name: 'Facebook', visitors: 1 }
+
+]
 export function DashboardPage({
     sites,
     errorMsg,
@@ -85,9 +99,22 @@ export function DashboardPage({
                 </div>
             </PageHeader>
 
+            {/* 
+                - trafic treands 
+                - trafic by platform (eg. mobile, laptop, computer, tab)
+                - trafic by platform (eg. direct, linkedin facebook)
+                - trafic by country
+           */}
             <DashboardStatsGrid stats={dashboardData.stats} />
-
-            <PageviewsCard pageviews={dashboardData.pageviews} />
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <ReferrerChart
+                    data={referrers}
+                    title="Where is traffic coming from?"
+                />
+                <PageviewsCard
+                    pageviews={dashboardData.pageviews}
+                />
+            </div>
         </div>
     );
 }
