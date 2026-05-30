@@ -72,13 +72,17 @@ export const dashboardRepository = {
 
     getCountries: (db: D1Instance, { activeSiteId, currentFromStr, currentToStr }: RepositoryQueryParams) => {
         return db.run(sql`
-            SELECT country as name, sum(distinct session_id) as visitors
-            FROM ${event}
-            WHERE website_id = ${activeSiteId} AND timestamp >= ${currentFromStr} AND timestamp <= ${currentToStr}
-            GROUP BY country 
-            ORDER BY count(DISTINCT session_id) DESC 
-            LIMIT 5
-        `);
+        SELECT 
+            country as name, 
+            count(DISTINCT session_id) as visitors
+        FROM ${event}
+        WHERE website_id = ${activeSiteId} 
+          AND timestamp >= ${currentFromStr} 
+          AND timestamp <= ${currentToStr}
+        GROUP BY country 
+        ORDER BY visitors DESC
+        LIMIT 5
+    `);
     },
 
     getTrends: (db: D1Instance, { currentFromStr, currentToStr, activeSiteId }: RepositoryQueryParams) => {
@@ -102,5 +106,20 @@ export const dashboardRepository = {
             GROUP BY b.n
             ORDER BY b.n ASC
         `);
-    }
+    },
+
+    getReferrers: (db: D1Instance, { activeSiteId, currentFromStr, currentToStr }: RepositoryQueryParams) => {
+        return db.run(sql`
+        SELECT 
+            coalesce(nullif(referrer, ''), 'Direct / None') as name, 
+            count(DISTINCT session_id) as visitors
+        FROM ${event}
+        WHERE website_id = ${activeSiteId} 
+          AND timestamp >= ${currentFromStr} 
+          AND timestamp <= ${currentToStr}
+        GROUP BY name
+        ORDER BY visitors DESC 
+        LIMIT 10
+    `);
+    },
 };

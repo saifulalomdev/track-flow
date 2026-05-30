@@ -4,6 +4,7 @@ import { siteService } from "@/db";
 import { format, subDays, differenceInCalendarDays } from "date-fns";
 import { dashboardRepository } from "./dashboard.repository";
 import type { DashboardPageProps, DashboardStatItem, GetOverviewParams } from "./dashboard.types";
+import { getCountryName, getPlatformName } from "./dashboard-libs";
 
 export const dashboardService = {
     async getOverviewData({ db, websiteId, dateRange }: GetOverviewParams): Promise<DashboardPageProps | null> {
@@ -31,12 +32,20 @@ export const dashboardService = {
         if (!queryCtx.activeSiteId) return null;
 
         // 2. Parallelize standalone query functions via Promise.all
-        const [statsQuery, pageviewsQuery, devicesQuery, countriesQuery, trendsQuery] = await Promise.all([
+        const [
+            statsQuery,
+            pageviewsQuery,
+            devicesQuery,
+            countriesQuery,
+            trendsQuery,
+            referrersQuery
+        ] = await Promise.all([
             dashboardRepository.getStats(db, queryCtx),
             dashboardRepository.getPageviews(db, queryCtx),
             dashboardRepository.getDevices(db, queryCtx),
             dashboardRepository.getCountries(db, queryCtx),
-            dashboardRepository.getTrends(db, queryCtx)
+            dashboardRepository.getTrends(db, queryCtx),
+            dashboardRepository.getReferrers(db, queryCtx)
         ]);
 
         const rawStats = (statsQuery.results?.[0] as Record<string, unknown>) || {};
@@ -44,13 +53,14 @@ export const dashboardService = {
         const rawDevices = (devicesQuery.results || []) as Record<string, unknown>[];
         const rawCountries = (countriesQuery.results || []) as Record<string, unknown>[];
         const rawTrends = (trendsQuery.results || []) as Record<string, unknown>[];
+        const rawReferrers = (referrersQuery.results || []) as Record<string, unknown>[];
 
         // 3. Transform database stats into explicitly typed items
         const stats: DashboardStatItem[] = [
             {
                 name: "totalTraffic",
-                value: Number(rawStats.total_traffic || 0) >= 1000 
-                    ? `${(Number(rawStats.total_traffic || 0) / 1000).toFixed(0)}k` 
+                value: Number(rawStats.total_traffic || 0) >= 1000
+                    ? `${(Number(rawStats.total_traffic || 0) / 1000).toFixed(0)}k`
                     : String(rawStats.total_traffic || 0),
                 changes: `${Number(rawStats.total_traffic || 0) >= Number(rawStats.prev_total_traffic || 0) ? "+" : ""}${Math.round(((Number(rawStats.total_traffic || 0) - Number(rawStats.prev_total_traffic || 0)) / (Number(rawStats.prev_total_traffic || 1) || 1)) * 100)}%`
             },
@@ -71,23 +81,26 @@ export const dashboardService = {
             }
         ];
 
+        console.log()
+        console.log(rawReferrers.map(({name , visitors}: any) => ({ name: getPlatformName(name), visitors})))
+
         return {
-            dateRange : {
+            dateRange: {
                 from: dateFrom,
                 to: dateTo
             },
             stats,
-            pageviews: rawPageviews.map(p => ({ 
-                title: String(p.title || ""), 
-                url: String(p.url || ""), 
-                views: Number(p.views || 0) 
+            pageviews: rawPageviews.map(p => ({
+                title: String(p.title || ""),
+                url: String(p.url || ""),
+                views: Number(p.views || 0)
             })),
-            devices: rawDevices.map(d => ({ 
-                name: String(d.name || ""), 
-                value: String(d.value || "0%") 
+            devices: rawDevices.map(d => ({
+                name: String(d.name || ""),
+                value: String(d.value || "0%")
             })),
             trafficTrends: rawTrends.map(t => Number(t.current_views || 0)),
-            countries: rawCountries.map(c => (c)) as any,
+            countries: rawCountries.map(({name , visitors}: any) => ({ name: getCountryName(name), visitors})),
             sites: siteList,
             activeSiteId
         };

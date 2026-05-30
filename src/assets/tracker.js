@@ -20,12 +20,20 @@
     }
 
     function basePayload() {
+        const currentReferrer = document.referrer;
+        let cleanReferrer = null;
+
+        // Only record the referrer if it exists and DOES NOT include your own domain name
+        if (currentReferrer && !currentReferrer.includes(window.location.hostname)) {
+            cleanReferrer = currentReferrer;
+        }
+
         return {
             website_id,
             tf_session_id: getSessionId(),
             params: Object.fromEntries(new URLSearchParams(window.location.search)),
             url: window.location.href,
-            referrer: document.referrer || null,
+            referrer: cleanReferrer, // Keeps internal navigation from polluting your charts
             page_title: document.title,
             screen: {
                 width: window.screen.width,

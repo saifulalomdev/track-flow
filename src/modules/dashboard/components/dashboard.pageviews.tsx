@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/card'
 import type { PageviewItem } from '../dashboard.types'
 import { formatPageTitle, formatPageUrl, formatViews } from '../dashboard-libs'
+import { truncateText } from '@/lib/truncate-text'
 
 type PageviewsCardProps = {
     pageviews?: PageviewItem[]
@@ -18,7 +19,7 @@ export function PageviewsCard({
     const topPages = pageviews.slice(0, 5)
 
     return (
-        <Card className="border-white/10 bg-background/50 backdrop-blur-sm">
+        <Card className="border-white/10 bg-background/50 w-full backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center justify-between pb-4">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                     Top Pages
@@ -47,7 +48,7 @@ export function PageviewsCard({
                             >
                                 <div className="min-w-0 flex-1 pr-4">
                                     <h3 className="truncate text-sm font-medium text-foreground">
-                                        {title}
+                                        {truncateText(title, 80)}
                                     </h3>
 
                                     {page?.url ? (
@@ -57,7 +58,7 @@ export function PageviewsCard({
                                             rel="noreferrer"
                                             className="inline-block truncate text-xs text-muted-foreground transition-colors hover:text-primary hover:underline"
                                         >
-                                            {url}
+                                            {truncateText(url, 30)}
                                         </a>
                                     ) : (
                                         <p className="truncate text-xs text-muted-foreground">
