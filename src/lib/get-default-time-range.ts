@@ -1,11 +1,11 @@
-import { subMonths } from "date-fns";
+import { subHours, subMonths } from "date-fns";
 import type { DateRange } from "react-day-picker";
 
 /**
  * Generates the fallback date range boundary targets for dashboard analytics metrics queries.
- * By default, this establishes a trailing 30-day (1-month) window ending at the current time.
+ * By default, this establishes a trailing 12 hours window ending at the current time.
  *
- * @returns {DateRange} An object containing the absolute `from` (one month ago) and `to` (now) JavaScript Date bounds.
+ * @returns {DateRange} An object containing the absolute `from` (12 hour ago) and `to` (now) JavaScript Date bounds.
  *
  * @example
  * const defaultRange = getDefaultTimeRange();
@@ -14,7 +14,7 @@ import type { DateRange } from "react-day-picker";
 export function getDefaultTimeRange(): DateRange {
     const today = new Date();
     return {
-        from: subMonths(today, 1), 
+        from: subHours(today, 12), 
         to: today
     };
 }
