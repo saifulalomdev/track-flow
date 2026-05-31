@@ -81,9 +81,6 @@ export const dashboardService = {
             }
         ];
 
-        console.log()
-        console.log(rawReferrers.map(({name , visitors}: any) => ({ name: getPlatformName(name), visitors})))
-
         return {
             dateRange: {
                 from: dateFrom,
@@ -102,7 +99,8 @@ export const dashboardService = {
             trafficTrends: rawTrends.map(t => Number(t.current_views || 0)),
             countries: rawCountries.map(({name , visitors}: any) => ({ name: getCountryName(name), visitors})),
             sites: siteList,
-            activeSiteId
+            activeSiteId,
+            referrers: rawReferrers.map(({name , visitors}: any) => ({ name: getPlatformName(name), visitors}))
         };
     }
 };
