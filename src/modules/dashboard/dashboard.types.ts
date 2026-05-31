@@ -30,6 +30,7 @@ export interface DashboardPageProps {
     devices: DeviceItem[];
     trafficTrends: number[];
     countries: CountryItem[];
+    referrers: CountryItem[];
     sites: Site[];
     activeSiteId: string | undefined;
     dateRange: DateRange;

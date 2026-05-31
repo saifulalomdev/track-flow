@@ -7,25 +7,12 @@ import DashboardSiteSelector from "./dashboard.site.selector";
 import { DashboardDateRangePicker } from "./dashboard.date.picker";
 import DashboardStatsGrid from "./dashboard.stats.grid";
 import { PageviewsCard } from "./dashboard.pageviews";
+import {  ReferrerChart } from "./dashbaord.referrer.donut";
 
 import type { DashboardPageProps } from "../dashboard.types";
 import { useAction } from "@/hooks/use-action";
 import { actions } from "astro:actions";
-import { ReferrerChart } from "@/components/ui/donut";
 
-const referrers = [
-
-    { name: 'Direct', visitors: 2 },
-
-    { name: 'Perplexity', visitors: 1 },
-
-    { name: 'Google', visitors: 1 },
-
-    { name: 'Brave', visitors: 1 },
-
-    { name: 'Facebook', visitors: 1 }
-
-]
 export function DashboardPage({
     sites,
     errorMsg,
@@ -34,22 +21,24 @@ export function DashboardPage({
     stats,
     pageviews,
     countries,
+    referrers
 }: DashboardPageProps) {
     const [siteId, setSiteId] = React.useState(activeSiteId || "");
     const [date, setDate] = React.useState<DateRange | undefined>(dateRange);
 
-    const [dashboardData, setDashboardData] =
-        React.useState<DashboardPageProps>({
-            sites,
-            errorMsg,
-            activeSiteId,
-            dateRange,
-            stats,
-            pageviews,
-            countries,
-            devices: [],
-            trafficTrends: []
-        });
+  const [dashboardData, setDashboardData] =
+    React.useState<DashboardPageProps>({
+        sites,
+        errorMsg,
+        activeSiteId,
+        dateRange,
+        stats,
+        pageviews,
+        countries,
+        devices: [],
+        trafficTrends: [],
+        referrers: referrers // ✅ Keep the initial data instead of []
+    });
 
     const { execute } = useAction(
         actions.dashboardActions.getOverview,
@@ -80,7 +69,6 @@ export function DashboardPage({
     return (
         <div className="space-y-6">
             <ErrorAlert errorMsg={dashboardData.errorMsg || errorMsg} />
-
             <PageHeader
                 title="Overview"
                 description="Welcome back. Here's what's happening today."
@@ -108,7 +96,7 @@ export function DashboardPage({
             <DashboardStatsGrid stats={dashboardData.stats} />
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <ReferrerChart
-                    data={referrers}
+                    data={dashboardData.referrers||[]}
                     title="Where is traffic coming from?"
                 />
                 <PageviewsCard
