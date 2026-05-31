@@ -1,41 +1,93 @@
-import { Chart } from "react-google-charts";
-import type { CountryItem } from "../dashboard.types";
+import React, { useMemo } from 'react';
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
+import { Tooltip } from 'react-tooltip';
+import { colord } from 'colord';
 
-interface TrafficMapProps {
-  countries: CountryItem[];
+const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+
+export const getCountryName = (code: string) => {
+  try {
+    return new Intl.DisplayNames(['en'], { type: 'region' }).of(code) || code;
+  } catch {
+    return code;
+  }
+};
+
+const ISO_COUNTRIES: Record<string, string> = {
+  "050": "BD", "840": "US", "702": "SG", "356": "IN", "276": "DE",
+  "076": "BR", "124": "CA", "250": "FR", "826": "GB", "036": "AU"
+};
+
+interface VisitorData {
+  name: string;
+  visitors: number;
 }
 
-export default function TrafficMap({ countries }: TrafficMapProps) {
-  const mapData = [
-    ["Country", "Visitors"],
-    ...countries.map((c) => [c.name.toUpperCase(), c.visitors]),
-  ];
+interface DensityMapProps {
+  data?: VisitorData[];
+}
 
-  // 2. Set options to match your dark/blue brand aesthetic
-  const chartOptions = {
-    backgroundColor: "transparent", // Lets your backdrop-blur shine through
-    datalessRegionColor: "#1e1e2e",  // Dark background color for regions with 0 visitors
-    defaultColor: "#1e1e2e",
-    colorAxis: { 
-      colors: ["#3b82f6", "#1d4ed8"] // Auto-generates a smooth gradient from light blue to dark deep blue
-    },
-    legend: "none", // Keeps the map layout clean and spacious
-    tooltip: { 
-      textStyle: { color: "balck" }, 
-      showColorCode: false 
-    },
-  };
+export default function DensityMap({ data = [] }: DensityMapProps) {
+  const { dataMap, maxVisitors } = useMemo(() => {
+    const resMap: Record<string, number> = {};
+    let max = 1;
+
+    data.forEach(item => {
+      if (item.name) {
+        const code = item.name.toUpperCase();
+        resMap[code] = item.visitors;
+        if (item.visitors > max) max = item.visitors;
+      }
+    });
+
+    return { dataMap: resMap, maxVisitors: max };
+  }, [data]);
 
   return (
-    <div className="w-full border border-white/10 bg-background/50 backdrop-blur-sm rounded-xl p-4 flex items-center justify-center overflow-hidden h-[400px]">
-      <Chart
-        chartType="GeoChart"
-        width="100%"
-        height="100%"
-        data={mapData}
-        options={chartOptions}
-        loader={<div className="text-sm text-muted-foreground animate-pulse">Loading Map Visualizer...</div>}
-      />
+    <div style={{ position: 'relative', width: '100%', maxWidth: '800px', margin: '0 auto' }}>
+      <ComposableMap projection="geoMercator">
+        <ZoomableGroup zoom={1} minZoom={0.7} center={[0, 30]} filterZoomEvent={() => false}>
+          <Geographies geography={geoUrl}>
+            {({ geographies }) =>
+              geographies.map((geo) => {
+                const code = ISO_COUNTRIES[geo.id];
+                const geoName = geo.properties.name;
+
+                if (geoName?.toLowerCase() === "antarctica" || code === 'AQ') {
+                  return null;
+                }
+
+                // If code matches lookup use it, otherwise fallback cleanly to asset definitions
+                const count = code ? (dataMap[code] || 0) : 0;
+                const displayLabel = code ? getCountryName(code) : (geoName || "Unknown");
+
+                const fillColor = count > 0
+                  ? colord("#3b82f6").lighten(0.4 * (1.0 - count / maxVisitors)).toHex()
+                  : "#e2e8f0";
+
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={fillColor}
+                    stroke="#ffffff"
+                    strokeWidth={0.5}
+                    style={{
+                      default: { outline: 'none' },
+                      hover: { outline: 'none', fill: '#1d4ed8' },
+                      pressed: { outline: 'none' },
+                    }}
+                    data-tooltip-id="world-map-tooltip"
+                    data-tooltip-content={`${displayLabel}: ${count} visitors`}
+                  />
+                );
+              })
+            }
+          </Geographies>
+        </ZoomableGroup>
+      </ComposableMap>
+
+      <Tooltip id="world-map-tooltip" float />
     </div>
   );
 }

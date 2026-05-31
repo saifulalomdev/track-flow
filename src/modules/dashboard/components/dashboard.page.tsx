@@ -8,6 +8,7 @@ import { DashboardDateRangePicker } from "./dashboard.date.picker";
 import DashboardStatsGrid from "./dashboard.stats.grid";
 import { PageviewsCard } from "./dashboard.pageviews";
 import {  ReferrerChart } from "./dashbaord.referrer.donut";
+import TrafficMap from "./dashboard.trafic.map";
 
 import type { DashboardPageProps } from "../dashboard.types";
 import { useAction } from "@/hooks/use-action";
@@ -37,7 +38,7 @@ export function DashboardPage({
         countries,
         devices: [],
         trafficTrends: [],
-        referrers: referrers // ✅ Keep the initial data instead of []
+        referrers: referrers
     });
 
     const { execute } = useAction(
@@ -103,6 +104,8 @@ export function DashboardPage({
                     pageviews={dashboardData.pageviews}
                 />
             </div>
+
+            <TrafficMap data={dashboardData.countries}/>
         </div>
     );
 }
