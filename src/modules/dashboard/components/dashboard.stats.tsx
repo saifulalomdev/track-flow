@@ -4,7 +4,7 @@ import type { DashboardStatItem } from '../dashboard.types'
 
 export default function DashboardStatCard({ name, value, changes }: DashboardStatItem) {
     return (
-        <Card key={name} className="border-white/10 bg-background/50">
+        <Card key={name}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                     {name === "avgSessionDuration" && "Avg. Session Duration" }

@@ -77,7 +77,7 @@ export function ReferrerChart({
   const isEmptyState = chartData.length === 0 || totalVisitors === 0
 
   return (
-    <Card className="flex flex-col w-full bg-transparent">
+    <Card>
       <CardHeader className="items-center pb-0">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

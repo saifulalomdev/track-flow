@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { adminNavItems } from '@/config/admin-nav-items';
 import { AppBranding } from '@/components/brand';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface DashboardSidebarProps {
     className?: string
@@ -9,8 +10,9 @@ interface DashboardSidebarProps {
 export default function DashboardSidebar({ className }: DashboardSidebarProps) {
 
     return (
-        <aside className={cn('w-full overflow-y-auto md:w-60 lg:w-75 p-4 border-r h-dvh bg-background flex flex-col justify-between z-30', className)}>
-            <div>
+        <Card className={cn('w-full overflow-y-auto md:w-60 lg:w-75 border-r h-dvh flex flex-col justify-between z-30', className)}>
+           <CardContent>
+             <div>
                 {/* sidebar header */}
                 <AppBranding border={true}/>
                 {/* sidebar navigations */}
@@ -31,6 +33,7 @@ export default function DashboardSidebar({ className }: DashboardSidebarProps) {
                     ))}
                 </nav>
             </div>
-        </aside>
+           </CardContent>
+        </Card>
     )
 }

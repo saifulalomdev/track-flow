@@ -56,7 +56,7 @@ export default function SiteCard({
     const trackingScript = `<script async defer src="${scriptUrl}" data-website-id="${id}" data-api="${apiEndPoint}"/>`;
 
     return (
-        <Card key={id} className="border-white/10 bg-background/50 rounded-lg justify-between gap-6 p-6 flex flex-col md:flex-row items-center">
+        <Card key={id} className="rounded-lg justify-between gap-6 p-6 flex flex-col md:flex-row items-center">
             <div className="flex items-center gap-4 w-full md:w-auto">
             <WebsiteStatusIcon isActive={isActive}/>
 

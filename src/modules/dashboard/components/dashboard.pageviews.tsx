@@ -19,7 +19,7 @@ export function PageviewsCard({
     const topPages = pageviews.slice(0, 5)
 
     return (
-        <Card className="border-white/10 bg-background/50 w-full backdrop-blur-sm">
+        <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-4">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                     Top Pages
