@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { Tooltip } from 'react-tooltip';
 import { colord } from 'colord';
+import { Card, CardContent } from '@/components/ui/card';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -44,50 +45,51 @@ export default function DensityMap({ data = [] }: DensityMapProps) {
   }, [data]);
 
   return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: '800px', margin: '0 auto' }}>
-      <ComposableMap projection="geoMercator">
-        <ZoomableGroup zoom={1} minZoom={0.7} center={[0, 30]} filterZoomEvent={() => false}>
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
-                const code = ISO_COUNTRIES[geo.id];
-                const geoName = geo.properties.name;
+    <Card>
+      <CardContent>
+        <ComposableMap projection="geoMercator">
+          <ZoomableGroup zoom={1} minZoom={0.7} center={[0, 30]} filterZoomEvent={() => false}>
+            <Geographies geography={geoUrl}>
+              {({ geographies }) =>
+                geographies.map((geo) => {
+                  const code = ISO_COUNTRIES[geo.id];
+                  const geoName = geo.properties.name;
 
-                if (geoName?.toLowerCase() === "antarctica" || code === 'AQ') {
-                  return null;
-                }
+                  if (geoName?.toLowerCase() === "antarctica" || code === 'AQ') {
+                    return null;
+                  }
 
-                // If code matches lookup use it, otherwise fallback cleanly to asset definitions
-                const count = code ? (dataMap[code] || 0) : 0;
-                const displayLabel = code ? getCountryName(code) : (geoName || "Unknown");
+                  // If code matches lookup use it, otherwise fallback cleanly to asset definitions
+                  const count = code ? (dataMap[code] || 0) : 0;
+                  const displayLabel = code ? getCountryName(code) : (geoName || "Unknown");
 
-                const fillColor = count > 0
-                  ? colord("#3b82f6").lighten(0.4 * (1.0 - count / maxVisitors)).toHex()
-                  : "#e2e8f0";
+                  const fillColor = count > 0
+                    ? colord("#3b82f6").lighten(0.4 * (1.0 - count / maxVisitors)).toHex()
+                    : "#e2e8f0";
 
-                return (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    fill={fillColor}
-                    stroke="#ffffff"
-                    strokeWidth={0.5}
-                    style={{
-                      default: { outline: 'none' },
-                      hover: { outline: 'none', fill: '#1d4ed8' },
-                      pressed: { outline: 'none' },
-                    }}
-                    data-tooltip-id="world-map-tooltip"
-                    data-tooltip-content={`${displayLabel}: ${count} visitors`}
-                  />
-                );
-              })
-            }
-          </Geographies>
-        </ZoomableGroup>
-      </ComposableMap>
-
-      <Tooltip id="world-map-tooltip" float />
-    </div>
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill={fillColor}
+                      stroke="#ffffff"
+                      strokeWidth={0.5}
+                      style={{
+                        default: { outline: 'none' },
+                        hover: { outline: 'none', fill: '#1d4ed8' },
+                        pressed: { outline: 'none' },
+                      }}
+                      data-tooltip-id="world-map-tooltip"
+                      data-tooltip-content={`${displayLabel}: ${count} visitors`}
+                    />
+                  );
+                })
+              }
+            </Geographies>
+          </ZoomableGroup>
+        </ComposableMap>
+        <Tooltip id="world-map-tooltip" float />
+      </CardContent>
+    </Card>
   );
 }
