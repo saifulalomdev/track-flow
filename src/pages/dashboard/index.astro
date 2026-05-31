@@ -23,7 +23,6 @@ let dashboardProps: DashboardPageProps = {
 
 try {
     const data = await dashboardService.getOverviewData({ db });
-    console.log(data)
     if (data) {
         dashboardProps = {
             ...data,

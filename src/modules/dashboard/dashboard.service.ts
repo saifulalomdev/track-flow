@@ -97,10 +97,13 @@ export const dashboardService = {
                 value: String(d.value || "0%")
             })),
             trafficTrends: rawTrends.map(t => Number(t.current_views || 0)),
-            countries: rawCountries.map(({name , visitors}: any) => ({ name: getCountryName(name), visitors})),
+            countries: rawCountries.map(({ name, visitors }: any) => ({
+                name: String(name || "").toUpperCase(), // Sends clean 'BD', 'US', 'SG' strings
+                visitors: Number(visitors || 0)
+            })),
             sites: siteList,
             activeSiteId,
-            referrers: rawReferrers.map(({name , visitors}: any) => ({ name: getPlatformName(name), visitors}))
+            referrers: rawReferrers.map(({ name, visitors }: any) => ({ name: getPlatformName(name), visitors }))
         };
     }
 };
