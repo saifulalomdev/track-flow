@@ -20,7 +20,7 @@ export default function DashboardStatCard({ name, value, changes }: DashboardSta
             <CardContent>
                 <div className="text-2xl font-bold">{value ? value : "--"}</div>
                 <p className={`text-xs mt-1 font-medium ${Number(changes) > 0 ? "text-green-400" : "text-red-400"}`}>
-                    {changes} % <span className="text-muted-foreground">from last period</span>
+                    {changes} <span className="text-muted-foreground">from last period</span>
                 </p>
             </CardContent>
         </Card >
