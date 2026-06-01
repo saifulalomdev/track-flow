@@ -3,8 +3,8 @@ import { getDefaultTimeRange } from "@/lib";
 import { siteService } from "@/db";
 import { format, subDays, differenceInCalendarDays } from "date-fns";
 import { dashboardRepository } from "./dashboard.repository";
-import type { DashboardPageProps, DashboardStatItem, GetOverviewParams } from "./dashboard.types";
-import { getCountryName, getPlatformName } from "./dashboard.libs";
+import type { DashboardPageProps, DashboardStatItem, GetOverviewParams , DeviceItem} from "./dashboard.types";
+import { getPlatformName } from "./dashboard.libs";
 
 export const dashboardService = {
     async getOverviewData({ db, websiteId, dateRange }: GetOverviewParams): Promise<DashboardPageProps | null> {
@@ -50,7 +50,7 @@ export const dashboardService = {
 
         const rawStats = (statsQuery.results?.[0] as Record<string, unknown>) || {};
         const rawPageviews = (pageviewsQuery.results || []) as Record<string, unknown>[];
-        const rawDevices = (devicesQuery.results || []) as Record<string, unknown>[];
+        const rawDevices = (devicesQuery.results || []) as DeviceItem[];
         const rawCountries = (countriesQuery.results || []) as Record<string, unknown>[];
         const rawTrends = (trendsQuery.results || []) as Record<string, unknown>[];
         const rawReferrers = (referrersQuery.results || []) as Record<string, unknown>[];
@@ -92,10 +92,7 @@ export const dashboardService = {
                 url: String(p.url || ""),
                 views: Number(p.views || 0)
             })),
-            devices: rawDevices.map(d => ({
-                name: String(d.name || ""),
-                value: String(d.value || "0%")
-            })),
+            devices: rawDevices,
             trafficTrends: rawTrends.map(t => Number(t.current_views || 0)),
             countries: rawCountries.map(({ name, visitors }: any) => ({
                 name: String(name || "").toUpperCase(), // Sends clean 'BD', 'US', 'SG' strings

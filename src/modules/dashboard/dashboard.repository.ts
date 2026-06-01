@@ -49,25 +49,25 @@ export const dashboardRepository = {
         `);
     },
 
-    getDevices: (db: D1Instance, { activeSiteId, currentFromStr, currentToStr }: RepositoryQueryParams) => {
+    getDevices: async (
+        db: D1Instance,
+        { activeSiteId, currentFromStr, currentToStr }: RepositoryQueryParams
+    ) => {
         return db.run(sql`
-            WITH device_counts AS (
-                SELECT 
-                    CASE 
-                        WHEN screen_width >= 1024 THEN 'computer/laptop'
-                        WHEN screen_width >= 768 THEN 'tablet'
-                        ELSE 'mobile'
-                    END as device_name,
-                    count(DISTINCT session_id) as distinct_sessions
-                FROM ${event}
-                WHERE website_id = ${activeSiteId} AND timestamp >= ${currentFromStr} AND timestamp <= ${currentToStr}
-                GROUP BY device_name
-            )
-            SELECT 
-                device_name as name,
-                coalesce(round((distinct_sessions * 100.0) / (SELECT sum(distinct_sessions) FROM device_counts), 0), 0) || '%' as value
-            FROM device_counts
-        `);
+        SELECT 
+            CASE 
+                WHEN screen_width >= 1024 THEN 'Desktop'
+                WHEN screen_width >= 768 THEN 'Tablet'
+                ELSE 'Mobile'
+            END as name,
+            count(DISTINCT session_id) as visitors
+        FROM ${event}
+        WHERE website_id = ${activeSiteId} 
+          AND timestamp >= ${currentFromStr} 
+          AND timestamp <= ${currentToStr}
+        GROUP BY name
+        ORDER BY visitors DESC
+    `);
     },
 
     getCountries: (db: D1Instance, { activeSiteId, currentFromStr, currentToStr }: RepositoryQueryParams) => {

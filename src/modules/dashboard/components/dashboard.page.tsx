@@ -7,12 +7,13 @@ import DashboardSiteSelector from "./dashboard.site.selector";
 import { DashboardDateRangePicker } from "./dashboard.date.picker";
 import DashboardStatsGrid from "./dashboard.stats.grid";
 import { PageviewsCard } from "./dashboard.pageviews";
-import {  ReferrerChart } from "./dashboard.referrer.donut";
 import TrafficMap from "./dashboard.traffic.map";
 
-import type { DashboardPageProps } from "../dashboard.types";
+import type { DashboardPageProps, DeviceItem } from "../dashboard.types";
 import { useAction } from "@/hooks/use-action";
 import { actions } from "astro:actions";
+import { DashboardReferrerList } from "./dashboard.referrer.list";
+import { DevicesCard } from "./dashbaord.device";
 
 export function DashboardPage({
     sites,
@@ -22,24 +23,26 @@ export function DashboardPage({
     stats,
     pageviews,
     countries,
-    referrers
+    referrers,
+    devices
 }: DashboardPageProps) {
     const [siteId, setSiteId] = React.useState(activeSiteId || "");
     const [date, setDate] = React.useState<DateRange | undefined>(dateRange);
 
-  const [dashboardData, setDashboardData] =
-    React.useState<DashboardPageProps>({
-        sites,
-        errorMsg,
-        activeSiteId,
-        dateRange,
-        stats,
-        pageviews,
-        countries,
-        devices: [],
-        trafficTrends: [],
-        referrers: referrers
-    });
+    const [dashboardData, setDashboardData] =
+        React.useState<DashboardPageProps>({
+            sites,
+            errorMsg,
+            activeSiteId,
+            dateRange,
+            stats,
+            pageviews,
+            countries,
+            devices: [],
+            trafficTrends: [],
+            referrers: referrers
+        });
+
 
     const { execute } = useAction(
         actions.dashboardActions.getOverview,
@@ -47,6 +50,7 @@ export function DashboardPage({
             loadingMessage: "Updating analytics...",
             successMessage: "Dashboard updated",
             onSuccess: (data) => {
+                console.log(data)
                 if (data) setDashboardData(data)
             },
             onError: (err) => {
@@ -96,16 +100,11 @@ export function DashboardPage({
            */}
             <DashboardStatsGrid stats={dashboardData.stats} />
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                <ReferrerChart
-                    data={dashboardData.referrers||[]}
-                    title="Where is traffic coming from?"
-                />
-                <PageviewsCard
-                    pageviews={dashboardData.pageviews}
-                />
+                <DashboardReferrerList data={dashboardData.referrers || []}/>
+                <PageviewsCard pageviews={dashboardData.pageviews || []} />
             </div>
-
-            <TrafficMap data={dashboardData.countries}/>
+            <DevicesCard data={dashboardData.devices}/>
+            <TrafficMap data={dashboardData.countries} />
         </div>
     );
 }

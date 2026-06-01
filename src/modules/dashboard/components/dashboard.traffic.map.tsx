@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
+"use client"
+
+import * as React from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { Tooltip } from 'react-tooltip';
 import { colord } from 'colord';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -14,6 +16,7 @@ export const getCountryName = (code: string) => {
   }
 };
 
+// Numeric ID map keys provided by world-atlas mapping to ISO alpha-2 codes
 const ISO_COUNTRIES: Record<string, string> = {
   "050": "BD", "840": "US", "702": "SG", "356": "IN", "276": "DE",
   "076": "BR", "124": "CA", "250": "FR", "826": "GB", "036": "AU"
@@ -29,7 +32,7 @@ interface DensityMapProps {
 }
 
 export default function DensityMap({ data = [] }: DensityMapProps) {
-  const { dataMap, maxVisitors } = useMemo(() => {
+  const { dataMap, maxVisitors } = React.useMemo(() => {
     const resMap: Record<string, number> = {};
     let max = 1;
 
@@ -46,9 +49,23 @@ export default function DensityMap({ data = [] }: DensityMapProps) {
 
   return (
     <Card>
-      <CardContent>
-        <ComposableMap projection="geoMercator">
-          <ZoomableGroup zoom={1} minZoom={0.7} center={[0, 30]} filterZoomEvent={() => false}>
+      <CardHeader className="border-b border-black pb-4 font-mono">
+        <CardTitle className="text-md font-bold uppercase tracking-tight">Geographic Density</CardTitle>
+        <CardDescription className="text-xs">Visitor distribution by tracked origin node</CardDescription>
+      </CardHeader>
+      
+      <CardContent className="p-0 relative select-none">
+        <ComposableMap 
+          projection="geoEqualEarth" 
+          className="w-full h-auto max-h-[380px] outline-none"
+        >
+          <ZoomableGroup 
+            zoom={1} 
+            minZoom={0.8} 
+            maxZoom={3}
+            center={[10, 10]} 
+            filterZoomEvent={() => false}
+          >
             <Geographies geography={geoUrl}>
               {({ geographies }) =>
                 geographies.map((geo) => {
@@ -59,28 +76,32 @@ export default function DensityMap({ data = [] }: DensityMapProps) {
                     return null;
                   }
 
-                  // If code matches lookup use it, otherwise fallback cleanly to asset definitions
                   const count = code ? (dataMap[code] || 0) : 0;
                   const displayLabel = code ? getCountryName(code) : (geoName || "Unknown");
 
-                  const fillColor = count > 0
-                    ? colord("#3b82f6").lighten(0.4 * (1.0 - count / maxVisitors)).toHex()
-                    : "#e2e8f0";
+                  const baseFill = count > 0
+                    ? colord("#3b82f6").lighten(0.35 * (1.0 - count / maxVisitors)).toHex()
+                    : "#f4f4f5";
+
+                  const hoverFill = count > 0 
+                    ? colord(baseFill).darken(0.12).toHex() 
+                    : "#e4e4e7";
 
                   return (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
-                      fill={fillColor}
+                      fill={baseFill}
                       stroke="#ffffff"
-                      strokeWidth={0.5}
+                      strokeWidth={0.6}
+                      className="transition-colors duration-150 outline-none cursor-crosshair"
                       style={{
                         default: { outline: 'none' },
-                        hover: { outline: 'none', fill: '#1d4ed8' },
+                        hover: { fill: hoverFill, outline: 'none' },
                         pressed: { outline: 'none' },
                       }}
                       data-tooltip-id="world-map-tooltip"
-                      data-tooltip-content={`${displayLabel}: ${count} visitors`}
+                      data-tooltip-content={`${displayLabel}|${count.toLocaleString()}`}
                     />
                   );
                 })
@@ -88,7 +109,22 @@ export default function DensityMap({ data = [] }: DensityMapProps) {
             </Geographies>
           </ZoomableGroup>
         </ComposableMap>
-        <Tooltip id="world-map-tooltip" float />
+        
+        <Tooltip 
+          id="world-map-tooltip" 
+          float 
+          render={({ content }) => {
+            if (!content) return null;
+            const [label, hits] = (content as any).split('|');
+            return (
+              <div className="font-mono text-xs p-1">
+                <span className="font-bold text-white">{label}</span>
+                <span className="text-zinc-400 mx-1.5">•</span>
+                <span className="text-primary-400 font-semibold">{hits} hits</span>
+              </div>
+            );
+          }}
+        />
       </CardContent>
     </Card>
   );

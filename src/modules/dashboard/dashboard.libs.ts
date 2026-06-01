@@ -66,3 +66,34 @@ export const getPlatformName = (referrer: string): string => {
         return referrer;
     }
 };
+
+/**
+ * Utility to get favicon details.
+ * Returns either a remote URL string or a Lucide icon component name.
+ */
+export const getFaviconSource = (sourceName: string) => {
+  if (!sourceName) return { type: 'icon', value: 'Globe' }; // Default fallback
+
+  const cleanName = sourceName.trim().toLowerCase();
+
+  // 1. Handle generic "Direct" traffic using a Lucide icon name
+  if (cleanName === "direct") {
+    return { type: 'icon', value: 'ArrowUpRight' }; // Lucide icon name
+  }
+
+  const domainMapping = {
+    google: "google.com",
+    perplexity: "perplexity.ai",
+    brave: "brave.com",
+    facebook: "facebook.com",
+    saifulalom: "saifulalom.com",
+  } as any;
+
+  const domain = domainMapping[cleanName] || `${cleanName}.com`;
+
+  // 2. Return the Google favicon URL for external sites
+  return { 
+    type: 'url', 
+    value: `https://www.google.com/s2/favicons?domain=${domain}&sz=32` 
+  };
+};
