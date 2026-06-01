@@ -97,3 +97,12 @@ export const getFaviconSource = (sourceName: string) => {
     value: `https://www.google.com/s2/favicons?domain=${domain}&sz=32` 
   };
 };
+
+export const calculateChange = (current: number, previous: number): string => {
+    if (!previous || previous === 0) {
+        // If there is no previous history but current has metrics, it's a 100% surge. Otherwise, 0%.
+        return current > 0 ? "+100%" : "0%";
+    }
+    const variance = Math.round(((current - previous) / previous) * 100);
+    return variance >= 0 ? `+${variance}%` : `${variance}%`;
+};
