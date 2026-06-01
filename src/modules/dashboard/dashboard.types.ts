@@ -15,8 +15,8 @@ export interface PageviewItem {
 }
 
 export interface DeviceItem {
-    name: "computer/laptop" | "tablet" | "mobile" | string;
-    value: string;
+    name: "Desktop" | "Tablet" | "Mobile";
+    visitors: number;
 }
 
 export interface CountryItem {
