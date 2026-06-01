@@ -7,8 +7,8 @@ import DashboardSiteSelector from "./dashboard.site.selector";
 import { DashboardDateRangePicker } from "./dashboard.date.picker";
 import DashboardStatsGrid from "./dashboard.stats.grid";
 import { PageviewsCard } from "./dashboard.pageviews";
-import {  ReferrerChart } from "./dashbaord.referrer.donut";
-import TrafficMap from "./dashboard.trafic.map";
+import {  ReferrerChart } from "./dashboard.referrer.donut";
+import TrafficMap from "./dashboard.traffic.map";
 
 import type { DashboardPageProps } from "../dashboard.types";
 import { useAction } from "@/hooks/use-action";

@@ -6,7 +6,7 @@ import {
     CardTitle,
 } from '@/components/ui/card'
 import type { PageviewItem } from '../dashboard.types'
-import { formatPageTitle, formatPageUrl, formatViews } from '../dashboard-libs'
+import { formatPageTitle, formatPageUrl, formatViews } from '../dashboard.libs'
 import { truncateText } from '@/lib/truncate-text'
 
 type PageviewsCardProps = {

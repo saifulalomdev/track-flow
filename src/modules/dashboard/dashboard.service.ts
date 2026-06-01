@@ -4,7 +4,7 @@ import { siteService } from "@/db";
 import { format, subDays, differenceInCalendarDays } from "date-fns";
 import { dashboardRepository } from "./dashboard.repository";
 import type { DashboardPageProps, DashboardStatItem, GetOverviewParams } from "./dashboard.types";
-import { getCountryName, getPlatformName } from "./dashboard-libs";
+import { getCountryName, getPlatformName } from "./dashboard.libs";
 
 export const dashboardService = {
     async getOverviewData({ db, websiteId, dateRange }: GetOverviewParams): Promise<DashboardPageProps | null> {
