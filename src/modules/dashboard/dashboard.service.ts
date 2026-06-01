@@ -3,8 +3,9 @@ import { getDefaultTimeRange } from "@/lib";
 import { siteService } from "@/db";
 import { format, subDays, differenceInCalendarDays } from "date-fns";
 import { dashboardRepository } from "./dashboard.repository";
-import type { DashboardPageProps, DashboardStatItem, GetOverviewParams , DeviceItem} from "./dashboard.types";
-import { getPlatformName } from "./dashboard.libs";
+import type { DashboardPageProps, DashboardStatItem, GetOverviewParams, DeviceItem } from "./dashboard.types";
+import { calculateChange, getPlatformName } from "./dashboard.libs";
+import { formatSeconds } from "@/lib/format-seconds";
 
 export const dashboardService = {
     async getOverviewData({ db, websiteId, dateRange }: GetOverviewParams): Promise<DashboardPageProps | null> {
@@ -60,24 +61,24 @@ export const dashboardService = {
             {
                 name: "totalTraffic",
                 value: Number(rawStats.total_traffic || 0) >= 1000
-                    ? `${(Number(rawStats.total_traffic || 0) / 1000).toFixed(0)}k`
+                    ? `${(Number(rawStats.total_traffic || 0) / 1000).toFixed(1).replace('.0', '')}k`
                     : String(rawStats.total_traffic || 0),
-                changes: `${Number(rawStats.total_traffic || 0) >= Number(rawStats.prev_total_traffic || 0) ? "+" : ""}${Math.round(((Number(rawStats.total_traffic || 0) - Number(rawStats.prev_total_traffic || 0)) / (Number(rawStats.prev_total_traffic || 1) || 1)) * 100)}%`
+                changes: calculateChange(Number(rawStats.total_traffic || 0), Number(rawStats.prev_total_traffic || 0))
             },
             {
                 name: "bounceRate",
                 value: `${rawStats.bounce_rate || 0}%`,
-                changes: "0%"
+                changes: calculateChange(Number(rawStats.bounce_rate || 0), Number(rawStats.prev_bounce_rate || 0))
             },
             {
                 name: "avgSessionDuration",
-                value: `${rawStats.avg_duration || 0}s`,
-                changes: "0%"
+                value: formatSeconds(rawStats.avg_duration as number),
+                changes: calculateChange(Number(rawStats.avg_duration || 0), Number(rawStats.prev_avg_duration || 0))
             },
             {
                 name: "conversionRate",
                 value: `${rawStats.conversion_rate || 0}%`,
-                changes: "0%"
+                changes: calculateChange(Number(rawStats.conversion_rate || 0), Number(rawStats.prev_conversion_rate || 0))
             }
         ];
 
