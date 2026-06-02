@@ -26,7 +26,7 @@ export function DashboardHeader({ onClick, isSidebarOpen }: DashboardHeaderProps
     });
 
     return (
-        <nav className="sticky shrink-0 top-0 left-0 z-50 flex h-16 w-full items-center justify-between border-b border-white/10 bg-background/60 p-4 backdrop-blur-md">
+        <nav className="sticky shrink-0 top-0 left-0 z-50 flex h-16 w-full items-center justify-between border-b border-white/10 bg-card/60 p-4 backdrop-blur-md">
             <div className="flex items-center font-bold gap-2 text-foreground">
                 Dashboard
             </div>

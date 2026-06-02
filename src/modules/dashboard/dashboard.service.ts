@@ -4,7 +4,7 @@ import { siteService } from "@/db";
 import { format, subDays, differenceInCalendarDays } from "date-fns";
 import { dashboardRepository } from "./dashboard.repository";
 import type { DashboardPageProps, DashboardStatItem, GetOverviewParams, DeviceItem } from "./dashboard.types";
-import { calculateChange, getPlatformName } from "./dashboard.libs";
+import { calculateChange, formatTrendBuckets, getPlatformName } from "./dashboard.libs";
 import { formatSeconds } from "@/lib/format-seconds";
 
 export const dashboardService = {
@@ -94,7 +94,7 @@ export const dashboardService = {
                 views: Number(p.views || 0)
             })),
             devices: rawDevices,
-            trafficTrends: rawTrends.map(t => Number(t.current_views || 0)),
+            trafficTrends: formatTrendBuckets(rawTrends as any, daysDifference),
             countries: rawCountries.map(({ name, visitors }: any) => ({
                 name: String(name || "").toUpperCase(), // Sends clean 'BD', 'US', 'SG' strings
                 visitors: Number(visitors || 0)

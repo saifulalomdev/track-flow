@@ -9,11 +9,12 @@ import DashboardStatsGrid from "./dashboard.stats.grid";
 import { PageviewsCard } from "./dashboard.pageviews";
 import TrafficMap from "./dashboard.traffic.map";
 
-import type { DashboardPageProps, DeviceItem } from "../dashboard.types";
+import type { DashboardPageProps } from "../dashboard.types";
 import { useAction } from "@/hooks/use-action";
 import { actions } from "astro:actions";
 import { DashboardReferrerList } from "./dashboard.referrer.list";
 import { DevicesCard } from "./dashbaord.device";
+import { TrafficTrendsChart } from "./dashbaord.barchart";
 
 export function DashboardPage({
     sites,
@@ -38,7 +39,7 @@ export function DashboardPage({
             stats,
             pageviews,
             countries,
-            devices: [],
+            devices: devices || [],
             trafficTrends: [],
             referrers: referrers
         });
@@ -72,7 +73,7 @@ export function DashboardPage({
     }, [siteId, date]);
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             <ErrorAlert errorMsg={dashboardData.errorMsg || errorMsg} />
             <PageHeader
                 title="Overview"
@@ -92,18 +93,21 @@ export function DashboardPage({
                 </div>
             </PageHeader>
 
-            {/* 
-                - trafic treands 
-                - trafic by platform (eg. mobile, laptop, computer, tab)
-                - trafic by platform (eg. direct, linkedin facebook)
-                - trafic by country
-           */}
             <DashboardStatsGrid stats={dashboardData.stats} />
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                <DashboardReferrerList data={dashboardData.referrers || []}/>
-                <PageviewsCard pageviews={dashboardData.pageviews || []} />
+            
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                <TrafficTrendsChart
+                    className="lg:col-span-2"
+                    data={dashboardData.trafficTrends || []}
+                    title="Network Hit Volumes"
+                />
+                <DevicesCard data={dashboardData.devices} />
             </div>
-            <DevicesCard data={dashboardData.devices}/>
+
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                <DashboardReferrerList data={dashboardData.referrers || []} />
+                <PageviewsCard className="lg:col-span-2" pageviews={dashboardData.pageviews || []} />
+            </div>
             <TrafficMap data={dashboardData.countries} />
         </div>
     );
