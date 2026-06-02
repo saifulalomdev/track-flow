@@ -15,11 +15,13 @@ import { formatPageTitle, formatPageUrl, formatViews } from '../dashboard.libs'
 import { truncateText } from '@/lib/truncate-text'
 
 type PageviewsCardProps = {
-    pageviews?: PageviewItem[]
+    pageviews?: PageviewItem[],
+      className?: string
 }
 
 export function PageviewsCard({
     pageviews = [],
+    className
 }: PageviewsCardProps) {
     const topPages = React.useMemo(() => pageviews.slice(0, 5), [pageviews])
 
@@ -28,7 +30,7 @@ export function PageviewsCard({
     }, [topPages])
 
     return (
-        <Card>
+        <Card className={className}>
             <CardHeader className="flex flex-row items-center justify-between pb-4 space-y-0">
                 <div>
                     <CardTitle className="font-mono text-md font-bold uppercase tracking-tight">

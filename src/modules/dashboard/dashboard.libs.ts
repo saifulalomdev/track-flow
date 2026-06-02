@@ -1,3 +1,5 @@
+import { format, parseISO } from "date-fns";
+
 export function formatPageTitle(title?: string) {
     if (!title?.trim()) {
         return 'Untitled page'
@@ -106,3 +108,49 @@ export const calculateChange = (current: number, previous: number): string => {
     const variance = Math.round(((current - previous) / previous) * 100);
     return variance >= 0 ? `+${variance}%` : `${variance}%`;
 };
+
+export interface RawTrendBucket {
+  bucket_index: number;
+  bucket_start_time: string;
+  current_views: number;
+}
+
+export interface TrafficTrendDataPoint {
+  date: string;
+  traffic: number;
+}
+
+/**
+ * Safely parses SQLite datetime strings and transforms them into 
+ * beautifully scannable chart axis label nodes based on range duration.
+ */
+export function formatTrendBuckets(
+  rawTrends: RawTrendBucket[],
+  daysDifference: number
+): TrafficTrendDataPoint[] {
+  if (!rawTrends || rawTrends.length === 0) return [];
+
+  return rawTrends.map((bucket) => {
+    // Replace space with 'T' to make it a safe cross-browser ISO string
+    const safeIsoString = bucket.bucket_start_time.replace(" ", "T");
+    const date = parseISO(safeIsoString);
+
+    let dateLabel: string;
+
+    if (daysDifference <= 1) {
+      // Single day: Show time intervals (e.g., 14:00)
+      dateLabel = format(date, "HH:mm");
+    } else if (daysDifference <= 7) {
+      // Under a week: Show short day names + hour (e.g., Tue 14h)
+      dateLabel = format(date, "EEE HH'h'");
+    } else {
+      // Long ranges: Show compact calendar dates (e.g., 02 Jun)
+      dateLabel = format(date, "dd MMM");
+    }
+
+    return {
+      date: dateLabel,
+      traffic: Number(bucket.current_views || 0),
+    };
+  });
+}

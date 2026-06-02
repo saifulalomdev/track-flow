@@ -23,12 +23,27 @@ export interface CountryItem {
     name: string;
     visitors: number;
 }
+export interface TrafficTrendDataPoint {
+  /** Formatted axis label string (e.g., "07:26", "Tue 14h", "02 Jun") */
+  date: string;
+  /** Normalized pageview/hit integer ready for visualization engines */
+  traffic: number;
+}
+
+export interface RawTrafficTrendBucket {
+  /** The chronological sequential index of the time bucket */
+  bucket_index: number;
+  /** Raw SQL timestamp string format: "YYYY-MM-DD HH:MM:SS" */
+  bucket_start_time: string;
+  /** Cumulative pageview/event hits parsed in this time window */
+  current_views: number;
+}
 
 export interface DashboardPageProps {
     stats: DashboardStatItem[] | undefined;
     pageviews: PageviewItem[];
     devices: DeviceItem[];
-    trafficTrends: number[];
+    trafficTrends: TrafficTrendDataPoint[];
     countries: CountryItem[];
     referrers: CountryItem[];
     sites: Site[];
