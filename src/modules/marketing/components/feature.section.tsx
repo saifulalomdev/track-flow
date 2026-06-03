@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { featuers } from '@/data/features'
+import { features } from '@/data/features'
 import { cn } from '@/lib/utils'
 import { FeaturesCard } from './features.card'
 import { GetStarted } from './get.started.button'
@@ -11,15 +11,15 @@ export function FeaturesSection() {
             <div className='flex flex-col lg:flex-row w-full justify-between items-center gap-10'>
                 <div className="text-center lg:text-left">
                     <h1 className='text-4xl md:text-5xl lg:text-[64px] font-bold leading-tight'>
-                        Designed for Growth.
+                        Deployed for Privacy.
                     </h1>
                     <h1 className='text-4xl md:text-5xl lg:text-[64px] lg:-mt-4 leading-tight'>
-                        Driven by <span className='text-primary font-bold'> Data.</span>
+                        Driven by <span className='text-primary font-bold'> Edge.</span>
                     </h1>
-                    <p className='text-base md:text-[18px] text-foreground/80 mt-6 max-w-xl mx-auto lg:mx-0'>
-                        Unlock the full potential of your traffic data with our high-performance tracking engine.
-                        Explore new dimensions of visitor behavior.
-                    </p>
+                    <h1 className='text-base md:text-[18px] text-foreground/80 mt-6 max-w-xl mx-auto lg:mx-0 font-normal'>
+                        Unlock the full power of your cloud database with our high-performance tracking engine.
+                        Explore new scales of serverless execution.
+                    </h1>
                 </div>
                 <div className='shrink-0'>
                     <img
@@ -32,7 +32,7 @@ export function FeaturesSection() {
 
             {/* Features Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                {featuers.map((feature, index) => (
+                {features.map((feature, index) => (
                     <FeaturesCard
                         {...feature}
                         key={feature.title}
@@ -50,20 +50,8 @@ export function FeaturesSection() {
                     {new Date().getFullYear()}
                 </h3>
                 <p className='text-xl md:text-[27px] font-bold leading-snug'>
-                    Whether you&apos;re tracking personal projects, scaling startup traffic, or managing enterprise-level campaigns, our high-performance platform is built to turn your data into insights—quickly, accurately, and intelligently.
+                    Whether you&apos;re launching personal sites, monitoring startup traffic, or hosting developer-level instances, our high-performance platform is built to turn your data into insights—freely, securely, and transparently.
                 </p>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className='flex flex-col sm:flex-row justify-center items-center gap-3 pb-10'>
-                <GetStarted />
-                <Button size="lg" variant="outline" className='w-full sm:w-auto'>
-                    All Systems
-                    <span className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0AC300] opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-[#0AC300]"></span>
-                    </span>
-                </Button>
             </div>
         </section>
     )

@@ -1,13 +1,20 @@
 import { defineConfig } from 'vitest/config';
-import path from 'path'; // 1. Import Node's path utility
+import { resolve } from 'path';
 
 export default defineConfig({
     test: {
-        include: ["**/__tests__/**"]
+        environment: 'jsdom',
+        include: ["**/__tests__/**"],
+        globals: true,
+        server: {
+            deps: {
+                inline: ['drizzle-orm'],
+            },
+        },
     },
     resolve: {
         alias: {
-            '@': './src',
+            '@': resolve(__dirname, './src'),
         }
     }
 });

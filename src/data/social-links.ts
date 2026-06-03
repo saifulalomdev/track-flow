@@ -1,5 +1,4 @@
-import { Globe  , Linkedin , Github , Twitter} from "lucide-react"
-
+import { Globe, Linkedin, Github, Twitter } from "lucide-react"
 
 export const socialLinks = [
     {
@@ -10,16 +9,16 @@ export const socialLinks = [
     {
         name: "LinkedIn",
         Icon: Linkedin,
-        href: "https://saifulalom.com"
+        href: "https://linkedin.com/in/iam-saifulalom"
     },
     {
-        name: "Github",
+        name: "GitHub",
         Icon: Github,
-        href: "https://saifulalom.com"
+        href: "https://github.com/saifulalomdev"
     },
     {
         name: "X (Twitter)",
         Icon: Twitter,
-        href: "https://saifulalom.com"
+        href: "https://x.com/iamsaifulalom"
     },
 ]
