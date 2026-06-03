@@ -4,7 +4,10 @@ import { getDb } from "@/lib/get-db";
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 
-const PROTECTED_SITE_ID = "cfb90e7b-64c1-4fdf-b412-f4eb8dbec7e9";
+const PROTECTED_SITE_IDS = [
+    "cfb90e7b-64c1-4fdf-b412-f4eb8dbec7e9",
+    "e05c0555-df01-4a78-8575-929b12c47920"
+];
 
 export const createSite = defineAction({
     accept: 'json',
@@ -26,7 +29,7 @@ export const updateSite = defineAction({
         const { id, ...data } = input;
 
         // Strict guard clause
-        if (id === PROTECTED_SITE_ID) {
+        if (PROTECTED_SITE_IDS.includes(id)) {
             throw new ActionError({
                 code: "FORBIDDEN",
                 message: "This site is a protected system resource and cannot be updated.",
@@ -45,8 +48,8 @@ export const deleteSite = defineAction({
     accept: 'json',
     input: z.object({ id: z.string() }),
     handler: async (input, context) => {
-        
-        if (input.id === PROTECTED_SITE_ID) {
+
+        if (PROTECTED_SITE_IDS.includes(input.id)) {
             throw new ActionError({
                 code: "FORBIDDEN",
                 message: "This site is a protected system resource and cannot be deleted.",
