@@ -2,7 +2,7 @@
 
 TrackFlow is an open-source, privacy-first, edge-native web analytics platform available at [trackflow.saifulalom.com](https://trackflow.saifulalom.com). Rebuilt as a unified, high-performance architecture on top of **Astro and Astro API Routes**, TrackFlow records visits, unique users, traffic sources, and conversions via a lightweight script without tracking cookies or heavy client-side overhead.
 
-![TrackFlow Open Source Analytics Dashboard Preview](https://tf.saifulalom.com/thumbnail.png)
+![TrackFlow Open Source Analytics Dashboard Preview](/public/thumbnail.png)
 ---
 
 ## 🗺️ Live Ecosystem & Source Code
