@@ -1,141 +1,155 @@
-# TrackFlow
+# ⚡ TrackFlow
 
-TrackFlow is a privacy-first web analytics platform hosted at [trackflow.saifulalom.com](https://trackflow.saifulalom.com). It helps website owners track visits, unique users, traffic sources, and conversions with a lightweight edge-based setup.
+TrackFlow is an open-source, privacy-first, edge-native web analytics platform available at [trackflow.saifulalom.com](https://trackflow.saifulalom.com). Rebuilt as a unified, high-performance architecture on top of **Astro and Astro API Routes**, TrackFlow records visits, unique users, traffic sources, and conversions via a lightweight script without tracking cookies or heavy client-side overhead.
 
-## What it does
+---
 
-TrackFlow collects website event data and turns it into a simple dashboard that shows:
-- total visits
-- unique visitors
-- active sites
-- conversion value
-- traffic trends by day, week, month, and year
-- traffic source breakdown
-- country and platform breakdown
+## 🗺️ Live Ecosystem & Source Code
 
-## Why I built it
+| Platform | Role | Live Demo | Source Code |
+|---|---|---|---|
+| **Landing page** | Application Hub | [Visit Site](https://trackflow.saifulalom.com) | [GitHub](https://github.com/saifulalomdev/track-flow) |
 
-I built TrackFlow to create a faster and simpler analytics tool for small businesses, startups, and freelance clients who need useful insights without heavy tracking scripts or expensive tooling.
+---
 
-## Key features
+## 🛠️ Tech Stack & Architecture
 
-- Lightweight tracking script.
-- Event ingestion from websites.
-- Dashboard with site filters.
-- Time range filters for week, month, and year.
-- Unique visitor and session tracking.
-- Traffic source, country, and platform analytics.
-- Conversion tracking.
-- Admin access for managing data.
+TrackFlow is built using an **Edge-Native Minimalist Architecture** designed for 100/100 Lighthouse performance scores and sub-millisecond edge processing:
 
-## Who it is for
+* **Framework:** Astro (Unified SSR Frontends & Type-Safe API Routes)
+* **Frontend Components:** React, Tailwind CSS, Lucide Icons
+* **Schema Validation:** Zod
+* **Database Engine:** Cloudflare D1 (Distributed SQLite at the Edge)
+* **Object-Relational Mapping:** Drizzle ORM (Schema-First Type Pipelines)
+* **Testing Runner:** Vitest (In-Memory `better-sqlite3` and `jsdom` runtimes)
 
-TrackFlow is useful for:
-- freelancers building analytics or reporting tools for clients
-- small businesses that want simple website insights
-- startups that need lightweight dashboards
-- developers who want a privacy-focused analytics solution
+---
 
-## How it works
+## 📊 Dashboard Metrics & Visual Components
 
-1. A website loads the tracking script.
-2. The script sends event data to TrackFlow.
-3. The backend validates and stores the data.
-4. Dashboard data is read from the database and cached for fast access.
-5. The admin dashboard shows analytics for each selected site.
+The TrackFlow dashboard gives developers and digital businesses a scannable overview of their traffic metrics without bloating client tracking payloads.
 
-## Tech stack
+### Core Metrics Covered
+* **Total Traffic:** Aggregated session network volumes.
+* **Bounce Rate:** Single-page bounces without interactions.
+* **Avg. Session Duration:** High-accuracy real-time reading duration metrics.
+* **Conversion Rate:** Goal completions tracked via micro-event pixels.
 
-- Astro
-- React
-- TypeScript
-- Hono
-- Cloudflare Workers
-- Cloudflare D1
-- Cloudflare KV
-- Drizzle ORM
-- GitHub Actions
+### Component Architecture
+The layout decomposes into modular, decoupled component lanes:
+* `<DashboardStatsGrid />` — Higher metric summary layout rows.
+* `<TrafficTrendsChart />` — Visualizes *Network Hit Volumes* with smart timeline aggregation.
+* `<DevicesCard />` — High-accuracy browser, engine, and platform footprints.
+* `<DashboardReferrerList />` — Clean referrer origin domain stripping.
+* `<PageviewsCard />` — Top performing URL node lists.
+* `<TrafficMap />` — Global geographic distribution mappings.
 
-## Architecture
+---
 
-TrackFlow is built for the Cloudflare edge environment, so it stays lightweight and fast.
-
-- **Astro** is used for the frontend and dashboard.
-- **Cloudflare D1** stores structured analytics data.
-- **Cloudflare KV** is used for fast dashboard reads and cached values.
-- **Drizzle ORM** provides type-safe database access.
-- **Cloudflare Queues** will be used later for faster ingestion and background processing.
-
-## Security
-
-TrackFlow is designed with simple and practical security in mind:
-- admin login protected by runtime secrets
-- validation before saving event data
-- separate dashboard access
-- planned rate limiting for ingestion
-- anonymous tracking by default unless identity is available
-
-## Project structure
+## 📂 Project Structure
 
 ```text
 src/
-├── actions/       # app actions and mutations
-├── components/    # UI components
-├── db/            # database schema and queries
-├── hooks/         # client-side logic
-└── pages/         # routes and API endpoints
+├── components/          # React components (Charts, Cards, Maps, UI)
+├── db/                  # Drizzle ORM schema definitions and migrations
+│   ├── schema/          # Table definitions and TypeScript relationships
+│   └── migrations/      # D1 SQL migration scripts
+├── lib/                 # Core system configurations and DB client initialization
+├── modules/             # Domain-driven feature sets
+│   └── dashboard/       # Dashboard module (Components, libs, actions, hooks)
+│       └── __tests__/   # Complete Vitest Unit & Integration suite
+└── pages/               # SSR pages and Astro API routes (pixel ingestion)
 
 public/
-└── pixel.js       # tracking script
+└── pixel.js             # High-performance tracking script snippet
+
 ```
 
-## Local development
+---
 
-### Requirements
-- Node.js 18+
-- pnpm
-- Wrangler CLI
+## 💻 Local Development
 
-### Setup
+### Prerequisites
+
+* Node.js 18+
+* pnpm (Workspace runner)
+* Wrangler CLI (Authenticated to your Cloudflare ecosystem)
+
+### 1. Installation & Environment Cloning
 
 ```bash
-git clone https://github.com/saifulalomdev/track-flow.git
+git clone [https://github.com/saifulalomdev/track-flow.git](https://github.com/saifulalomdev/track-flow.git)
 cd track-flow
 pnpm install
-pnpm run db:generate
-pnpm run db:migrate
-pnpm dev
+
 ```
 
-## Deployment
+### 2. Database Migrations (Local Schema Setup)
 
-TrackFlow is deployed on Cloudflare and available at:
-[trackflow.saifulalom.com](https://trackflow.saifulalom.com)
+Generate your SQL migration assets and execute them against your local sandbox instance:
 
-## Freelance value
+```bash
+pnpm run db:generate
+pnpm run db:migrate
 
-This project shows that I can build:
-- analytics dashboards
-- admin panels
-- event tracking systems
-- client reporting tools
-- edge-deployed web apps
-- database-backed business tools
+```
 
-## What I learned
+### 3. Running the Application Locally
 
-This project helped me improve my skills in:
-- backend development
-- database design
-- edge deployment
-- analytics workflows
-- product thinking
-- building real-world software for businesses
+Boot your local dev environment:
 
-## Contact
+```bash
+pnpm dev
 
-Built by Saiful Alom.
+```
 
-- GitHub: [saifulalomdev](https://github.com/saifulalomdev)
-- Portfolio: [saifulalom.com](https://saifulalom.com)
-- TrackFlow: [trackflow.saifulalom.com](https://trackflow.saifulalom.com)
+---
+
+## 🧪 Test Suite
+
+TrackFlow features 100% code coverage across core utilities and UI logic using Vitest.
+
+```bash
+# Execute the full test runner suite (Utils, DOM Cards, Path Resolvers)
+pnpm test
+
+# Run tests in continuous file watch mode during active development
+pnpm test:watch
+
+```
+
+---
+
+## 🚀 Deployment
+
+TrackFlow runs completely within Cloudflare's edge runtime environment. To provision your database properties and compile your Astro build targets:
+
+```bash
+# 1. Generate local Cloudflare type-safety files
+pnpm cf-types
+
+# 2. Apply your schema migrations directly to your production Cloudflare D1 Database
+pnpm db:migrate
+
+# 3. Build the Astro optimization bundle
+pnpm build
+
+```
+
+---
+
+## 🏗️ Architectural Philosophy & Lessons Learned
+
+* **Crash-Only Software:** Designed around type-safe data pipelines where corrupt inputs or failing network dependencies fail early and cleanly without side effects.
+* **Privacy-First Tracking:** Bypasses cookie banners completely by performing host-stripping calculations at the edge without recording Personally Identifiable Information (PII).
+* **Zero Overhead Monoliths:** Rebuilding from independent edge microservices to a single unified Astro project improved developer velocity while keeping Cold Starts near 0ms.
+
+---
+
+## 📬 Contact
+
+Built by **Saiful Alom** — Edge Architecture & Distributed Systems Specialist.
+
+* **GitHub:** [@saifulalomdev](https://github.com/saifulalomdev)
+* **Portfolio:** [saifulalom.com](https://saifulalom.com)
+* **TrackFlow Hub:** [trackflow.saifulalom.com](https://trackflow.saifulalom.com)

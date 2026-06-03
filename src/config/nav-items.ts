@@ -7,10 +7,6 @@ export const navItems = [
         name: "About us",
         href: "/#features"
     },
-    // {
-    //     name: "Pricing",
-    //     href: "/#pricing"
-    // },
     {
         name: "FAQs",
         href: "/#FAQs"

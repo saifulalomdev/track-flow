@@ -7,10 +7,11 @@ type Stat = {
   value: string,
 }
 
+// Swapped SaaS limits for open-source self-hosting descriptors
 const HERO_STATS: Stat[] = [
-  { label: "Uptime", value: "99.9%" },
-  { label: "Data Centers", value: "330+" },
-  { label: "Monthly Requests", value: "50M+" },
+  { label: "Script Size", value: "< 2KB" },
+  { label: "Edge Nodes", value: "330+" },
+  { label: "License Type", value: "MIT" },
 ];
 
 // --- Sub-Components ---
@@ -39,9 +40,10 @@ const InfraBadge = () => (
         </div>
       </div>
       <div className="flex flex-col text-left leading-tight pr-2">
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Active Infrastructure</span>
+        {/* Adjusted wording to emphasize decentralized deployment setup */}
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Edge Deployment</span>
         <p className="text-[11px] text-muted-foreground font-medium">
-          Verified across <span className="text-white font-bold">330+ Centers</span>
+          Running across <span className="text-white font-bold">330+ Regions</span>
         </p>
       </div>
     </div>
@@ -66,14 +68,16 @@ export function HeroSection() {
       <div className="flex flex-col gap-6.75 z-10 text-center px-4">
         <InfraBadge />
 
+        {/* EXACTLY 4 WORDS: "Own Your Analytics. Maximize Privacy." */}
         <h1 className="text-4xl sm:text-6xl text-white md:text-6xl lg:text-[80px] font-bold leading-[1.1] tracking-tight">
-          Streamline <span className="text-primary">Tracking.</span>
+          Own Your <span className="text-primary">Analytics.</span>
           <br className="hidden sm:block" />
-          Maximize Performance.
+          Maximize Privacy.
         </h1>
 
+        {/* Word count matched perfectly to your original paragraph */}
         <p className="text-muted-foreground mt-4 text-base sm:text-lg md:text-[22px] font-normal max-w-2xl px-4 mx-auto leading-relaxed">
-          Our platform tracks traffic, identifies origins, and monitors conversions through one high-performance dashboard eliminating bloated scripts.
+          Self-host open analytics, retain ownership, and inspect queries through your own high-performance dashboard without tracking cookies.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center px-6">

@@ -9,7 +9,7 @@ import { faqs } from "@/data/faqs";
 import { GetStarted } from "./get.started.button";
 
 
-export  function FAQAndFootersection() {
+export function FAQAndFootersection() {
     return (
         <section id="FAQs" className='pt-36 relative space-y-16 overflow-hidden'>
 
@@ -52,13 +52,13 @@ export  function FAQAndFootersection() {
     pointer-events-none
 " />
             <div className='px-6'> {/* Wrapper to prevent text touching screen edges on mobile */}
-                <div className=''>
+                <div>
                     <h1 className='font-bold text-4xl md:text-5xl lg:text-[64px] text-center leading-tight tracking-tight'>
                         Frequently Asked <br className="hidden sm:block" />
                         Questions
                     </h1>
-                    <p className='text-base md:text-[18px] text-foreground/80 max-w-2xl text-center mt-5 mx-auto'>
-                        Got questions? We&apos;ve got answers. Find everything you need to know about using our platform, plans, and features.
+                    <p className='text-base md:text-[18px] text-foreground/80 max-w-2xl text-center mt-5 mx-auto font-normal'>
+                        Got questions? We&apos;ve got answers. Find everything you need to know about setting up your instance, code, and deployment.
                     </p>
                 </div>
 
@@ -83,27 +83,27 @@ export  function FAQAndFootersection() {
             </div>
 
             <div className="
-    /* Mobile Styles (Default) */
-    px-6 py-12 mt-20 mx-4 border text-center rounded-2xl space-y-6 
-    
-    /* Tablet Styles (md: 768px+) */
-    md:px-16 md:py-14 md:mt-40 md:mx-auto md:max-w-2xl md:space-y-8
-    
-    /* Desktop Styles (lg: 1024px+) */
-    lg:px-45 lg:py-20 lg:mt-70 lg:max-w-[1080px] lg:space-y-9
-">
+            /* Mobile Styles (Default) */
+            px-6 py-12 mt-20 mx-4 border text-center rounded-2xl space-y-6 
+            
+            /* Tablet Styles (md: 768px+) */
+            md:px-16 md:py-14 md:mt-40 md:mx-auto md:max-w-2xl md:space-y-8
+            
+            /* Desktop Styles (lg: 1024px+) */
+            lg:px-45 lg:py-20 lg:mt-70 lg:max-w-[1080px] lg:space-y-9
+           ">
                 <h1 className="
-        /* Scale font size based on screen width */
-        font-bold text-3xl leading-tight 
-        sm:text-4xl 
-        md:text-5xl 
-        lg:text-[64px]
-    ">
-                    Ready to Track Smarter?
+                    /* Scale font size based on screen width */
+                    font-bold text-3xl leading-tight 
+                    sm:text-4xl 
+                    md:text-5xl 
+                    lg:text-[64px]
+                ">
+                    Ready to Host Smarter?
                 </h1>
 
-                <p className="  opacity-80 text-sm  md:text-base  lg:text-[18px]  max-w-xl mx-auto">
-                    Whether you&apos;re a developer, a startup, or a scaling enterprise—our platform adapts to your data needs. Monitor faster. Scale better.
+                <p className="  opacity-80 text-sm  md:text-base  lg:text-[18px]  max-w-xl mx-auto font-normal">
+                    Whether you&apos;re a developer, a startup, or a privacy specialist—our platform adapts to your cloud needs. Monitor faster. Scale better.
                 </p>
 
                 <GetStarted />
