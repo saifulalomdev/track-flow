@@ -7,9 +7,32 @@ TrackFlow is an open-source, privacy-first, edge-native web analytics platform a
 
 ## 🗺️ Live Ecosystem & Source Code
 
+
+## 🗺️ Live Ecosystem & Source Code
+
 | Platform | Role | Live Demo | Source Code |
 |---|---|---|---|
 | **Landing page** | Application Hub | [Visit Site](https://trackflow.saifulalom.com) | [GitHub](https://github.com/saifulalomdev/track-flow) |
+
+---
+
+## ⚡ Performance & Accessibility
+
+We care deeply about user experience, speed, and accessibility. TrackFlow is fully optimized to achieve perfect scores across all core web metrics:
+
+| Metric | Score | Status |
+| :--- | :---: | :---: |
+| 🚀 Performance | **100/100** | ✅ Passed |
+| ♿ Accessibility | **100/100** | ✅ Passed |
+| 🛡️ Best Practices | **100/100** | ✅ Passed |
+| 🔍 SEO | **100/100** | ✅ Passed |
+
+### PageSpeed Insights Audit
+Below is our latest desktop core vitals audit showing a clean sweep:
+
+[![TrackFlow PageSpeed Insights Audit Score](/public/pagespeed-insights.png)](https://pagespeed.web.dev/analysis/https-features-trackflow-8il-pages-dev/hs2w77n7ny?form_factor=desktop)
+
+_Audit captured on June 4, 2026 via Google Lighthouse._
 
 ---
 

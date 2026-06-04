@@ -6,7 +6,7 @@ import { AppBranding } from "@/components/brand";
 import { ChevronRight, Menu, X } from "lucide-react";
 
 
-export  function PublicHeader() {
+export function PublicHeader() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -34,7 +34,7 @@ export  function PublicHeader() {
           <Button
             variant="outline"
             size="icon-lg"
-
+            aria-label="Toggle navigation menu"
             className="md:hidden text-white"
             onClick={() => setIsOpen(!isOpen)}
           >
