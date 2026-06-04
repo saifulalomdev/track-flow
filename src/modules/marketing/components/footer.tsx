@@ -16,7 +16,7 @@ export function Footer() {
 
                 {/* About Us section - Spans full width on mobile, 2 cols on Desktop */}
                 <div className='md:col-span-3 xl:col-span-2 pr-0'>
-                    <h3 className='text-3xl font-bold tracking-tight'>About Us</h3>
+                    <h2 className='text-3xl font-bold tracking-tight'>About Us</h2>
                     <p className='text-lg opacity-70 mt-4 leading-relaxed'>
                         We’re an open-source software project building high-performance tracking tools that empower developers to turn raw metrics into structured insights faster, more safely, and independently.
                     </p>

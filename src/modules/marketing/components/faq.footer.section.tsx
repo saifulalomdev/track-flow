@@ -17,28 +17,33 @@ export function FAQAndFootersection() {
             {/* Top Left Background - Hide on smallest mobile to keep UI clean */}
             <img
                 src="/images/faqs-left-side-top-bg.png"
+                alt=""
                 className="absolute left-0 top-0 opacity-40 md:opacity-100 w-1/2 md:w-auto pointer-events-none -z-10"
             />
 
             {/* Bottom Left Background - Adjusted top-200 to something relative like % or smaller rem */}
             <img
                 src="/images/faqs-left-side-botton-bg.png"
+                alt=""
                 className="absolute -left-10 top-[40%] md:top-200 opacity-30 md:opacity-100 pointer-events-none -z-10"
             />
 
             {/* Right Side Background */}
             <img
                 src="/images/faqs-right-side-bg.png"
+                alt=""
                 className="absolute right-0 top-80 opacity-50 md:opacity-100 w-1/3 md:w-auto pointer-events-none -z-10"
             />
 
             {/* Decorative Lines - Hidden on Mobile to save performance and prevent clutter */}
             <img
                 src="/images/faqs-top-line.png"
+                alt=""
                 className="hidden lg:block absolute -z-10 right-0 bottom-50 opacity-36 pointer-events-none"
             />
             <img
                 src="/images/faqs-bottom-line.png"
+                alt=""
                 className="hidden lg:block absolute -z-10 right-0 bottom-16 opacity-30 pointer-events-none"
             />
 
@@ -53,10 +58,10 @@ export function FAQAndFootersection() {
 " />
             <div className='px-6'> {/* Wrapper to prevent text touching screen edges on mobile */}
                 <div>
-                    <h1 className='font-bold text-4xl md:text-5xl lg:text-[64px] text-center leading-tight tracking-tight'>
+                    <h2 className='font-bold text-4xl md:text-5xl lg:text-[64px] text-center leading-tight tracking-tight'>
                         Frequently Asked <br className="hidden sm:block" />
                         Questions
-                    </h1>
+                    </h2>
                     <p className='text-base md:text-[18px] text-foreground/80 max-w-2xl text-center mt-5 mx-auto font-normal'>
                         Got questions? We&apos;ve got answers. Find everything you need to know about setting up your instance, code, and deployment.
                     </p>
