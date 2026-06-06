@@ -1,7 +1,7 @@
 import { createSiteSchema, updateSiteSchema } from "@/db/schema";
-import { siteService } from "@/db/services/site";
-import { getDb } from "@/lib/get-db";
 import { ActionError, defineAction } from "astro:actions";
+import { siteService } from "./website.repository";
+import { getDb } from "@/lib/get-db";
 import { z } from "astro:schema";
 
 const PROTECTED_SITE_IDS = [

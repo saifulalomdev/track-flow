@@ -1,14 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { toast } from "sonner";
 import { actions } from "astro:actions";
 import { navigate } from "astro:transitions/client";
 import { type LoginInput, loginSchema } from "@/schema/login";
+import { useAction } from "@/hooks/use-action";
 
 export default function useLogIn() {
-  const [isPending, setIsPending] = useState(false);
-
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -17,33 +14,43 @@ export default function useLogIn() {
     },
   });
 
-  async function onSubmit(data: LoginInput) {
-    setIsPending(true);
-
-    try {
-      // Call the Astro Action
-      const { data: res, error } = await actions.login(data);
-
-      if (error) {
-        // Astro Actions return a structured error object
-        toast.error(error.message || "Invalid credentials");
-        return;
-      }
-
-      if (res?.success) {
-        toast.success("Login successful! Redirecting...");
-        form.reset();
-        
-        // Redirect to dashboard
-        navigate("/dashboard");
-      }
-    } catch (err) {
-      toast.error("An unexpected error occurred");
-      console.error(err);
-    } finally {
-      setIsPending(false);
+  // Setup the action runner using your custom hook
+  const { execute, isLoading, error } = useAction(
+    async (data: LoginInput) => {
+      const result = await actions.login(data);
+      
+      // Astro actions return an ActionError object on failure. 
+      // We pass it forward or shape it to match your ActionResult type.
+      return {
+        data: result.data,
+        error: result.error ? { message: result.error.message } : null,
+      };
+    },
+    {
+      loadingMessage: "Logging you in...",
+      successMessage: "Login successful! Redirecting...",
+      onSuccess: (res) => {
+        if (res?.success) {
+          form.reset();
+          navigate("/dashboard");
+        }
+      },
+      // Optional: useAction already toasts the error automatically!
+      onError: (errMsg) => {
+        console.error("Login failed:", errMsg);
+      },
     }
-  }
+  );
 
-  return { form, onSubmit, isPending };
+  // The form submit handler now just pipes data into execute
+  const onSubmit = (data: LoginInput) => {
+    execute(data);
+  };
+
+  return { 
+    form, 
+    onSubmit, 
+    isPending: isLoading, // Maps to your hook's isLoading state
+    error 
+  };
 }

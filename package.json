@@ -57,6 +57,7 @@
     "@faker-js/faker": "^10.4.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/d3-scale": "^4.0.9",
     "@types/react-simple-maps": "^3.0.6",
     "better-sqlite3": "^12.10.0",
