@@ -1,6 +1,7 @@
 // src/pages/api/events.ts
 import { createEventSchema, eventService, siteService } from "@/db";
 import { getDb } from "@/lib/get-db";
+import { isProductionOrRemote } from "@/modules/event";
 import type { APIRoute } from "astro";
 
 const CORS_HEADERS = {
@@ -53,16 +54,25 @@ export const POST: APIRoute = async ({ request, locals }) => {
             screenHeight: rawBody.screen?.height,
             lang: rawBody.lang || null,
             params: rawBody.params || null,
-            referrer: rawBody.referrer || rawBody.params.utm_source || "Direct",
+            referrer: rawBody.referrer || rawBody.params?.utm_source || "Direct",
             country: cf?.country || "LocalDev",
         });
 
 
         // 6. Fire your type-safe database service ingestion operation block!
-        const savedRecord = await eventService.ingest(db, validatedPayload);
+        // If the incoming event URL is localhost, mock a successful save and skip DB ingestion
+        let savedId = "mocked-local-id";
+
+        if (isProductionOrRemote(rawBody.url)) {
+            // 6. Fire your type-safe database service ingestion operation block!
+            const savedRecord = await eventService.ingest(db, validatedPayload);
+            savedId = savedRecord.id;
+        } else {
+            console.log(`⚠️ Localhost detected for URL [${rawBody.url}]. Skipping database write.`);
+        }
 
         // 7. Return a highly optimized, clean response payload structure back to the browser
-        return new Response(JSON.stringify({ success: true, id: savedRecord.id }), {
+        return new Response(JSON.stringify({ success: true, id: savedId }), {
             status: 200,
             headers: {
                 ...CORS_HEADERS,

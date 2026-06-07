@@ -1,7 +1,7 @@
 // src/db/services/site.ts
 import { and, desc, eq, sql } from "drizzle-orm";
-import { site } from "../schema";
-import type { NewSite, Site } from "../schema"; // Importing single source of truth inferred types
+import { site } from "@/db/schema";
+import type { NewSite, Site } from "@/db/schema"; // Importing single source of truth inferred types
 import type { D1Instance } from "@/lib/get-db";
 
 export const siteService = {

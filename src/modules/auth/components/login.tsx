@@ -2,11 +2,11 @@ import { logInFields } from "@/config/login-fields";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { FormInput } from "../ui/form-input";
+import { FormInput } from "@/components/ui/form-input";
 import useLogIn from "@/hooks/use-log-in";
-import { Spinner } from "../ui/spinner";
+import { Spinner } from "@/components/ui/spinner";
 
-export default function LogInForm() {
+export function LogInForm() {
     const { form, isPending, onSubmit } = useLogIn();
 
     return (
