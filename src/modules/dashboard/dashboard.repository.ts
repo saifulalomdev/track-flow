@@ -85,38 +85,34 @@ export const dashboardRepository = {
     `);
     },
 
-   getTrends: (db: D1Instance, { currentFromStr, currentToStr, activeSiteId }: RepositoryQueryParams) => {
+    getTrends: (db: D1Instance, { currentFromStr, currentToStr, activeSiteId }: RepositoryQueryParams) => {
+        // 1. Pre-calculate boundaries in JS/TS to offload D1 computation
+        const startTs = Math.floor(new Date(currentFromStr).getTime() / 1000);
+        const endTs = Math.floor(new Date(currentToStr).getTime() / 1000);
+        const bucketWidth = (endTs - startTs) / 12.0;
+
         return db.run(sql`
-            WITH RECURSIVE buckets(n) AS (
-                SELECT 0 
-                UNION ALL 
-                SELECT n + 1 FROM buckets WHERE n < 11
-            ),
-            time_bounds AS (
-                SELECT 
-                    strftime('%s', ${currentFromStr}) as start_ts,
-                    strftime('%s', ${currentToStr}) as end_ts,
-                    -- Use real floating-point numbers to keep bucket widths perfectly accurate
-                    (strftime('%s', ${currentToStr}) - strftime('%s', ${currentFromStr})) / 12.0 as bucket_width
+        WITH RECURSIVE buckets(n) AS (
+            SELECT 0 
+            UNION ALL 
+            SELECT n + 1 FROM buckets WHERE n < 11
+        )
+        SELECT 
+            b.n as bucket_index,
+            datetime(${startTs} + (b.n * ${bucketWidth}), 'unixepoch') as bucket_start_time,
+            count(e.id) as current_views
+        FROM buckets b
+        LEFT JOIN ${event} e ON e.website_id = ${activeSiteId} 
+            -- Compare native text timestamps directly to allow index usage
+            AND e.timestamp >= datetime(${startTs} + (b.n * ${bucketWidth}), 'unixepoch')
+            AND (
+                (b.n < 11 AND e.timestamp < datetime(${startTs} + ((b.n + 1) * ${bucketWidth}), 'unixepoch'))
+                OR 
+                (b.n = 11 AND e.timestamp <= datetime(${endTs}, 'unixepoch'))
             )
-            SELECT 
-                b.n as bucket_index,
-                -- Explicitly calculate standard bucket timestamps for client chart rendering if needed
-                datetime(tb.start_ts + (b.n * tb.bucket_width), 'unixepoch') as bucket_start_time,
-                count(e.id) as current_views
-            FROM buckets b
-            CROSS JOIN time_bounds tb
-            LEFT JOIN ${event} e ON e.website_id = ${activeSiteId} 
-                AND strftime('%s', e.timestamp) >= (tb.start_ts + (b.n * tb.bucket_width))
-                AND (
-                    -- If it's the final bucket (index 11), make it inclusive of the end boundary
-                    (b.n < 11 AND strftime('%s', e.timestamp) < (tb.start_ts + ((b.n + 1) * tb.bucket_width)))
-                    OR 
-                    (b.n = 11 AND strftime('%s', e.timestamp) <= tb.end_ts)
-                )
-            GROUP BY b.n
-            ORDER BY b.n ASC
-        `);
+        GROUP BY b.n
+        ORDER BY b.n ASC
+    `);
     },
 
     getReferrers: (db: D1Instance, { activeSiteId, currentFromStr, currentToStr }: RepositoryQueryParams) => {
