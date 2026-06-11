@@ -1,8 +1,8 @@
 // src/pages/api/events.ts
 import { createEventSchema, eventService, siteService } from "@/db";
-import { getDb } from "@/lib/get-db";
 import { isProductionOrRemote } from "@/modules/event";
 import type { APIRoute } from "astro";
+import { getDb } from "@/lib/get-db";
 
 const CORS_HEADERS = {
     "Access-Control-Allow-Origin": "*",
