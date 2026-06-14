@@ -1,8 +1,9 @@
 // src/pages/api/events.ts
-import { createEventSchema, eventService, siteService } from "@/db";
+import { createEventSchema, siteService } from "@/db";
 import { isProductionOrRemote } from "@/modules/event";
 import type { APIRoute } from "astro";
 import { getDb } from "@/lib/get-db";
+import { eventRepository } from "@/modules/event/event.repository";
 
 const CORS_HEADERS = {
     "Access-Control-Allow-Origin": "*",
@@ -65,7 +66,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
         if (isProductionOrRemote(rawBody.url)) {
             // 6. Fire your type-safe database service ingestion operation block!
-            const savedRecord = await eventService.ingest(db, validatedPayload);
+            const savedRecord = await eventRepository.ingest(db, validatedPayload);
             savedId = savedRecord.id;
         } else {
             console.log(`⚠️ Localhost detected for URL [${rawBody.url}]. Skipping database write.`);
