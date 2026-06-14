@@ -1,9 +1,8 @@
 import { eq, and, gte, lte, desc } from "drizzle-orm";
-import { event } from "../schema"; 
-import type { NewTrackFlowEvent, TrackFlowEvent } from "../schema/event";
 import type { D1Instance } from "@/lib/get-db";
+import { event, type NewTrackFlowEvent, type TrackFlowEvent } from "@/db";
 
-export const eventService = {
+export const eventRepository = {
   /**
    * INGESTION: Appends tracked device data rows directly onto Cloudflare D1
    */
