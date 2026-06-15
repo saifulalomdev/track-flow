@@ -4,7 +4,7 @@ import { site } from "@/db/schema";
 import type { NewSite, Site } from "@/db/schema"; // Importing single source of truth inferred types
 import type { D1Instance } from "@/lib/get-db";
 
-export const siteService = {
+export const siteRepository = {
   /**
    * CREATE: Inserts a new site using the inferred type directly
    */
