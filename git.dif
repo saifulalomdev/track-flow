@@ -1,0 +1,232 @@
+
+D:\track-flow
+├── astro.config.mjs
+├── components.json
+├── drizzle
+|  ├── 0000_bouncy_ronan.sql
+|  ├── 0001_spotty_guardsmen.sql
+|  ├── 0002_slippery_magus.sql
+|  ├── 0003_silly_vin_gonzales.sql
+|  ├── 0004_common_scarecrow.sql
+|  ├── 0005_slow_the_liberteens.sql
+|  ├── 0006_optimal_korath.sql
+|  ├── 0007_amused_rocket_racer.sql
+|  ├── 0008_far_amphibian.sql
+|  └── meta
+|     ├── 0000_snapshot.json
+|     ├── 0001_snapshot.json
+|     ├── 0002_snapshot.json
+|     ├── 0003_snapshot.json
+|     ├── 0004_snapshot.json
+|     ├── 0005_snapshot.json
+|     ├── 0006_snapshot.json
+|     ├── 0007_snapshot.json
+|     ├── 0008_snapshot.json
+|     └── _journal.json
+├── drizzle.config.ts
+├── example.dev.vars
+├── git.dif
+├── git.diff
+├── package.json
+├── pnpm-lock.yaml
+├── public
+|  ├── avatars.webp
+|  ├── fonts
+|  |  ├── sk-modernist-bold.otf
+|  |  ├── sk-modernist-mono.otf
+|  |  └── sk-modernist-regular.otf
+|  ├── images
+|  |  ├── cube.svg
+|  |  ├── faqs-bottom-line.png
+|  |  ├── faqs-left-side-botton-bg.png
+|  |  ├── faqs-left-side-top-bg.png
+|  |  ├── faqs-right-side-bg.png
+|  |  ├── faqs-top-line.png
+|  |  ├── hero-left-side.png
+|  |  ├── hero-right-side.png
+|  |  ├── implement-later.png
+|  |  ├── logo.svg
+|  |  ├── price-section-bg.png
+|  |  └── separator.svg
+|  ├── logo.svg
+|  ├── pagespeed-insights.png
+|  ├── side-image.webp
+|  ├── site-logo.webp
+|  └── thumbnail.png
+├── README.md
+├── src
+|  ├── actions
+|  |  ├── index.ts
+|  |  ├── login.ts
+|  |  ├── logout.ts
+|  |  └── verify-tracking-script.ts
+|  ├── assets
+|  |  ├── astro.svg
+|  |  ├── background.svg
+|  |  └── tracker.js
+|  ├── components
+|  |  ├── brand
+|  |  |  ├── app-branding.tsx
+|  |  |  └── index.ts
+|  |  └── ui
+|  |     ├── accordion.tsx
+|  |     ├── alert-dialog.tsx
+|  |     ├── badge.tsx
+|  |     ├── button.tsx
+|  |     ├── calendar.tsx
+|  |     ├── card.tsx
+|  |     ├── chart.tsx
+|  |     ├── copy-to-clipboard.tsx
+|  |     ├── dialog.tsx
+|  |     ├── dropdown-menu.tsx
+|  |     ├── error-alert.tsx
+|  |     ├── field.tsx
+|  |     ├── form-input.tsx
+|  |     ├── form.tsx
+|  |     ├── input.tsx
+|  |     ├── label.tsx
+|  |     ├── page-header.tsx
+|  |     ├── popover.tsx
+|  |     ├── select.tsx
+|  |     ├── separator.tsx
+|  |     ├── sonner.tsx
+|  |     ├── spinner.tsx
+|  |     ├── switch-card.tsx
+|  |     ├── switch.tsx
+|  |     └── tooltip.tsx
+|  ├── config
+|  |  ├── admin-nav-items.ts
+|  |  ├── help-menus.ts
+|  |  ├── login-fields.ts
+|  |  ├── nav-items.ts
+|  |  └── pricing-plans.ts
+|  ├── data
+|  |  ├── faqs.ts
+|  |  ├── features.ts
+|  |  ├── platforms.ts
+|  |  └── social-links.ts
+|  ├── db
+|  |  ├── index.ts
+|  |  └── schema
+|  |     ├── event.ts
+|  |     ├── index.ts
+|  |     └── site.ts
+|  ├── env.d.ts
+|  ├── hooks
+|  |  ├── use-action.ts
+|  |  └── use-log-in.ts
+|  ├── layouts
+|  |  └── main.astro
+|  ├── lib
+|  |  ├── format-date.ts
+|  |  ├── format-seconds.ts
+|  |  ├── generate-uuid.ts
+|  |  ├── get-base-url.ts
+|  |  ├── get-db.ts
+|  |  ├── get-default-time-range.ts
+|  |  ├── index.ts
+|  |  ├── truncate-text.ts
+|  |  ├── utils.ts
+|  |  └── __tests__
+|  |     ├── generate-uuid.ts
+|  |     ├── get-base-url.ts
+|  |     ├── get-db.ts
+|  |     ├── get-default-time-range.ts
+|  |     └── utils.ts
+|  ├── middleware
+|  |  ├── index.ts
+|  |  ├── middleware.auth.ts
+|  |  ├── middleware.cors.ts
+|  |  └── middleware.logger.ts
+|  ├── mocks
+|  |  ├── recent-conversions.ts
+|  |  ├── stats.ts
+|  |  └── websites.ts
+|  ├── modules
+|  |  ├── auth
+|  |  |  ├── auth.layout.astro
+|  |  |  ├── components
+|  |  |  |  └── login.tsx
+|  |  |  └── index.ts
+|  |  ├── dashboard
+|  |  |  ├── components
+|  |  |  |  ├── dashbaord.barchart.tsx
+|  |  |  |  ├── dashbaord.device.tsx
+|  |  |  |  ├── dashboard.date.picker.tsx
+|  |  |  |  ├── dashboard.header.tsx
+|  |  |  |  ├── dashboard.layout.tsx
+|  |  |  |  ├── dashboard.page.tsx
+|  |  |  |  ├── dashboard.pageviews.tsx
+|  |  |  |  ├── dashboard.referrer.list.tsx
+|  |  |  |  ├── dashboard.sidebar.tsx
+|  |  |  |  ├── dashboard.site.selector.tsx
+|  |  |  |  ├── dashboard.stats.grid.tsx
+|  |  |  |  ├── dashboard.stats.tsx
+|  |  |  |  └── dashboard.traffic.map.tsx
+|  |  |  ├── dashboard.actions.ts
+|  |  |  ├── dashboard.libs.ts
+|  |  |  ├── dashboard.repository.ts
+|  |  |  ├── dashboard.schema.ts
+|  |  |  ├── dashboard.service.ts
+|  |  |  ├── dashboard.types.ts
+|  |  |  ├── index.ts
+|  |  |  └── __tests__
+|  |  |     ├── dashboard.libs.test.ts
+|  |  |     ├── dashboard.repository.test.ts
+|  |  |     └── dashboard.stats.test.tsx
+|  |  ├── event
+|  |  |  ├── event.libs.ts
+|  |  |  ├── event.repository.ts
+|  |  |  └── index.ts
+|  |  ├── marketing
+|  |  |  ├── components
+|  |  |  |  ├── faq.footer.section.tsx
+|  |  |  |  ├── feature.section.tsx
+|  |  |  |  ├── features.card.tsx
+|  |  |  |  ├── footer.tsx
+|  |  |  |  ├── get.started.button.tsx
+|  |  |  |  ├── hero.section.tsx
+|  |  |  |  ├── pricing-section.tsx
+|  |  |  |  ├── pricing.card.tsx
+|  |  |  |  └── public.header.tsx
+|  |  |  └── index.ts
+|  |  └── websites
+|  |     ├── components
+|  |     |  ├── website.card.tsx
+|  |     |  ├── website.form.tsx
+|  |     |  ├── website.manager.tsx
+|  |     |  ├── website.status.icon.tsx
+|  |     |  └── websites.empty.state.tsx
+|  |     ├── index.ts
+|  |     ├── website.actions.ts
+|  |     ├── website.repository.ts
+|  |     └── __tests__
+|  |        └── website.repository.test.ts
+|  ├── pages
+|  |  ├── 404.astro
+|  |  ├── api
+|  |  |  └── events.ts
+|  |  ├── dashboard
+|  |  |  ├── index.astro
+|  |  |  ├── settings.astro
+|  |  |  └── sites.astro
+|  |  ├── index.astro
+|  |  ├── login.astro
+|  |  └── script.js.ts
+|  ├── schema
+|  |  └── login.ts
+|  ├── scripts
+|  |  └── seed.ts
+|  └── styles
+|     └── global.css
+├── tsconfig.json
+├── vitest.config.ts
+├── worker-configuration.d.ts
+└── wrangler.jsonc
+
+directory: 49 file: 184 symboliclink: 52
+
+ignored: directory (1)
+
+
+[2K[1G
