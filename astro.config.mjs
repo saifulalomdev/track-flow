@@ -17,5 +17,5 @@ export default defineConfig({
   },
 
   integrations: [react()],
-  adapter: cloudflare()
+  adapter: cloudflare({workerEntryPoint: {path: "./src/worker.ts"}})
 });

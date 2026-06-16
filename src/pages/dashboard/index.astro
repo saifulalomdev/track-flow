@@ -4,7 +4,7 @@ import { getDb } from "@/lib/get-db";
 import { DashboardLayout, DashboardPage } from "@/modules/dashboard";
 import { dashboardService } from "@/modules/dashboard/dashboard.service";
 import type { DashboardPageProps } from "@/modules/dashboard/dashboard.types";
-import { env } from "cloudflare:workers";
+const { env } = Astro.locals.runtime;
 
 const db = getDb(env);
 
