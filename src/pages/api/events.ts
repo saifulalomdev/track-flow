@@ -62,7 +62,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
         // 6. Fire your type-safe database service ingestion operation block!
         // If the incoming event URL is localhost, mock a successful save and skip DB ingestion
-        let savedId = "mocked-local-id";
+        let savedId: any = "mocked-local-id";
 
         if (isProductionOrRemote(rawBody.url)) {
             // 6. Fire your type-safe database service ingestion operation block!

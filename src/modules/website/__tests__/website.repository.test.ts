@@ -11,7 +11,7 @@ describe("Website repository integration test", () => {
             url: "https://trackflow.dev",
             isActive: true
         };
-        const createdSite = await siteRepository.create(db, testMockSite);
+        const createdSite = await siteRepository.create(db, testMockSite as any);
         expect(createdSite).toBeDefined();
     });
 });
