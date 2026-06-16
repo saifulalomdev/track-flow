@@ -1,6 +1,5 @@
 import { loginSchema } from '@/schema/login';
 import { defineAction } from 'astro:actions';
-import { env } from 'cloudflare:workers';
 
 import { SignJWT } from 'jose';
 
@@ -9,6 +8,7 @@ export const login = defineAction({
     input: loginSchema,
     handler: async (input, context) => {
         const { email, password } = input;
+        const { env } = context.locals.runtime;
 
         // 1. Validate Credentials against Environment Secrets
         if (email !== env.ADMIN_EMAIL || password !== env.ADMIN_PASSWORD) {

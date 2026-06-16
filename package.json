@@ -1,7 +1,7 @@
 {
   "name": "Trackflow",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "astro": "astro",
     "dev": "astro dev",
@@ -15,7 +15,7 @@
     "deploy": ""
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.7.0",
+    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/react": "^4.4.2",
     "@hookform/resolvers": "^5.2.2",
     "@nivo/core": "^0.99.0",
@@ -24,7 +24,7 @@
     "@tailwindcss/vite": "^4.2.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "astro": "^6.4.6",
+    "astro": "5.17.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "colord": "^2.9.3",

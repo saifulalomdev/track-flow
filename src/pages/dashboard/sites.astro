@@ -4,8 +4,7 @@ import { DashboardLayout } from "@/modules/dashboard";
 import MainLayout from "@/layouts/main.astro";
 import { getDb } from "@/lib/get-db";
 import { WebsiteManager } from "@/modules/website";
-import { env } from "cloudflare:workers";
-
+const { env } = Astro.locals.runtime;
 let initialSites: Site[] = [];
 let errorMsg = null;
 
