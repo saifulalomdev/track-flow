@@ -1,5 +1,5 @@
 // src/pages/api/events.ts
-import { createEventSchema, siteService } from "@/db";
+import { createEventSchema, siteRepository } from "@/db";
 import { isProductionOrRemote } from "@/modules/event";
 import type { APIRoute } from "astro";
 import { getDb } from "@/lib/get-db";
@@ -30,7 +30,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         // 3. Extract Cloudflare Edge location data properties natively
         const cf = (request as any).cf;
         // 4. Verify the site exists and is allowed to ingest data
-        const targetSite = await siteService.findActive(db, rawBody.website_id);
+        const targetSite = await siteRepository.findActive(db, rawBody.website_id);
 
         if (!targetSite) {
             return new Response(
