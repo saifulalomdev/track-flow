@@ -1,3 +1,4 @@
+// @ts-ignore
 import { cloudflareTest, readD1Migrations } from "@cloudflare/vitest-pool-workers";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
@@ -14,7 +15,7 @@ export default defineConfig({
                         const migrations = await readD1Migrations(migrationsPath);
 
                         return {
-                            main: "./src/worker.ts",
+                            main: "./src/test/test-worker.ts",
                             wrangler: { configPath: "./wrangler.jsonc" },
                             miniflare: {
                                 bindings: { TEST_MIGRATIONS: migrations },

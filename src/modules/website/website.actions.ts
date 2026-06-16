@@ -3,6 +3,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { siteRepository } from "./website.repository";
 import { getDb } from "@/lib/get-db";
 import { z } from "astro:schema";
+import { env } from "cloudflare:workers";
 
 const PROTECTED_SITE_IDS = [
     "cfb90e7b-64c1-4fdf-b412-f4eb8dbec7e9",
@@ -13,7 +14,6 @@ export const createSite = defineAction({
     accept: 'json',
     input: createSiteSchema as any,
     handler: async (input, context) => {
-        const env = context.locals.runtime?.env;
         const db = getDb(env);
 
         const newSite = await siteRepository.create(db, input);
@@ -35,7 +35,6 @@ export const updateSite = defineAction({
                 message: "This site is a protected system resource and cannot be updated.",
             });
         }
-        const env = context.locals.runtime?.env;
         const db = getDb(env);
 
         const updatedSite = await siteRepository.update(db, id, data);
@@ -55,7 +54,6 @@ export const deleteSite = defineAction({
                 message: "This site is a protected system resource and cannot be deleted.",
             });
         }
-        const env = context.locals.runtime?.env;
         const db = getDb(env);
 
         const deletedSite = await siteRepository.delete(db, input.id);
