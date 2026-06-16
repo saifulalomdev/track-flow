@@ -4,6 +4,7 @@ import { isProductionOrRemote } from "@/modules/event";
 import type { APIRoute } from "astro";
 import { getDb } from "@/lib/get-db";
 import { eventRepository } from "@/modules/event/event.repository";
+import { env } from "cloudflare:workers";
 
 const CORS_HEADERS = {
     "Access-Control-Allow-Origin": "*",
@@ -20,7 +21,6 @@ export const OPTIONS: APIRoute = async () => {
 
 export const POST: APIRoute = async ({ request, locals }) => {
     // 1. Initialize your Edge D1 Database connection profile safely
-    const { env } = locals.runtime;
     const db = getDb(env);
 
     try {

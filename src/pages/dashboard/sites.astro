@@ -4,12 +4,13 @@ import { DashboardLayout } from "@/modules/dashboard";
 import MainLayout from "@/layouts/main.astro";
 import { getDb } from "@/lib/get-db";
 import { WebsiteManager } from "@/modules/website";
+import { env } from "cloudflare:workers";
 
 let initialSites: Site[] = [];
 let errorMsg = null;
 
 try {
-    const db = getDb(Astro.locals.runtime?.env);
+    const db = getDb(env);
     initialSites = await siteRepository.findAll(db);
 } catch (error: any) {
     errorMsg = error.message || "Something went wrong!";

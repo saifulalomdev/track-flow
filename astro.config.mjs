@@ -14,14 +14,8 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    ssr: {
-      external: ['better-auth', '@better-auth/drizzle-adapter']
-    },
-    optimizeDeps: {
-      exclude: ['better-auth']
-    }
   },
 
   integrations: [react()],
-  adapter: cloudflare({ workerEntryPoint: { path: "src/worker.ts" } })
+  adapter: cloudflare()
 });

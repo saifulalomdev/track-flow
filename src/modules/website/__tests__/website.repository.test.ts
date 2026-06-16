@@ -1,7 +1,7 @@
 import { siteRepository } from '@/db';
 import { getDb } from '@/lib';
 import { env } from 'cloudflare:workers';
-import { describe, it } from 'vitest';
+import { describe, it , expect} from 'vitest';
 
 describe("Website repository integration test", () => {
     it("should create a new site", async () => {

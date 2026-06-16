@@ -4,6 +4,7 @@ import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { dashboardService } from "./dashboard.service";
 import { getDb } from "@/lib";
+import { env } from "cloudflare:workers";
 
 export const dashboardActions = {
     getOverview: defineAction({
@@ -16,7 +17,7 @@ export const dashboardActions = {
         }),
 
         handler: async ({ websiteId, dateRange }, ctx) => {
-            const db = getDb(ctx.locals.runtime.env);
+            const db = getDb(env);
 
             const overview = await dashboardService.getOverviewData({
                 db,
