@@ -1,6 +1,6 @@
 import { createSiteSchema, updateSiteSchema } from "@/db/schema";
 import { ActionError, defineAction } from "astro:actions";
-import { siteService } from "./website.repository";
+import { siteRepository } from "./website.repository";
 import { getDb } from "@/lib/get-db";
 import { z } from "astro:schema";
 
@@ -16,7 +16,7 @@ export const createSite = defineAction({
         const env = context.locals.runtime?.env;
         const db = getDb(env);
 
-        const newSite = await siteService.create(db, input);
+        const newSite = await siteRepository.create(db, input);
         return { success: true, data: newSite };
     },
 })
@@ -38,7 +38,7 @@ export const updateSite = defineAction({
         const env = context.locals.runtime?.env;
         const db = getDb(env);
 
-        const updatedSite = await siteService.update(db, id, data);
+        const updatedSite = await siteRepository.update(db, id, data);
         return { success: true, data: updatedSite };
     },
 })
@@ -58,7 +58,7 @@ export const deleteSite = defineAction({
         const env = context.locals.runtime?.env;
         const db = getDb(env);
 
-        const deletedSite = await siteService.delete(db, input.id);
+        const deletedSite = await siteRepository.delete(db, input.id);
         return { success: true, data: deletedSite };
     },
 })

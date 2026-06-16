@@ -1,24 +1,36 @@
-import { defineConfig } from "vitest/config";
+import { cloudflareTest, readD1Migrations } from "@cloudflare/vitest-pool-workers";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
+import path from "node:path";
 
 export default defineConfig({
     test: {
         projects: [
             {
-                // 1. BACKEND ISOLATED WORKERS RUNNER
                 plugins: [
                     tsconfigPaths(),
-                    cloudflareTest({ wrangler: { configPath: "./wrangler.jsonc" } }),
+                    cloudflareTest(async () => {
+                        const migrationsPath = path.join(__dirname, "drizzle");
+                        const migrations = await readD1Migrations(migrationsPath);
+
+                        return {
+                            main: "./src/worker.ts",
+                            wrangler: { configPath: "./wrangler.jsonc" },
+                            miniflare: {
+                                bindings: { TEST_MIGRATIONS: migrations },
+                            },
+                        };
+                    }),
                 ],
                 test: {
                     name: "server-workers",
                     globals: true,
                     include: ["**/__tests__/**/*.ts"],
+                    setupFiles: ["./src/test/apply-migrations.ts"],
+
                 },
             },
             {
-                // 2. CLIENT UI RUNNER (unchanged)
                 plugins: [tsconfigPaths()],
                 test: {
                     name: "client-ui",

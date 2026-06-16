@@ -11,4 +11,15 @@ declare global {
   }
 }
 
+declare module "@astrojs/cloudflare/entrypoints/server" {
+  const handler: {
+    fetch: (
+      request: Request,
+      env: any,
+      ctx: any
+    ) => Promise<Response>;
+  };
+  export default handler;
+}
+
 export { };

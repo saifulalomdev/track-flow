@@ -1,6 +1,6 @@
 // src/modules/dashboard/dashboard.service.ts
 import { getDefaultTimeRange } from "@/lib";
-import { siteService } from "@/db";
+import { siteRepository } from "@/db";
 import { format, subDays, differenceInCalendarDays } from "date-fns";
 import { dashboardRepository } from "./dashboard.repository";
 import type { DashboardPageProps, DashboardStatItem, GetOverviewParams, DeviceItem } from "./dashboard.types";
@@ -18,8 +18,8 @@ export const dashboardService = {
         const prevDateTo = subDays(dateTo, daysDifference);
 
         // 1. Resolve site information instantly to prevent client-side UI flickering
-        const latestSite = await siteService.findLatest(db);
-        const siteList = await siteService.findAll(db);
+        const latestSite = await siteRepository.findLatest(db);
+        const siteList = await siteRepository.findAll(db);
         const activeSiteId = websiteId || latestSite?.id || "";
 
         const queryCtx = {
