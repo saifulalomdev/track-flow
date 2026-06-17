@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { actions } from "astro:actions";
-import { navigate } from "astro:transitions/client";
 import { useAction } from "@/hooks/use-action";
 import { LoginInput, loginSchema } from "./auth.schema";
 
@@ -30,7 +29,7 @@ export default function useLogIn() {
       onSuccess: (res) => {
         if (res?.success) {
           form.reset();
-          navigate("/dashboard");
+          window.location.assign("/dashboard");
         }
       },
 
