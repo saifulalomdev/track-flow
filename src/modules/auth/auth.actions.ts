@@ -1,7 +1,7 @@
 // src/modules/auth/auth.actions.ts
 import { defineAction, ActionError } from 'astro:actions';
-import { SignJWT } from 'jose';
 import { loginSchema } from './auth.schema';
+import { SignJWT } from 'jose';
 
 export const login = defineAction({
     accept: 'json',

@@ -45,7 +45,7 @@ export function DashboardHeader({ onClick, isSidebarOpen }: DashboardHeaderProps
                         </Button>
                     </AlertDialogTrigger>
 
-                    <AlertDialogContent className="border border-white/10 bg-background/95 backdrop-blur-lg max-w-[400px]">
+                    <AlertDialogContent className="border border-white/10 bg-background/95 backdrop-blur-lg max-w-100">
                         <AlertDialogHeader>
                             <AlertDialogTitle className="text-xl font-semibold tracking-tight">
                                 End your session?
