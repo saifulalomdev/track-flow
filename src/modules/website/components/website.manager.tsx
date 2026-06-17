@@ -61,7 +61,7 @@ export function WebsiteManager({ initialWebsites, errorMsg }: WebsitePageProps) 
   });
 
   // 4. Hook for Script Verification Action
-  const verifyAction = useAction(actions.verifyTrackingScript, {
+  const verifyAction = useAction(actions.verifyWebsiteTrackingScript, {
     successMessage: "Tracking script verified successfully!",
     loadingMessage: "Verifying tracking script placement...",
   });

@@ -15,12 +15,10 @@ export default function useLogIn() {
   });
 
   // Setup the action runner using your custom hook
-  const { execute, isLoading, error } = useAction(
+  const { execute } = useAction(
     async (data: LoginInput) => {
       const result = await actions.login(data);
-      
-      // Astro actions return an ActionError object on failure. 
-      // We pass it forward or shape it to match your ActionResult type.
+
       return {
         data: result.data,
         error: result.error ? { message: result.error.message } : null,
@@ -47,10 +45,5 @@ export default function useLogIn() {
     execute(data);
   };
 
-  return { 
-    form, 
-    onSubmit, 
-    isPending: isLoading, // Maps to your hook's isLoading state
-    error 
-  };
+  return { form, onSubmit };
 }

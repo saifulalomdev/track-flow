@@ -9,6 +9,6 @@ export function createExports(manifest: SSRManifest) {
       async fetch(request: Request, env: Env, ctx: ExecutionContext) {
         return app.render(request, { locals: { runtime: { env, ctx } } });
       },
-    } satisfies ExportedHandler<Env>,
+    }
   };
 }

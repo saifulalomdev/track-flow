@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/use-action";
 import { actions } from "astro:actions";
 import {
-    AlertDialog,
-    AlertDialogCancel,
-    AlertDialogContent,
     AlertDialogDescription,
+    AlertDialogTrigger,
+    AlertDialogContent,
+    AlertDialogCancel,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
+    AlertDialog,
 } from "@/components/ui/alert-dialog";
 
 interface DashboardHeaderProps {
