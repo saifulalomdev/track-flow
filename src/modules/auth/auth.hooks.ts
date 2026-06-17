@@ -15,14 +15,7 @@ export default function useLogIn() {
 
   // Setup the action runner using your custom hook
   const { execute, isLoading } = useAction(
-    async (data: LoginInput) => {
-      const result = await actions.login(data);
-
-      return {
-        data: result.data,
-        error: result.error ? { message: result.error.message } : null,
-      };
-    },
+    actions.login,
     {
       loadingMessage: "Logging you in...",
       successMessage: "Login successful! Redirecting...",
