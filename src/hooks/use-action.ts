@@ -49,5 +49,5 @@ export function useAction<TInput, TData>(actionFn: (input: TInput) => Promise<Ac
     }
   };
 
-  return { execute , isLoading};
+  return { execute, isLoading };
 }

@@ -33,7 +33,7 @@ export default function useLogIn() {
           navigate("/dashboard");
         }
       },
-      // Optional: useAction already toasts the error automatically!
+
       onError: (errMsg) => {
         console.error("Login failed:", errMsg);
       },

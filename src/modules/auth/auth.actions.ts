@@ -1,4 +1,4 @@
-import { defineAction,ActionError } from 'astro:actions';
+import { defineAction, ActionError } from 'astro:actions';
 import { SignJWT } from 'jose';
 import { loginSchema } from './auth.schema';
 
@@ -33,8 +33,9 @@ export const login = defineAction({
             path: '/',
             httpOnly: true,
             secure: true,
-            sameSite: 'strict',
-            maxAge: 60 * 60 * 24, // 24 hours
+            sameSite: 'lax',
+            domain: context.url.hostname,
+            maxAge: 60 * 60 * 24,
         });
 
         return { success: true };
