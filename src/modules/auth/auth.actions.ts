@@ -1,3 +1,4 @@
+// src/modules/auth/auth.actions.ts
 import { defineAction, ActionError } from 'astro:actions';
 import { SignJWT } from 'jose';
 import { loginSchema } from './auth.schema';
@@ -11,7 +12,6 @@ export const login = defineAction({
 
         // 1. Validate Credentials against Environment Secrets
         if (email !== env.ADMIN_EMAIL || password !== env.ADMIN_PASSWORD) {
-            // High security, standard code format for authentication blocks
             throw new ActionError({
                 code: "UNAUTHORIZED",
                 message: "Invalid email or password."
@@ -34,8 +34,7 @@ export const login = defineAction({
             httpOnly: true,
             secure: true,
             sameSite: 'lax',
-            domain: context.url.hostname,
-            maxAge: 60 * 60 * 24,
+            maxAge: 60 * 60 * 24, // 24 hours
         });
 
         return { success: true };
