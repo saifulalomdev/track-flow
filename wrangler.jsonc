@@ -1,5 +1,5 @@
 {
-	"main": "./src/worker.ts",
+	"main": "dist/_worker.js/index.js",
 	"name": "trackflow",
 	"compatibility_date": "2024-09-23",
 	"compatibility_flags": [
