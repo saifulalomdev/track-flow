@@ -13,7 +13,7 @@ interface UseFormActionOptions<TFieldValues extends FieldValues, TData> {
 }
 
 interface UseFormActionReturn<TFieldValues extends FieldValues> {
-    form: UseFormReturn<TFieldValues, any>; // Add 'any' context parameter to align return types
+    form: UseFormReturn<TFieldValues, any>;
     onSubmit: (data: TFieldValues) => void;
 }
 

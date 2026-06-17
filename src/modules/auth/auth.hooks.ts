@@ -2,8 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { actions } from "astro:actions";
 import { navigate } from "astro:transitions/client";
-import { type LoginInput, loginSchema } from "@/schema/login";
 import { useAction } from "@/hooks/use-action";
+import { LoginInput, loginSchema } from "./auth.schema";
 
 export default function useLogIn() {
   const form = useForm<LoginInput>({
@@ -15,7 +15,7 @@ export default function useLogIn() {
   });
 
   // Setup the action runner using your custom hook
-  const { execute } = useAction(
+  const { execute, isLoading } = useAction(
     async (data: LoginInput) => {
       const result = await actions.login(data);
 
@@ -45,5 +45,5 @@ export default function useLogIn() {
     execute(data);
   };
 
-  return { form, onSubmit };
+  return { form, onSubmit, isLoading };
 }

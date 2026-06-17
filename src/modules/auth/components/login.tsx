@@ -1,13 +1,13 @@
+import { FormInput } from "@/components/ui/form-input";
 import { logInFields } from "@/config/login-fields";
+import { Spinner } from "@/components/ui/spinner";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { FormInput } from "@/components/ui/form-input";
-import useLogIn from "@/hooks/use-log-in";
-import { Spinner } from "@/components/ui/spinner";
+import useLogIn from "../auth.hooks";
 
 export function LogInForm() {
-    const { form, isPending, onSubmit } = useLogIn();
+    const { form, isLoading, onSubmit } = useLogIn();
 
     return (
         <Form {...form}>
@@ -22,11 +22,11 @@ export function LogInForm() {
                         label={field.label}
                         placeholder={field.placeholder}
                         type={field.type}
-                        disabled={isPending}
+                        disabled={isLoading}
                     />
                 ))}
-                <Button type="submit" className="w-full font-bold" disabled={isPending}>
-                    {isPending ? <Spinner /> : "Log in"}
+                <Button type="submit" className="w-full font-bold" disabled={isLoading}>
+                    {isLoading ? <Spinner /> : "Log in"}
                 </Button>
             </form>
         </Form>
