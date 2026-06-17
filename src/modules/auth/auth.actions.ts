@@ -1,7 +1,6 @@
-import { loginSchema } from '@/schema/login';
 import { defineAction } from 'astro:actions';
-
 import { SignJWT } from 'jose';
+import { loginSchema } from './auth.schema';
 
 export const login = defineAction({
     accept: 'json',
@@ -37,3 +36,14 @@ export const login = defineAction({
         return { success: true };
     },
 })
+
+export const logout = defineAction({
+    handler: async (_, context) => {
+        // Delete the authentication cookie
+        context.cookies.delete('auth_token', {
+            path: '/',
+        });
+
+        return { success: true };
+    },
+});

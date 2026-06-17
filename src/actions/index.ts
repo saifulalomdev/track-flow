@@ -1,13 +1,10 @@
-import { login } from "./login";
-import { logout } from "./logout";
-import * as websiteActions from '../modules/website/website.actions'
-import { verifyTrackingScript } from "./verify-tracking-script";
+import * as websiteActions from '@/modules/website/website.actions'
+import { login , logout } from "@/modules/auth/auth.actions";
 import { dashboardActions } from "@/modules/dashboard/dashboard.actions";
 
 export const server = {
     login,
     logout,
     ...websiteActions,
-    verifyTrackingScript,
     dashboardActions
 };
