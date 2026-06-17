@@ -1,4 +1,4 @@
-import { defineAction } from 'astro:actions';
+import { defineAction,ActionError } from 'astro:actions';
 import { SignJWT } from 'jose';
 import { loginSchema } from './auth.schema';
 
@@ -11,7 +11,11 @@ export const login = defineAction({
 
         // 1. Validate Credentials against Environment Secrets
         if (email !== env.ADMIN_EMAIL || password !== env.ADMIN_PASSWORD) {
-            throw new Error("Invalid credentials");
+            // High security, standard code format for authentication blocks
+            throw new ActionError({
+                code: "UNAUTHORIZED",
+                message: "Invalid email or password."
+            });
         }
 
         // 2. Prepare JWT Secret
@@ -35,7 +39,7 @@ export const login = defineAction({
 
         return { success: true };
     },
-})
+});
 
 export const logout = defineAction({
     handler: async (_, context) => {
