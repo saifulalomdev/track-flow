@@ -5,11 +5,11 @@ import { actions } from "astro:actions";
 import type { Site } from "@/db/schema";
 import { useAction } from "@/hooks/use-action";
 import { Button } from "@/components/ui/button";
-import SiteForm from "./website.form";
+import SiteForm from "./form";
 import ErrorAlert from "@/components/ui/error-alert";
 import { PageHeader } from "@/components/ui/page-header";
-import SiteCard from "./website.card";
-import DomainEmptyState from "./websites.empty.state";
+import SiteCard from "./card";
+import DomainEmptyState from "./empty-state";
 
 interface WebsitePageProps {
   initialWebsites: Site[];

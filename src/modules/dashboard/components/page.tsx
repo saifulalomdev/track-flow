@@ -3,18 +3,18 @@ import { type DateRange } from "react-day-picker";
 
 import { PageHeader } from "@/components/ui/page-header";
 import ErrorAlert from "@/components/ui/error-alert";
-import DashboardSiteSelector from "./dashboard.site.selector";
-import { DashboardDateRangePicker } from "./dashboard.date.picker";
-import DashboardStatsGrid from "./dashboard.stats.grid";
-import { PageviewsCard } from "./dashboard.pageviews";
-import TrafficMap from "./dashboard.traffic.map";
+import DashboardSiteSelector from "./site-selector";
+import { DashboardDateRangePicker } from "./date-picker";
+import DashboardStatsGrid from "./stats-grid";
+import { PageviewsCard } from "./pageviews-chart";
+import TrafficMap from "./traffic-map";
 
-import type { DashboardPageProps } from "../dashboard.types";
 import { useAction } from "@/hooks/use-action";
 import { actions } from "astro:actions";
-import { DashboardReferrerList } from "./dashboard.referrer.list";
-import { DevicesCard } from "./dashbaord.device";
-import { TrafficTrendsChart } from "./dashbaord.barchart";
+import { DashboardReferrerList } from "./referrer-list";
+import { DevicesCard } from "./device-breakdown";
+import { TrafficTrendsChart } from "./bar-chart";
+import type { DashboardPageProps } from "../dashboard.types";
 
 export function DashboardPage({
     sites,
