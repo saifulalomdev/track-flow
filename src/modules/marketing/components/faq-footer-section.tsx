@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import { Footer } from "./footer";
 import { faqs } from "@/data/faqs";
-import { GetStarted } from "./get.started.button";
+import { GetStarted } from "./get-started-button";
 
 
 export function FAQAndFootersection() {

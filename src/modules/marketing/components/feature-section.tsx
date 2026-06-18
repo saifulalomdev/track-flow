@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { features } from '@/data/features'
 import { cn } from '@/lib/utils'
-import { FeaturesCard } from './features.card'
-import { GetStarted } from './get.started.button'
+import { FeaturesCard } from './feature-card'
+import { GetStarted } from './get-started-button'
 
 export function FeaturesSection() {
     return (

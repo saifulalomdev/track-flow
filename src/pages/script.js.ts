@@ -7,7 +7,7 @@ export const GET: APIRoute = async () => {
   return new Response(trackerCode, {
     headers: {
       'Content-Type': 'application/javascript; charset=utf-8',
-      'Cache-Control': 'public, max-age=31536000, immutable', // Cache aggressively on CDN
+      'Cache-Control': 'public, max-age=31536000, immutable',
     },
   });
 };

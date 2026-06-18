@@ -28,7 +28,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useState } from 'react'
-import { WebsiteStatusIcon } from './website.status.icon';
+import { WebsiteStatusIcon } from './status-icon';
 import CopyToClipboard from '@/components/ui/copy-to-clipboard';
 import { Card } from "@/components/ui/card";
 

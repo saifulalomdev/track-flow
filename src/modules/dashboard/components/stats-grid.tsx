@@ -1,5 +1,5 @@
 import type { DashboardStatItem } from "../dashboard.types";
-import DashboardStatCard from "./dashboard.stats";
+import DashboardStatCard from "./stats";
 
 export default function DashboardStatsGrid({ stats }: { stats: DashboardStatItem[] | undefined}) {
     return (

@@ -1,6 +1,6 @@
 import { GlobeIcon, ShieldCheckIcon, ZapIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { GetStarted } from "./get.started.button";
+import { GetStarted } from "./get-started-button";
 
 type Stat = {
   label: string,

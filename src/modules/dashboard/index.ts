@@ -1,4 +1,4 @@
-export * from "./components/dashboard.layout"
-export * from "./components/dashboard.page"
-export * from "./components/dashboard.date.picker"
+export * from "./components/layout"
+export * from "./components/page"
+export * from "./components/date-picker"
 export * from "./dashboard.types"
